@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Trial Lab: State of Ohio v. Caleb Flynn | Law &amp; Justice</title>
+<style>
+:root{--ink:#1b2440;--paper:#f6f1e6;--muted:#5a6480;--gold:#ffc83d;--line:#e3dfd3;--pc:#0f9d8f;--ps:#d9f4f0}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Georgia,"Iowan Old Style","Palatino Linotype","Times New Roman",serif;color:var(--ink);background:var(--paper);font-size:17px;line-height:1.55}
+body.noscroll{overflow:hidden}
+h1,h2,h3,h4,button,.pill,.tag,.chip,.ptag,.lk,.gk,summary,.brand,.prog,label,.wcnt,.wsave,dt,.sn,.hint,.erase,.srcs,small{font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+a{color:#2b4fd6}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:3px solid #2b4fd6;outline-offset:2px}
+[hidden]{display:none!important}
+/* buttons */
+.btn{background:var(--ink);color:#fff;border:2px solid var(--ink);border-radius:999px;padding:9px 18px;font-weight:700;font-size:.95rem;transition:transform .1s,box-shadow .1s}
+.btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(27,36,64,.25)}
+.btn.ghost{background:#fff;color:var(--ink)}
+.btn.sm{padding:5px 13px;font-size:.85rem}
+.btn[disabled]{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
+.link{background:none;border:0;color:var(--muted);text-decoration:underline;font-size:.85rem;padding:0}
+/* top bar */
+#top{position:sticky;top:0;z-index:30;display:none;align-items:center;gap:14px;background:#fff;padding:10px 18px;box-shadow:0 2px 14px rgba(27,36,64,.12)}
+#top.on{display:flex}
+.brand{font-weight:800;letter-spacing:-.01em;display:flex;align-items:center;gap:9px}
+.brand i{display:inline-block;width:26px;height:26px;border-radius:8px;background:conic-gradient(#0f9d8f 0 25%,#6c5ce7 0 50%,#ef5b5b 0 75%,#e08a00 0)}
+.pg{flex:1;display:flex;align-items:center;gap:10px;justify-content:center;min-width:0}
+.prog{font-weight:700;font-size:.9rem;white-space:nowrap}
+.bar{width:min(220px,30vw);height:10px;border-radius:999px;background:#e8e4d8;overflow:hidden}
+#progbar{height:100%;width:0;background:linear-gradient(90deg,#0f9d8f,#6c5ce7,#ef5b5b,#e08a00);transition:width .3s}
+/* cover */
+#cover{min-height:100vh;display:grid;grid-template-columns:1.05fr 1fr;gap:40px;align-items:center;padding:48px max(24px,6vw);background:radial-gradient(1200px 600px at 85% 10%,#fff3d1,transparent),radial-gradient(900px 500px at 0% 100%,#d9f4f0,transparent),var(--paper)}
+.eyebrow{display:inline-block;background:var(--ink);color:#fff;font:700 .78rem system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;padding:6px 14px;border-radius:999px}
+#cover h1{font-size:clamp(2.2rem,5.4vw,4.1rem);line-height:1.03;margin:16px 0 14px;letter-spacing:-.025em}
+#cover h1 em{font-style:normal;background:linear-gradient(transparent 62%,#ffc83d 62%)}
+.lede{font-size:1.2rem;max-width:34em}
+.note-card{background:#fff;border-left:6px solid #ef5b5b;border-radius:12px;padding:12px 16px;margin:18px 0;max-width:36em;box-shadow:0 3px 14px rgba(27,36,64,.08);font-size:.97rem}
+.start{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:8px}
+.start input{font:inherit;padding:11px 16px;border:2px solid var(--ink);border-radius:999px;min-width:240px}
+.how{display:flex;gap:18px;flex-wrap:wrap;margin-top:22px}
+.how div{flex:1 1 150px;background:#fff;border-radius:14px;padding:11px 14px;font:600 .88rem/1.35 system-ui,sans-serif;box-shadow:0 2px 10px rgba(27,36,64,.08)}
+.how b{display:block;font-size:1.3rem;color:#6c5ce7}
+#cvart{position:relative;height:460px}
+#cvart>div{position:absolute;width:76%;border-radius:20px;overflow:hidden;box-shadow:0 14px 34px rgba(27,36,64,.25);border:6px solid #fff;background:#fff}
+#cvart svg{display:block;width:100%;height:auto}
+#cvart .c1{left:0;top:10px;transform:rotate(-5deg)}
+#cvart .c2{right:0;top:120px;transform:rotate(4deg)}
+#cvart .c3{left:8%;top:262px;transform:rotate(-2deg)}
+
+.btn.big{padding:14px 26px;font-size:1.05rem;background:#0f9d8f;border-color:#0f9d8f}
+#cover{grid-template-columns:1.1fr .9fr}
+#cvart{height:430px}
+.modes{display:grid;gap:10px;margin:14px 0 6px;max-width:36em}
+.mc{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--line);border-radius:14px;padding:11px 14px;cursor:pointer;font:500 .9rem/1.4 system-ui,sans-serif}
+.mc b{display:block;font-size:1rem}
+.mc:has(input:checked){border-color:#0f9d8f;box-shadow:0 0 0 3px #d9f4f0}
+.mc input{margin-top:4px;accent-color:#0f9d8f}
+.seg2{display:flex;border:2px solid var(--ink);border-radius:999px;overflow:hidden}
+.seg2 button{border:0;background:#fff;color:var(--ink);padding:5px 12px;font:700 .8rem system-ui,sans-serif}
+.seg2 button[aria-pressed="true"]{background:var(--ink);color:#fff}
+/* intro + vertical timeline */
+.intro{max-width:1000px;margin:0 auto;padding:16px max(18px,4vw) 0;font:600 .93rem system-ui,sans-serif;color:var(--muted)}
+.intro b{color:var(--ink)}
+#tlwrap{max-width:1000px;margin:0 auto;padding:6px max(14px,3vw) 60px}
+.day{margin-top:26px;--pc:#0f9d8f;--ps:#d9f4f0}
+.dayhd{display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:var(--pc);color:#fff;border-radius:18px;padding:16px 20px;box-shadow:0 6px 18px rgba(27,36,64,.18)}
+.dayhd h2{margin:0;font-size:1.25rem;line-height:1.2}
+.dayhd small{display:block;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.9;font-size:.72rem}
+.dayhd p{margin:4px 0 0;font:500 .9rem/1.4 system-ui,sans-serif;opacity:.95;max-width:34em}
+.dayhd .dp{display:flex;align-items:center;gap:10px;font:800 .85rem system-ui,sans-serif;flex-wrap:wrap}
+.dayhd .btn{background:#fff;color:var(--ink);border-color:#fff}
+.row{position:relative;display:grid;grid-template-columns:1fr 54px 1fr;align-items:center;margin:0;padding:14px 0}
+.row::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:6px;margin-left:-3px;background:var(--pc)}
+.row:first-of-type::before{top:50%}.row:last-of-type::before{bottom:50%}
+.row .nd{grid-column:2;grid-row:1;justify-self:center;z-index:2}
+.row .card{grid-column:1;grid-row:1;justify-self:end}
+.row.r .card{grid-column:3;justify-self:start}
+.nd{width:34px;height:34px;border-radius:50%;background:#fff;border:6px solid var(--pc);padding:0;display:grid;place-items:center;color:#fff;font:800 .8rem system-ui,sans-serif;box-shadow:0 0 0 4px var(--paper)}
+.nd.done{background:var(--pc)}.nd.done::after{content:"✓"}
+.nd.lock{background:#9aa3b8;border-color:#9aa3b8}.nd.lock::after{content:"🔒";font-size:.75rem}
+.card{display:grid;grid-template-columns:132px 1fr;width:min(410px,100%);background:#fff;border-radius:16px;box-shadow:0 4px 14px rgba(27,36,64,.12);overflow:hidden;cursor:pointer;border-bottom:5px solid var(--pc);transition:transform .15s,box-shadow .15s;text-align:left;border-top:0;border-left:0;border-right:0;padding:0;color:inherit;font:inherit}
+.card:hover{transform:translateY(-3px);box-shadow:0 10px 22px rgba(27,36,64,.2)}
+.card.lockd{opacity:.65}
+.cart svg{display:block;width:100%;height:100%;object-fit:cover}
+.cardb{padding:11px 13px 12px;display:flex;flex-direction:column;gap:5px}
+.cardb .sn{font:800 .7rem system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--pc)}
+.cardb h3{margin:0;font-size:1.02rem;line-height:1.22}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto}
+.chip{background:var(--ps);color:var(--ink);font:700 .72rem system-ui,sans-serif;border-radius:999px;padding:2px 9px}
+@media (max-width:760px){
+ #cover{grid-template-columns:1fr}#cvart{display:none}
+ .row,.row.r{grid-template-columns:44px 1fr;padding:10px 0}
+ .row::before{left:22px}
+ .row .nd{grid-column:1}.row .card,.row.r .card{grid-column:2;justify-self:stretch;width:100%}
+ .card{grid-template-columns:108px 1fr}
+ .pg{display:none}.seg2 button{padding:5px 8px}#top{flex-wrap:wrap}
+}
+/* station panel */
+.ov{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;padding:14px;background:rgba(27,36,64,.55)}
+.panel{background:#fff;border-radius:18px;max-width:920px;width:100%;max-height:94vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.35);--pc:#0f9d8f;--ps:#d9f4f0}
+.ph{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--pc);color:#fff;padding:12px 18px;font:800 .85rem system-ui,sans-serif;letter-spacing:.04em}
+.x{background:rgba(255,255,255,.22);border:0;color:inherit;width:34px;height:34px;border-radius:50%;font-size:1rem}
+.pt{padding:14px 22px 0}.pt h2{margin:2px 0 0;font-size:1.6rem;line-height:1.15}
+.pt .sub{font:600 .85rem system-ui,sans-serif;color:var(--muted)}
+.steps{display:flex;gap:8px;padding:12px 22px 0;flex-wrap:wrap}
+.steps button{border:2px solid var(--pc);background:#fff;color:var(--ink);border-radius:999px;padding:6px 16px;font:800 .85rem system-ui,sans-serif}
+.steps button[aria-selected="true"]{background:var(--pc);color:#fff}
+.steps button.ok::after{content:" ✓"}
+.pbody{overflow:auto;padding:14px 22px 10px;flex:1}
+.pf{display:flex;gap:10px;justify-content:space-between;align-items:center;padding:12px 22px;background:#f8f6ef;flex-wrap:wrap}
+.idea{background:var(--ps);border-radius:12px;padding:10px 14px;margin:0 0 10px}
+.idea b{display:block;font:800 .95rem system-ui,sans-serif}.idea span{font-size:.97rem}
+.dd{border:2px solid var(--ps);border-radius:12px;margin:12px 0;background:#fff}
+.dd summary{cursor:pointer;padding:10px 14px;font:800 .92rem system-ui,sans-serif;list-style:none}
+.dd summary::-webkit-details-marker{display:none}.dd summary::after{content:"＋";float:right;color:var(--pc)}.dd[open] summary::after{content:"－"}
+.ddb{padding:4px 15px 8px}.ddb p{margin:0 0 .7em}
+.rulebox{border-left:6px solid var(--pc);background:#fafaf6;border-radius:8px;padding:9px 14px;margin:12px 0;font-size:.95rem}
+.rulebox b{font:800 .8rem system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--pc);display:block}
+.reads{margin:12px 0;font:600 .92rem system-ui,sans-serif}.reads a{display:block;margin:4px 0}
+.mini{width:100%;border-collapse:collapse;font-size:.92rem;margin:6px 0}.mini td{border-bottom:1px solid var(--line);padding:6px 8px;vertical-align:top}.mini td:first-child{font:800 .88rem system-ui,sans-serif;white-space:nowrap}
+.sorter{border:2px solid var(--ps);border-radius:12px;padding:10px 14px;margin:12px 0}
+.sorter h4{margin:0 0 8px;font:800 .95rem system-ui,sans-serif}
+.sit{padding:8px 0;border-bottom:1px solid var(--line)}.sit:last-child{border:0}
+.sit p{margin:0 0 6px;font-size:.96rem}
+.sit .opts{display:flex;gap:8px;flex-wrap:wrap}
+.sit .opts button{border:2px solid var(--pc);background:#fff;border-radius:999px;padding:3px 14px;font:700 .82rem system-ui,sans-serif}
+.sit .opts button.pick{background:var(--ink);color:#fff;border-color:var(--ink)}
+.sit .fb{font:600 .84rem system-ui,sans-serif;margin-top:5px}.fb.good{color:#127a5b}.fb.bad{color:#b3261e}
+.clip{border:2px solid var(--ps);border-radius:14px;overflow:hidden;margin:0 0 16px}
+.cw{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:10px 14px 0}
+.win{background:var(--pc);color:#fff;border-radius:999px;padding:3px 12px;font:800 .8rem system-ui,sans-serif}
+.ct2{padding:6px 14px 0}.ct2 b{display:block;font:800 1rem/1.3 system-ui,sans-serif}.ct2 span{font:700 .78rem system-ui,sans-serif;color:var(--muted)}
+.wf{padding:6px 14px 0;font-size:.94rem}.wf b{font:800 .78rem system-ui,sans-serif;text-transform:uppercase;letter-spacing:.06em;color:var(--pc)}.wf ul{margin:4px 0 6px 18px;padding:0}
+.vplayer{background:#101830;margin-top:8px}
+.vbtn{display:flex;align-items:center;gap:14px;width:100%;min-height:80px;padding:12px 16px;border:0;color:#fff;text-align:left;background:linear-gradient(135deg,#1b2440,#3a4778);font:800 1rem system-ui,sans-serif}
+.vplay{flex:none;width:46px;height:46px;border-radius:50%;background:#fff;color:var(--pc);display:grid;place-items:center;padding-left:3px}
+.vframe{position:relative;padding-top:56.25%;background:#000}.vframe iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.vlink{display:block;padding:8px 14px 12px;font:700 .82rem system-ui,sans-serif}
+.q{margin:0 0 16px}.q label{display:block;font:800 .98rem/1.35 system-ui,sans-serif;margin-bottom:4px}
+.q .tag{display:inline-block;background:#fff3cd;color:#7a5200;border-radius:999px;padding:1px 9px;font:800 .7rem system-ui,sans-serif;margin-left:6px;vertical-align:1px}
+.q .hint{font:500 .84rem/1.4 system-ui,sans-serif;color:var(--muted);margin:0 0 5px}
+.ans{width:100%;min-height:110px;font:inherit;line-height:1.5;padding:11px 13px;border:2px solid var(--line);border-radius:12px;resize:vertical}
+.ans:focus{border-color:var(--pc);outline:none;box-shadow:0 0 0 3px var(--ps)}
+.wcnt{font:700 .78rem system-ui,sans-serif;color:var(--muted);margin-top:3px}.wcnt.ok{color:#127a5b}
+.vrow{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}
+.vrow b{font:800 .95rem system-ui,sans-serif}.vrow small{display:block;color:var(--muted);font:500 .8rem system-ui,sans-serif}
+.vrow .g{display:flex;gap:6px}.vrow label{border:2px solid var(--ink);border-radius:999px;padding:3px 12px;font:800 .8rem system-ui,sans-serif;cursor:pointer}
+.vrow input{position:absolute;opacity:0}.vrow label:has(input:checked){background:var(--ink);color:#fff}
+.vrow label:has(input:focus-visible){outline:3px solid #2b4fd6;outline-offset:2px}
+.reveal{background:#fdf0d2;border-radius:14px;padding:12px 16px;margin:0 0 14px}
+.reveal p{margin:0 0 .6em}
+.lockmsg{background:#eef0f6;border-radius:12px;padding:10px 14px;font:600 .9rem system-ui,sans-serif;margin-top:10px}
+/* drawer */
+#dr{position:fixed;top:0;right:0;bottom:0;width:min(460px,100vw);background:#fff;z-index:60;box-shadow:-12px 0 40px rgba(0,0,0,.3);display:flex;flex-direction:column}
+.drh{display:flex;justify-content:space-between;align-items:center;background:var(--ink);color:#fff;padding:12px 16px}
+.drh .x{background:rgba(255,255,255,.2)}
+#drbar{display:flex;gap:6px;padding:10px 14px;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+#drbar button{border:2px solid var(--ink);background:#fff;border-radius:999px;padding:4px 12px;font:700 .8rem system-ui,sans-serif}
+#drbar button[aria-selected="true"]{background:var(--ink);color:#fff}
+#drbody{overflow:auto;padding:14px 16px 24px;flex:1}
+#drbody h3{margin:.2em 0 .4em;font-size:1.05rem}
+.dayrow{display:flex;justify-content:space-between;gap:10px;align-items:center;border:2px solid var(--line);border-radius:12px;padding:10px 12px;margin:0 0 10px}
+.dayrow b{font:800 .95rem system-ui,sans-serif}.dayrow small{display:block;color:var(--muted);font:600 .78rem system-ui,sans-serif}
+.srow{padding:8px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1fr auto;gap:6px;align-items:center;font:500 .88rem system-ui,sans-serif}
+.srow input{width:70px;font:inherit;padding:3px 6px;border:2px solid var(--line);border-radius:8px}
+#toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,40px);background:var(--ink);color:#fff;padding:10px 18px;border-radius:999px;font:700 .9rem system-ui,sans-serif;opacity:0;pointer-events:none;transition:.25s;z-index:80;max-width:92vw;text-align:center}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+
+#daynav{max-width:1000px;margin:10px auto 0;padding:0 max(14px,3vw);display:flex;gap:8px;flex-wrap:wrap}
+.dn{background:var(--pc);color:#fff;text-decoration:none;font:800 .8rem system-ui,sans-serif;border-radius:999px;padding:5px 14px}
+.dn.ok::after{content:" ✓"}
+
+</style>
+</head>
+<body>
+<header id="top"><div class="brand"><i></i><span>Trial Lab</span></div>
+ <div class="pg"><span class="prog" id="prog">0 of 36 done</span><div class="bar" aria-hidden="true"><div id="progbar"></div></div></div>
+ <div class="seg2" role="group" aria-label="How you are working today"><button type="button" id="mclass" aria-pressed="true">With my class</button><button type="button" id="msolo" aria-pressed="false">On my own</button></div>
+ <button type="button" class="btn ghost sm" id="gdbtn">Courtroom guide</button>
+ <button type="button" class="btn sm" id="nbbtn">My notebook</button>
+ <button type="button" class="btn ghost sm" id="tcbtn" hidden>Clip times</button></header>
+
+<section id="cover" aria-labelledby="ct">
+ <div>
+  <span class="eyebrow">Law &amp; Justice · Trial Lab</span>
+  <h1 id="ct">Be the juror: <em>State of Ohio v. Caleb Flynn</em></h1>
+  <p class="lede">Follow a real murder trial step by step. See how openings, witnesses, cross-examination, experts, and closing arguments work, then reach your own verdict.</p>
+  <div class="note-card"><b>Please read first.</b> This case involves the real death of Ashley Flynn, a wife and mother. The recordings include a 911 call and body camera video of the aftermath. Discuss it with respect for her, her daughters, and everyone affected. The trial is finished, but the outcome is not shown until you have reached your own verdict, so please do not look it up.</div>
+  <div class="start"><input id="nm" type="text" autocomplete="name" placeholder="Type your name" aria-label="Your name"></div>
+  <div class="modes" role="radiogroup" aria-label="How are you working?">
+   <label class="mc"><input type="radio" name="mode" value="class" checked><span><b>With my class</b>Your teacher leads the discussion. You watch the clips and type your responses.</span></label>
+   <label class="mc"><input type="radio" name="mode" value="solo"><span><b>On my own</b>Missed class? Everything your teacher would explain is here, and discussion questions become typed responses.</span></label>
+  </div>
+  <div class="start"><button type="button" class="btn big" id="begin">Start the trial</button><button type="button" class="btn ghost" id="cont" hidden>Continue where I left off</button></div>
+  <div class="how"><div><b>4</b>class periods of about 90 minutes</div><div><b>22</b>stations: learn, watch a short clip, respond</div><div><b>1</b>Word notebook for each day and for the whole unit</div></div>
+ </div>
+ <div id="cvart" aria-hidden="true"></div>
+</section>
+
+<main id="app" hidden>
+ <div class="intro"><span>Open a station and work through <b>Learn</b>, <b>Watch</b>, and <b>Respond</b>. You can switch between “With my class” and “On my own” at the top at any time.</span></div>
+ <nav id="daynav" aria-label="Jump to a day"></nav>
+ <div id="tlwrap"><div id="tl" role="list" aria-label="Timeline of the trial"></div></div>
+</main>
+
+<div id="ov" class="ov" hidden></div>
+<aside id="dr" hidden aria-label="Drawer"><div class="drh"><b id="drt">Courtroom guide</b><button type="button" class="x" id="drx" aria-label="Close">✕</button></div><div id="drbar" role="tablist"></div><div id="drbody"></div></aside>
+<div id="toast" role="status" aria-live="polite"></div>
+<script>
+/* ============ CONTENT: STATE OF OHIO v. CALEB FLYNN ============ */
+var CFG={key:"flynn_trial_v1",videos:true};
+var DAYS=[
+ {id:1,name:"The Jury and the Evidence",short:"Day 1",color:"#0f9d8f",soft:"#d9f4f0",goal:"Learn the juror’s job, the standard of proof, and the two kinds of evidence. Hear both openings."},
+ {id:2,name:"Admitting Evidence and Direct Examination",short:"Day 2",color:"#6c5ce7",soft:"#e6e2fb",goal:"See how evidence gets in front of a jury and how lay witnesses tell their story."},
+ {id:3,name:"Cross-Examination and the Investigation",short:"Day 3",color:"#ef5b5b",soft:"#fde3e3",goal:"See how a defense attorney tests witnesses and the investigation. Compare lay and expert witnesses."},
+ {id:4,name:"Closing Arguments and Your Verdict",short:"Day 4",color:"#e08a00",soft:"#fdf0d2",goal:"Weigh both closings, review the law, and reach your own verdict before you learn the jury’s."}
+];
+/* clip windows are in seconds. est:1 marks a window chosen from the order of testimony, to be fine-tuned in teacher mode */
+var STATIONS=[
+{id:"s1",day:1,title:"The case in brief",art:"case",mins:10,
+ ideas:[{t:"You are the juror",x:"Twelve people decide the facts. Your job is to listen, weigh the evidence, and follow the judge’s instructions about the law."},
+        {t:"A real, finished trial",x:"This case went to trial in 2026. You will decide your own verdict before you learn what the jury decided, so please do not look up the outcome."}],
+ more:["Early on February 16, 2026, Caleb Flynn, 40, called 911 from his home in Tipp City, Ohio. He said an intruder had broken in and shot his wife, Ashley Flynn, 37, a middle-school volleyball coach and mother of two. He told police he had been lying in his daughters’ bedroom when he heard a gunshot. Three days later he was arrested.","Flynn is a former worship pastor who auditioned for American Idol in 2013. He pleaded not guilty to aggravated murder, murder, felonious assault, and tampering with evidence. The trial was held in the Miami County Court of Common Pleas in Troy, Ohio, before Judge Jeannine Pratt.","Ashley Flynn was a real person who was loved by her family and community. Please discuss this case with respect for her, her daughters, and everyone affected."],
+ who:true,
+ read:[{t:"Case overview: State of Ohio v. Caleb Flynn (Hindustan Times)",u:"https://www.hindustantimes.com/world-news/us-news/caleb-flynn-trial-was-ex-american-idol-contestant-having-an-affair-texts-in-focus-amid-ashleys-death-101789759994256.html?utm_source=gemini"}],
+ qs:[{id:"d1a",type:"d",min:20,q:"What do you already know or assume about this case? What would you want to know before judging it?",hint:"Be honest about first impressions. A good juror notices them and then tests them against the evidence."}]},
+{id:"s2",day:1,title:"The rules for jurors",art:"rules",mins:15,
+ ideas:[{t:"Presumption of innocence",x:"The defendant starts the trial presumed innocent. The state must prove guilt. The defendant does not have to prove anything."},
+        {t:"Beyond a reasonable doubt",x:"The highest standard in the law. Jurors must be “firmly convinced” of the truth of the charge."},
+        {t:"Not evidence",x:"Opening statements, closing arguments, and the lawyers’ questions are not evidence. Testimony and exhibits are."}],
+ more:["The judge tells jurors the rules before the lawyers speak. Jurors may take notes, must decide only from what is presented in court, and may not research the case or talk about it outside the jury room.","Ohio law (R.C. 2901.05) says reasonable doubt is present when, after jurors carefully consider and compare all the evidence, they cannot say they are firmly convinced of the truth of the charge. It is not a mere possible doubt. It is proof of such a character that an ordinary person would be willing to rely and act on it in the most important affairs of their own life."],
+ rule:{t:"Ohio law: R.C. 2901.05",x:"Every person is presumed innocent until proven guilty beyond a reasonable doubt, and the burden of proof stays with the state throughout the trial."},
+ read:[{t:"Reasonable doubt standard in Ohio",u:"https://www.columbuscriminalattorney.com/what-is-reasonable-doubt/"}],
+ clips:[{id:"c2",yt:"FAJOnzLDrVg",t:"Jury instructions from the judge",s:"Trial video (YouTube)",start:0,end:600,est:1,watch:["What are jurors told they may and may not do?","How does the judge describe the state’s burden of proof?"]}],
+ qs:[{id:"q2a",type:"q",min:30,q:"In your own words, what does “beyond a reasonable doubt” mean? Use Ohio’s definition in your answer.",hint:"Use the phrases “firmly convinced” and “truth of the charge,” then explain what they mean in everyday language."},
+     {id:"d2b",type:"d",min:25,q:"Why does the law make the prosecution prove guilt instead of making the defendant prove innocence?",hint:"Think about who has the power of the government and what could go wrong if the burden were reversed."}]},
+{id:"s3",day:1,title:"Two kinds of evidence",art:"evidence",mins:15,
+ ideas:[{t:"Direct evidence",x:"Proves a fact without needing an inference. An eyewitness who saw the act, a video of it, or a confession."},
+        {t:"Circumstantial evidence",x:"Points to a fact and asks you to infer the rest. Fingerprints, motive, timing, text messages, missing items."},
+        {t:"Same legal weight",x:"Ohio law gives both kinds equal weight. A conviction can rest on circumstantial evidence alone if it proves every element beyond a reasonable doubt."}],
+ more:["Think of snow on the ground. If you saw it fall, that is direct evidence. If you wake up and see snow and footprints, you infer it fell overnight and someone walked through it. That is circumstantial evidence. Strong circumstantial evidence can be very persuasive, and weak circumstantial evidence can be easy to explain away.","The Ohio Supreme Court has said that circumstantial and direct evidence have the same probative value (State v. Jenks, 1991). What jurors must ask is whether all the evidence, taken together, leaves them firmly convinced."],
+ rule:{t:"Ohio law: State v. Jenks (1991)",x:"Circumstantial evidence and direct evidence “inherently possess the same probative value.” Jurors weigh all of it against the beyond a reasonable doubt standard."},
+ sort:{title:"Quick check: direct or circumstantial?",opts:["Direct","Circumstantial"],items:[
+   {t:"A neighbor testifies, “I watched Dana take the cash from the register.”",a:0,why:"An eyewitness who saw the act itself is direct evidence."},
+   {t:"Dana’s fingerprints are on the cash drawer, and she has no job duties near it.",a:1,why:"Fingerprints show she touched the drawer. The jury must infer she took the cash."},
+   {t:"A security video shows Dana putting money in her pocket.",a:0,why:"A recording of the act itself is direct evidence."},
+   {t:"Dana bought an expensive phone the day after the cash went missing.",a:1,why:"The timing suggests a link, but the jury must infer it."},
+   {t:"Dana texts a friend, “I took the money.”",a:0,why:"A confession proves the fact directly."},
+   {t:"Wet footprints lead from the sink to the bedroom.",a:1,why:"The jury must infer who made them and when."}]},
+ qs:[{id:"q3a",type:"q",min:30,q:"What is direct evidence, and what is circumstantial evidence?",hint:"Define both in your own words and give one example of each that is not from the Flynn case."}]},
+{id:"s4",day:1,title:"The state’s opening statement",art:"opening",mins:20,
+ ideas:[{t:"A roadmap",x:"The opening is each side’s preview of what it says the evidence will show. It is not evidence."},
+        {t:"State goes first",x:"The state has the burden of proof, so it opens first and closes last."}],
+ clips:[{id:"c4",yt:"1C1nbHmC1lc",t:"State’s opening statement and key exhibits",s:"Trial video (YouTube)",start:0,end:720,est:1,watch:["What is the state’s theory of what happened?","Which pieces of evidence does the prosecutor promise to show the jury?","Is there any direct evidence of who fired the gun?"]}],
+ qs:[{id:"q4a",type:"q",min:20,q:"What direct evidence does the prosecution possess in this case?",hint:"Look for a witness who saw the shooting, a recording of it, or a confession. If none exists, say so and explain what that means."},
+     {id:"q4b",type:"q",min:30,q:"Based on the Prosecution's opening statement, list three pieces of circumstantial evidence the state plans to use against Caleb Flynn.",hint:"Name the evidence, then add a few words about what the state wants the jury to infer from each."},
+     {id:"q4c",type:"q",min:40,q:"How do you think the prosecution will use text messages, a missing weapon, and a damaged door to build a case without direct eyewitness testimony?",hint:"Think of each piece as a link in a chain. What does each one suggest about motive, opportunity, or the intruder story?"}]},
+{id:"s5",day:1,title:"The defense’s opening statement",art:"opening",mins:15,
+ ideas:[{t:"The defense may wait or go now",x:"The defense can open right after the state or hold its opening until its own case. This defense opened right away."},
+        {t:"Raising doubt",x:"The defense does not have to prove anything. Its job is often to show the jury where the state’s proof falls short."}],
+ clips:[{id:"c5",yt:"5ieQh6BiIIg",t:"Defense counsel’s opening statement",s:"Trial video (YouTube)",start:0,end:600,est:1,watch:["What does the defense admit?","What does the defense say the state has not shown?"]}],
+ qs:[{id:"q5a",type:"q",min:25,q:"What does the defense say about the affair and text messages?",hint:"Describe what the defense admits and what it argues those facts do and do not prove."},
+     {id:"d5b",type:"d",min:25,q:"Why might a defense attorney admit the affair in the opening statement instead of hiding it?",hint:"Think about credibility with the jury and about when jurors will first hear damaging facts."}]},
+{id:"s6",day:1,title:"Your first check-in as a juror",art:"notebook",mins:10,
+ ideas:[{t:"Keep an open mind",x:"No evidence has been presented yet. Jurors are told not to make up their minds until they have heard everything."}],
+ qs:[{id:"q6a",type:"q",min:40,q:"Do you believe circumstantial evidence alone can prove guilt “beyond a reasonable doubt”? Explain your reasoning.",hint:"Use what you learned about Ohio law and what you heard in the openings."},
+     {id:"q6b",type:"q",min:25,q:"What additional pieces of direct evidence would make the prosecution's case significantly stronger?",hint:"Be specific: who would need to testify, or what recording or object would need to exist?"},
+     {id:"q6c",type:"q",min:25,q:"What are questions that you would like to be answered by the prosecution or defense to help you come to a verdict?",hint:"Write two or three questions. Keep them for the rest of the unit and see which ones get answered."}]},
+
+{id:"s7",day:2,title:"How evidence gets in",art:"stamp",mins:10,
+ ideas:[{t:"Foundation",x:"Before an item can be shown to a jury, a witness must show what it is and why it can be trusted."},
+        {t:"Authentication",x:"Showing an item is what its owner says it is. A witness with knowledge can do this."},
+        {t:"Admitted into evidence",x:"The attorney asks the judge to admit the exhibit. If the other side does not object and the rules are met, the judge admits it and the jury may consider it."}],
+ more:["Evidence cannot just be shown to the jury. Each recording, photo, document, or object needs a witness to explain what it is. The judge also checks that it is relevant (it helps prove or disprove something that matters) and that it is allowed under the rules of evidence.","Attorneys may object if they think a rule is being broken. The judge rules on the objection. The jury is not supposed to see or hear things the judge has excluded."],
+ rule:{t:"Ohio Rules of Evidence",x:"Rule 401: relevant evidence makes a fact that matters more or less likely. Rule 901: the party offering an item must show it is what they claim it is."},
+ qs:[{id:"d7a",type:"d",min:25,q:"Why do you think courts require a witness to “lay a foundation” before a recording or document can be shown to the jury?",hint:"Think about how easily a recording could be edited, mislabeled, or misunderstood."}]},
+{id:"s8",day:2,title:"Direct examination and lay witnesses",art:"witness",mins:15,
+ ideas:[{t:"Direct examination",x:"The side that calls a witness questions that witness first. The goal is to let the witness tell their story."},
+        {t:"Open-ended questions",x:"“What happened next?” invites a story. Leading questions suggest the answer, so they are usually not allowed on direct."},
+        {t:"Lay witness",x:"An ordinary person testifying to what they saw, heard, or did. Lay witnesses mostly report facts, not expert opinions."}],
+ more:["Most witnesses in a trial are lay witnesses: a 911 records director, a patrol officer, a family member. They must have personal knowledge of what they describe. They may share limited opinions that come from their own perception, like “he seemed upset,” but they may not give expert opinions.","After direct, the other side may cross-examine. If new topics come up, the first side may ask follow-up questions on redirect."],
+ rule:{t:"Ohio Rules of Evidence",x:"Rule 602: a witness must have personal knowledge. Rule 701: a lay witness’s opinions must come from their own perception and help the jury. Rule 611(C): leading questions are generally not allowed on direct."},
+ sort:{title:"Quick check: open-ended or leading?",opts:["Open-ended","Leading"],items:[
+   {t:"“Tell the jury what you saw next.”",a:0,why:"It invites the witness to tell the story in their own words."},
+   {t:"“You saw the car run the red light, didn’t you?”",a:1,why:"It suggests the answer the attorney wants."},
+   {t:"“What happened after you arrived?”",a:0,why:"Open-ended questions often begin with Who, What, How, or Describe."},
+   {t:"“The door was open when you got there, correct?”",a:1,why:"It supplies the fact and asks the witness to agree."},
+   {t:"“How did you secure the recording?”",a:0,why:"The witness has to explain the process."},
+   {t:"“Isn’t it true you never checked the lock?”",a:1,why:"A leading question like this is allowed on cross-examination."}]},
+ qs:[{id:"d8a",type:"d",min:25,q:"Why is an attorney usually not allowed to lead their own witness on direct examination?",hint:"Think about whose words the jury should be hearing."}]},
+{id:"s9",day:2,title:"The 911 witness: laying the foundation",art:"phone",mins:25,
+ ideas:[{t:"The first witness",x:"The state called the director of the county 911 center to explain how 911 calls are recorded and kept."},
+        {t:"What to track",x:"Notice each step the prosecutor takes before the recording is played."}],
+ clips:[{id:"c9",yt:"TBlPqMj8rIg",t:"Caleb Flynn breaks down hearing his own 911 call in court",s:"Court TV",start:0,end:480,est:1,watch:["How does the witness explain her job and her knowledge of the system?","How does she show the audio is accurate and unaltered?","When does the prosecutor ask for the recording to be admitted?"]}],
+ qs:[{id:"q9a",type:"q",min:25,q:"How does the prosecution establish that Beth Hall is qualified to authenticate the 911 recording?",hint:"Look at her job, her experience, and her knowledge of how recordings are made and stored."},
+     {id:"q9b",type:"q",min:30,q:"How does the prosecutor prove that the 911 audio file is secure, accurate, and has not been altered or edited?",hint:"List the steps: how the call is recorded, where it is stored, who can access it, and how the copy was checked."},
+     {id:"q9c",type:"q",min:15,q:"At what point in the testimony does the prosecution officially ask the judge to enter the recording into evidence?",hint:"Say what happened right before that moment and why the order matters."},
+     {id:"q9d",type:"q",min:30,q:"How well did the prosecutor do at asking open-ended questions (e.g., “Who,” “What,” “How”) to allow the witness to tell their story?",hint:"Give at least one example of a question you thought worked well, or one that was more leading."},
+     {id:"q9e",type:"q",min:25,q:"Why do you think the defense attorney chose to ask “no questions” on cross-examination for this witness?",hint:"Think about whether she said anything harmful to the defense, and whether cross would have helped."}]},
+{id:"s10",day:2,title:"Hearing the 911 call",art:"phone",mins:20,
+ ideas:[{t:"Evidence of what was said",x:"Once admitted, the jury hears the call itself. Jurors judge sincerity, consistency, and details."},
+        {t:"Demeanor",x:"Jurors may consider how a person sounds and acts, but should be careful not to read too much into emotion."}],
+ more:["This part includes the recording of a man describing his wife’s shooting. It is upsetting. You can look away or pause the video and listen later, but try to listen at least once with a juror’s attention."],
+ clips:[{id:"c10",yt:"TBlPqMj8rIg",t:"Caleb Flynn breaks down hearing his own 911 call in court",s:"Court TV",start:480,end:1080,est:1,watch:["What facts does he give the dispatcher?","What does the dispatcher ask or tell him?","How does he react in the courtroom as the call plays?"]}],
+ qs:[{id:"q10a",type:"q",min:30,q:"What key facts does Caleb Flynn state to the 911 dispatcher during the call?",hint:"Include where he says he was, what he heard, what he saw, and what he says about the garage door."},
+     {id:"q10b",type:"q",min:30,q:"How does the caller’s demeanor and physical reaction in court impact a jury’s view of witness credibility?",hint:"Consider both how it could help him and how a juror might also look at it carefully."},
+     {id:"q10c",type:"q",min:40,q:"What did you pick up on in regards to the phone call? Does he sound sincere? Do you believe his story? What questions do you have after this phone call?",hint:"Point to specific moments in the call. Then separate what you noticed from what you can prove."}]},
+{id:"s11",day:2,title:"Texts and other digital evidence",art:"chat",mins:20,
+ ideas:[{t:"Digital evidence",x:"Text messages, phone data, smartwatch records, and deleted apps can all be evidence."},
+        {t:"A party’s own words",x:"What a defendant said or wrote can be used against him. The rules treat a party’s own statements differently from other hearsay."},
+        {t:"A witness who was there",x:"Alleigha Botner, who had a relationship with Flynn, read messages aloud and explained them. She was a lay witness."}],
+ more:["In this trial jurors heard that investigators recovered more than 100,000 messages between Caleb Flynn and Alleigha Botner, and that his devices recorded movement in the hours before the 911 call. The state used witnesses to explain where the data came from and how it was collected.","Hearsay is an out-of-court statement offered to prove the truth of what it says. There are many exceptions. One of them is a statement by the opposing party, which is why the state could offer Flynn’s own messages."],
+ rule:{t:"Ohio Rules of Evidence",x:"Rule 901: the offering side must show an item is genuine. Rule 801(D)(2): a statement made by the opposing party is not hearsay when offered against that party."},
+ qs:[{id:"q11a",type:"q",min:30,q:"Texts, smartwatch steps, and deleted apps are all digital evidence. Choose one and explain how the state could show the jury it is genuine (authentic).",hint:"Think about who could testify to where it came from and how it was saved or recovered."},
+     {id:"d11b",type:"d",min:25,q:"A defendant’s own texts can be used against him. Why isn’t that unfair?",hint:"Think about what makes a statement reliable when the person who said it is on trial."}]},
+
+{id:"s12",day:3,title:"Cross-examination: testing the witness",art:"cross",mins:10,
+ ideas:[{t:"Cross-examination",x:"The other side questions a witness after direct. The goal is to test credibility, show gaps, or bring out facts that help."},
+        {t:"Leading questions allowed",x:"On cross, attorneys may lead. Short questions that call for “yes” or “no” keep control with the lawyer."},
+        {t:"Choosing not to cross",x:"Sometimes the best strategy is to ask nothing. Cross can reinforce what the witness said."}],
+ more:["Common cross-examination goals: show the witness is mistaken, biased, or unsure; show the investigation missed something; or get helpful facts from a witness the other side called.","Tone matters too. An attorney may be sharp with a professional witness who made choices that can be challenged, and gentle with a grieving relative whose sympathy the jury may share."],
+ rule:{t:"Ohio Rules of Evidence",x:"Rule 611(B) and (C): cross-examination is allowed on the subject matter of direct and on credibility, and leading questions are generally allowed."},
+ qs:[{id:"d12a",type:"d",min:25,q:"Why might a lawyer decide to ask a witness no questions on cross-examination?",hint:"Go back to the 911 center director. What would cross have risked?"}]},
+{id:"s13",day:3,title:"Body camera footage and the first officers",art:"bodycam",mins:25,
+ ideas:[{t:"Body camera as evidence",x:"A body camera shows what the officer saw and heard. It is authenticated by the officer who wore it."},
+        {t:"Challenging the investigation",x:"The defense may argue the police missed leads, rushed to a conclusion, or failed to protect the scene."}],
+ more:["The state played about 24 minutes of more than two hours of body camera video from a responding patrol officer. The defense then cross-examined responding officers about what was and was not recorded and preserved."],
+ clips:[{id:"c13",yt:"sJFDYO6J6_4",t:"Caleb Flynn bodycam footage: “Ashley’s Dead, She’s Gone”",s:"Court TV",start:1063,end:1963,est:1,tn:"start 17:43 is from your assignment; the end is estimated",watch:["What does Flynn say and do on the footage?","What does the defense ask the officer about evidence and the scene?"]}],
+ qs:[{id:"q13a",type:"q",min:30,q:"What potential evidence does the defense criticize the officers for not preserving properly?",hint:"Name the evidence and what the defense says could have been learned from it."},
+     {id:"q13b",type:"q",min:40,q:"How did the defense attempt to show that the responding officers failed to preserve potential evidence or immediately treat the scene as a possible crime scene?",hint:"Describe the kinds of questions the attorney asked and what the officer admitted."},
+     {id:"q13c",type:"q",min:30,q:"What key behaviors, statements, or physical reactions from Caleb Flynn are captured on the responding officer’s body camera footage?",hint:"Stick to what you can see and hear on the footage. Do not add what you assume."},
+     {id:"q13d",type:"q",min:40,q:"How might the prosecution and the defense interpret Caleb Flynn’s emotional reaction on the body camera footage differently for the jury?",hint:"Write one sentence from each attorney’s point of view."},
+     {id:"q13e",type:"q",min:40,q:"Does the body camera evidence make you lean more toward guilt or innocence? Explain your reasoning.",hint:"It is fine to say it did not move you much. Explain why."}]},
+{id:"s14",day:3,title:"Cross-examining a family witness",art:"witness",mins:20,
+ ideas:[{t:"A different kind of witness",x:"Ashley’s sister, Kayla Keyt, was Caleb Flynn’s sister-in-law. She testified about what he told the family and what she had believed at first."},
+        {t:"Compare the tone",x:"Notice how the defense treats her compared with the officer on the last clip."}],
+ clips:[{id:"c14",yt:"BKrwojn2aXg",t:"Caleb Flynn sister-in-law testimony",s:"Trial video (YouTube)",start:1200,end:1800,est:1,tn:"start 20:00 is from your assignment; the end is estimated",watch:["What does she say Caleb told the family?","How does the defense attorney speak to her?","What does she say about when she learned of the affair?"]}],
+ qs:[{id:"q14a",type:"q",min:50,q:"How did the demeanor & manner of questioning from the defense attorneys stay the same and differ between the two witnesses? Why do you think the attorney would treat these witnesses differently?",hint:"Compare the officer on the last clip with Ashley’s sister. Think about what each witness could help or hurt."},
+     {id:"q14b",type:"q",min:40,q:"How does the victim’s sister’s testimony impact your view of the case? In what ways does her testimony matter to the case?",hint:"Consider what it adds as evidence, and what it might do emotionally. Are those the same thing?"}]},
+{id:"s15",day:3,title:"Expert witnesses",art:"expert",mins:25,
+ ideas:[{t:"Expert witness",x:"A witness with special training or experience who may give opinions that help the jury understand the evidence."},
+        {t:"Qualified first",x:"The attorney shows the witness’s training and experience, and the judge decides whether the witness may give opinions."},
+        {t:"Jurors decide",x:"Jurors do not have to accept an expert’s opinion. They weigh it like any other testimony."}],
+ more:["In this trial a lay witness such as the 911 director described facts. Several witnesses gave opinions based on specialized training: an Ohio Bureau of Criminal Investigation (BCI) special agent who spent about 12 hours at the home and testified his concern was that the scene was staged as a burglary, a BCI firearms examiner, and digital forensic examiners who explained data on Flynn’s devices.","Cross-examination of an expert often targets what the expert did not do, the limits of the method, or whether the facts really support the opinion."],
+ rule:{t:"Ohio Rules of Evidence",x:"Rule 702: a witness qualified by knowledge, skill, experience, training, or education may testify in the form of an opinion when it will help the jury understand evidence or decide a fact."},
+ clips:[{id:"c15",yt:"aRN_L4tblps",t:"Caleb Flynn’s defense clashes with crime scene agent",s:"Court TV",start:0,end:0,tn:"whole short clip: nothing to estimate",watch:["What does the defense point out that the agent could not tell?","How does the agent respond when challenged?","Which questions are leading questions?"]}],
+ qs:[{id:"q15a",type:"q",min:40,q:"Beth Hall, a police officer, and a family member are lay witnesses. The BCI agent gave an opinion about the scene. Why is he allowed to give an opinion when a lay witness mostly cannot?",hint:"Use the words qualified, training, and helps the jury understand."},
+     {id:"q15b",type:"q",min:40,q:"How did the defense try to limit or challenge the agent’s conclusions on cross-examination?",hint:"Name one question or point from the clip and explain what the defense wanted the jury to take from it."},
+     {id:"d15c",type:"d",min:25,q:"Do jurors have to accept an expert’s opinion? Why or why not?",hint:"Think about experts who disagree, and about opinions that depend on facts the jury has not accepted."}]},
+{id:"s16",day:3,title:"Your evidence ledger",art:"ledger",mins:10,
+ ideas:[{t:"Weighing the evidence",x:"Jurors do not need to decide each piece by itself. They weigh the whole picture."}],
+ qs:[{id:"q16a",type:"q",min:60,q:"Evidence ledger: List the three pieces of evidence that most point toward guilt and the three that most raise doubt. Label each one direct or circumstantial.",hint:"Use a short line for each: the evidence, direct or circumstantial, and why it matters."}]},
+
+{id:"s17",day:4,title:"The defense rests",art:"rests",mins:10,
+ ideas:[{t:"The right to remain silent",x:"The Fifth Amendment protects a defendant from being forced to testify. The judge tells jurors not to hold it against him."},
+        {t:"The burden never shifts",x:"If the defense calls no witnesses, the state must still prove every element beyond a reasonable doubt."}],
+ more:["After the state called more than three dozen witnesses over seven days of testimony, it rested its case. The defense also rested without calling witnesses, and Flynn did not testify. Jurors had already heard his own words in the 911 call, the body camera video, his messages, and recorded police interviews."],
+ rule:{t:"Constitution and Ohio law",x:"Fifth Amendment: no one may be compelled to be a witness against himself. Griffin v. California (1965): the prosecution may not comment on a defendant’s silence."},
+ qs:[{id:"q17a",type:"q",min:30,q:"Why can’t a jury hold it against a defendant that he did not testify?",hint:"Connect your answer to the presumption of innocence and the Fifth Amendment."},
+     {id:"d17b",type:"d",min:25,q:"The defense called no witnesses. Does that change who has to prove the case? Explain.",hint:"Look at who carries the burden of proof."}]},
+{id:"s18",day:4,title:"Closing arguments: the state",art:"closing",mins:20,
+ ideas:[{t:"Argument, not evidence",x:"In closings each side argues what the evidence proves. Lawyers may argue reasonable inferences. They may not add new facts."},
+        {t:"Order of closings",x:"The state closes first, the defense second, and the state gets a short rebuttal because it has the burden."}],
+ clips:[{id:"c18",yt:"ervJZaGVmsQ",t:"Prosecuting attorney Matt Joseph delivers closing arguments",s:"Courtroom Insider (YouTube)",start:0,end:720,est:1,watch:["How does he connect the separate pieces of evidence?","What does he say about each element the state must prove?"]}],
+ qs:[{id:"q18a",type:"q",min:40,q:"Identify two ways the prosecutor tries to connect separate pieces of circumstantial evidence into one story.",hint:"For each, name the evidence and what he asks the jury to infer."},
+     {id:"d18b",type:"d",min:25,q:"Closing arguments are not evidence. Why does the judge tell jurors that?",hint:"Think about what lawyers are paid to do."}]},
+{id:"s19",day:4,title:"Closing arguments: the defense and rebuttal",art:"closing",mins:20,
+ ideas:[{t:"Proven versus not proven",x:"The defense’s closing tried to separate what was proven from what was only suspected."},
+        {t:"Rebuttal",x:"The state answers the defense’s points in a short final argument."}],
+ read:[{t:"Read: the defense closing (Dayton Daily News live coverage)",u:"https://www.daytondailynews.com/local/crime/caleb-flynn-murder-trial-prosecution-giving-rebuttal/article_673d3137-c07f-4f3d-90f5-5969d68ee90b.html"},{t:"Read: closing arguments as they happened (Courtroom Insider)",u:"https://www.courtroominsider.com/2026/09/live-updates-closing-arguments-planned-for-day-8-of-caleb-flynn-murder-trial/"}],
+ clips:[{id:"c19",yt:"fnkY40ecA6Y",t:"Prosecuting attorney Paul Watkins wraps up closing with a rebuttal argument",s:"Courtroom Insider (YouTube)",start:0,end:480,est:1,watch:["Which defense points does he answer?","What does he ask the jury to do?"]}],
+ qs:[{id:"q19a",type:"q",min:40,q:"What is the defense’s central argument in closing? Which piece of the state’s evidence does it attack most directly?",hint:"Use the reading for the defense closing and the rebuttal clip to see what the state was answering."},
+     {id:"q19b",type:"q",min:50,q:"Which side’s closing argument was more effective, and why? Use at least one specific example.",hint:"Effective does not mean you agree with the side. Explain what made the argument persuasive or weak."}]},
+{id:"s20",day:4,title:"The law the jury applies",art:"book",mins:10,
+ ideas:[{t:"Elements",x:"Each charge has parts, called elements. The state must prove every element beyond a reasonable doubt."},
+        {t:"Unanimous",x:"In a felony trial all twelve jurors must agree on each verdict."}],
+ elems:true,
+ qs:[{id:"d20a",type:"d",min:30,q:"Pick one charge and explain in your own words what the state has to prove beyond a reasonable doubt.",hint:"For aggravated murder, pay special attention to “prior calculation and design.”"}]},
+{id:"s21",day:4,title:"Your verdict",art:"ballot",mins:15,verdict:true,
+ ideas:[{t:"Decide before you learn",x:"Reach your own verdict using only what you have seen and the law. You will lock it in before the jury’s verdict is shown."}],
+ qs:[{id:"q21a",type:"q",min:100,q:"Explain your verdict. For the most serious charge, name the evidence you relied on and explain how it meets, or fails to meet, the “beyond a reasonable doubt” standard.",hint:"Use evidence and the law, not just feelings. If you disagree with a classmate, explain why."}]},
+{id:"s22",day:4,title:"What the jury decided",art:"reveal",mins:10,reveal:true,
+ qs:[{id:"q22a",type:"q",min:30,q:"How did your verdict compare to the jury’s? If it was different, what do you think accounts for the difference?",hint:"Think about evidence you weighed differently, or instructions you read differently."},
+     {id:"q22b",type:"q",min:40,q:"Which part of the trial procedure most shaped your thinking (openings, direct, cross, experts, closings)? Explain.",hint:"Pick one and describe a moment from it."},
+     {id:"q22c",type:"q",min:30,q:"What is one thing about how a jury trial works that surprised you, or that you would change?",hint:"It can be about evidence rules, the burden of proof, or how lawyers question witnesses."}]}
+];
+var VERDICT_COUNTS=[
+ {id:"agg",t:"Aggravated murder",x:"Caused Ashley Flynn’s death purposely and with prior calculation and design (R.C. 2903.01)."},
+ {id:"mur",t:"Murder",x:"Purposely caused her death (R.C. 2903.02). This also includes causing death while committing felonious assault."},
+ {id:"fel",t:"Felonious assault",x:"Knowingly caused serious physical harm, or caused harm with a deadly weapon (R.C. 2903.11)."},
+ {id:"tam",t:"Tampering with evidence",x:"Knowing an investigation was likely, altered or hid something to keep it from being used as evidence (R.C. 2921.12)."}];
+var REVEAL={
+ facts:["On September 29, 2026, after about two to two and a half hours of deliberation (reports vary), the jury found Caleb Flynn guilty on all nine counts. Each juror was asked in open court whether the verdict was theirs.","The nine counts were one count of aggravated murder, three of murder, two of felonious assault, and three of tampering with evidence. The jury also found he used a firearm in connection with several counts.","The defense called no witnesses, and Flynn did not testify. After the verdict, defense attorney Patrick Mulligan said he expected an appeal and that there was “a lack of evidence on prior calculation and design.”","On October 5, 2026, Judge Jeannine Pratt sentenced Flynn to life in prison without the possibility of parole. Flynn told the court, “I did not kill my wife,” and said he would continue to fight for his innocence."],
+ src:[{t:"ABC News: verdict and closing arguments",u:"https://abcnews.com/US/caleb-flynn-former-american-idol-contestant-murder-trial-wife-closing-arguments/story?id=136849417"},{t:"CBS News: sentencing",u:"https://www.cbsnews.com/news/caleb-flynn-sentenced-american-idol-contestant/"},{t:"NBC News: jury reaches verdict",u:"https://www.nbcnews.com/news/us-news/jury-reaches-verdict-case-caleb-flynn-american-idol-singer-charged-wif-rcna600448"}]};
+var WHO=[
+ ["Judge Jeannine Pratt","Presides over the trial, rules on objections, and instructs the jury on the law."],
+ ["Paul Watkins and Matthew Joseph","Miami County prosecutors. They represent the State of Ohio and have the burden of proof."],
+ ["L. Patrick Mulligan and Emily Smith","Defense attorneys for Caleb Flynn."],
+ ["Caleb Flynn","The defendant. Presumed innocent unless the state proves guilt beyond a reasonable doubt."],
+ ["The jury","Twelve jurors who decide the facts and the verdict. Four alternates also sat through the trial."],
+ ["Witnesses","Lay witnesses describe what they saw, heard, or did. Expert witnesses give opinions based on special training."]];
+var STEPS=[
+ ["Jury selection","Attorneys and the judge question possible jurors.",1],
+ ["Preliminary instructions","The judge explains the rules for jurors.",2],
+ ["Opening statements","State, then defense. A preview, not evidence.",4],
+ ["State’s case","Direct, cross, and sometimes redirect for each witness.",9],
+ ["Defense case","The defense may call witnesses or rest.",17],
+ ["Closing arguments","State, defense, then state’s rebuttal.",18],
+ ["Final instructions","The judge reads the law the jury must apply.",20],
+ ["Deliberations and verdict","Jurors discuss privately and must agree unanimously.",21],
+ ["Sentencing","If there is a conviction, the judge imposes the sentence.",22]];
+var TERMS=[
+ ["Burden of proof","The duty to prove the case. In a criminal trial it stays with the state."],
+ ["Beyond a reasonable doubt","Proof that leaves jurors firmly convinced of the truth of the charge."],
+ ["Direct evidence","Evidence that proves a fact without needing an inference."],
+ ["Circumstantial evidence","Evidence from which a fact may be inferred."],
+ ["Foundation","The testimony that shows an exhibit is what it claims to be."],
+ ["Authentication","Showing that an item is genuine."],
+ ["Direct examination","Questions from the side that called the witness."],
+ ["Cross-examination","Questions from the other side, often leading."],
+ ["Lay witness","A witness who reports what they personally saw, heard, or did."],
+ ["Expert witness","A qualified witness who may give opinions based on special training."],
+ ["Hearsay","An out-of-court statement offered to prove its truth, with many exceptions."],
+ ["Objection","A lawyer’s formal challenge to a question or evidence."],
+ ["Elements","The parts of a charge that the state must prove."]];
+var ELEMS=[
+ ["Aggravated murder (R.C. 2903.01)","Purposely caused the death of another, with prior calculation and design.","“Prior calculation and design” means planning more than a spur-of-the-moment act."],
+ ["Murder (R.C. 2903.02)","Purposely caused the death of another. A separate count covers causing death as a result of committing felonious assault.","“Purposely” means it was the person’s specific intention."],
+ ["Felonious assault (R.C. 2903.11)","Knowingly caused serious physical harm to another, or caused physical harm with a deadly weapon.","“Knowingly” means aware that the conduct will probably cause that result."],
+ ["Tampering with evidence (R.C. 2921.12)","Knowing an investigation was in progress or likely, altered, destroyed, or hid something to impair its use as evidence.","Counts in this case involved the missing firearm, the garage door, and digital messages."]];
+
+/* ============ ILLUSTRATIONS: flat vector scenes drawn in code ============ */
+var FONT='font-family="system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif"';
+function R(x,y,w,h,f,rx,ex){return '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" fill="'+f+'"'+(rx?' rx="'+rx+'"':'')+(ex||'')+'/>';}
+function C(x,y,r,f,ex){return '<circle cx="'+x+'" cy="'+y+'" r="'+r+'" fill="'+f+'"'+(ex||'')+'/>';}
+function PA(d,f,ex){return '<path d="'+d+'" fill="'+f+'"'+(ex||'')+'/>';}
+function TX(x,y,t,s,f,a,w,ex){return '<text x="'+x+'" y="'+y+'" '+FONT+' font-size="'+s+'" fill="'+f+'" text-anchor="'+(a||'start')+'" font-weight="'+(w||700)+'"'+(ex||'')+'>'+t+'</text>';}
+function LN(x1,y1,x2,y2,c,w,ex){return '<line x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" stroke="'+c+'" stroke-width="'+(w||2)+'" stroke-linecap="round"'+(ex||'')+'/>';}
+function svgWrap(inner,bg,id){return '<svg viewBox="0 0 480 300" role="img" aria-label="'+(id||"Illustration")+'" xmlns="http://www.w3.org/2000/svg"><rect width="480" height="300" fill="'+bg+'"/>'+inner+'</svg>';}
+function stars(n,x,y,c){var o="";for(var i=0;i<n;i++)o+=C(x+i*34,y+(i%2)*10,3,c);return o;}
+function balance(x,y,s,c){return '<g transform="translate('+x+','+y+') scale('+s+')">'+R(-3,-60,6,110,c,3)+R(-34,48,68,8,c,4)+R(-70,-52,140,6,c,3)
+ +LN(-62,-48,-82,-4,c,3)+LN(-62,-48,-42,-4,c,3)+PA("M-90,-4 Q-62,22 -34,-4 Z",c)+LN(62,-48,42,-4,c,3)+LN(62,-48,82,-4,c,3)+PA("M34,-4 Q62,22 90,-4 Z",c)+'</g>';}
+function gavel(x,y,s,c,c2){return '<g transform="translate('+x+','+y+') scale('+s+') rotate(-30)">'+R(-34,-16,68,32,c,8)+R(-4,16,8,70,c2,4)+R(-42,-20,10,40,c2,4)+R(32,-20,10,40,c2,4)+'</g>';}
+var ART={};
+var ART={};
+var INK2="#1b2440",GOLD="#ffc83d";
+function sc(p,inner,label){p=p||{color:"#6c5ce7",soft:"#e6e2fb"};return svgWrap(inner,p.soft,label);}
+function pc(p){return (p||{color:"#6c5ce7"}).color;}
+function lines(x,y,w,n,gap,col){var o="";for(var i=0;i<n;i++)o+=R(x,y+i*gap,i===n-1?w*0.6:w,9,col||"#dfe5ea",4);return o;}
+ART.case=function(p){var c=pc(p);return sc(p,R(140,64,200,150,c,14)+R(140,50,80,26,c,10)+R(164,92,152,104,"#fff",8)+lines(180,112,120,4,22),"A case file folder");};
+ART.rules=function(p){var c=pc(p);return sc(p,R(172,46,136,196,"#fff",14)+R(160,38,160,22,c,11)+R(160,230,160,22,c,11)+lines(194,84,92,5,26),"A scroll of instructions");};
+ART.evidence=function(p){var c=pc(p);return sc(p,C(215,126,66,"#fff",' stroke="'+c+'" stroke-width="16"')+LN(264,176,334,248,c,20)+lines(180,104,70,3,20,"#cfd6dd"),"A magnifying glass");};
+ART.opening=function(p){var c=pc(p);return sc(p,PA("M150,250 L180,120 L300,120 L330,250 Z",c)+R(160,104,160,18,"#fff",8)+R(236,52,8,54,INK2,4)+C(240,46,15,INK2)+R(190,134,100,10,"#fff",5,' opacity=".6"'),"A speaker at a podium");};
+ART.phone=function(p){var c=pc(p);return sc(p,R(176,36,100,210,c,20)+R(190,62,72,142,"#fff",8)+C(226,224,9,"#fff")+R(300,118,10,64,c,5)+R(320,96,10,108,c,5)+R(340,128,10,44,c,5),"A phone and a sound wave");};
+ART.stamp=function(p){var c=pc(p);return sc(p,R(160,44,130,174,"#fff",14)+lines(180,76,90,4,26)+C(300,204,46,c)+'<path d="M280,204 L296,220 L322,188" stroke="#fff" stroke-width="10" fill="none" stroke-linecap="round" stroke-linejoin="round"/>',"A document with an approval stamp");};
+ART.chat=function(p){var c=pc(p);return sc(p,R(120,60,190,96,"#fff",22)+PA("M150,156 L134,190 L188,156 Z","#fff")+R(176,140,190,96,c,22)+PA("M336,236 L352,266 L300,236 Z",c)+C(160,108,7,c)+C(190,108,7,c)+C(220,108,7,c)+C(232,188,7,"#fff")+C(262,188,7,"#fff")+C(292,188,7,"#fff"),"Two text message bubbles");};
+ART.cross=function(p){var c=pc(p);return sc(p,C(146,108,28,c)+PA("M96,214 Q146,126 196,214 Z",c)+C(334,108,28,INK2)+PA("M284,214 Q334,126 384,214 Z",INK2)+TX(240,150,"?",72,"#fff","middle",800,' stroke="'+INK2+'" stroke-width="2"')+LN(208,176,272,176,c,8),"Two people facing each other, one asking questions");};
+ART.bodycam=function(p){var c=pc(p);return sc(p,PA("M126,262 L126,170 Q126,130 176,118 L304,118 Q354,130 354,170 L354,262 Z",c)+PA("M210,118 L240,150 L270,118 Z","#fff")+R(206,168,68,48,INK2,12)+C(240,192,15,"#9fb3c8")+C(264,177,4.5,"#ff5252"),"A police body camera");};
+ART.witness=function(p){var c=pc(p);return sc(p,C(190,120,34,c)+PA("M130,250 Q190,156 250,250 Z",c)+R(250,52,150,84,"#fff",20)+PA("M270,136 L256,166 L304,136 Z","#fff")+lines(268,74,110,3,20),"A witness speaking");};
+ART.expert=function(p){var c=pc(p);return sc(p,R(170,50,140,190,"#fff",16)+R(222,40,36,22,c,8)+C(240,112,28,c)+PA("M200,184 Q240,128 280,184 Z",c)+lines(190,200,100,2,16),"An expert's identification badge");};
+ART.ledger=function(p){return sc(p,balance(240,150,1.3,pc(p)),"Scales weighing evidence");};
+ART.rests=function(p){var c=pc(p);return sc(p,R(170,132,140,112,c,14)+'<path d="M202,132 V104 a38,38 0 0 1 76,0 V132" fill="none" stroke="'+c+'" stroke-width="16"/>'+C(240,182,15,"#fff")+R(235,188,10,32,"#fff",4),"A padlock");};
+ART.closing=function(p){var c=pc(p);return sc(p,gavel(240,134,1.45,c,INK2)+R(166,226,148,20,c,8),"A gavel");};
+ART.book=function(p){var c=pc(p);return sc(p,PA("M240,70 Q190,50 120,60 L120,236 Q190,226 240,246 Z","#fff")+PA("M240,70 Q290,50 360,60 L360,236 Q290,226 240,246 Z","#f1f4f7")+R(236,66,8,182,c,3)+lines(142,92,80,5,28)+lines(262,92,80,5,28),"An open book of instructions");};
+ART.ballot=function(p){var c=pc(p);var o=R(160,40,160,202,"#fff",14);for(var i=0;i<4;i++){o+=R(184,68+i*44,26,26,"none",5,' stroke="'+c+'" stroke-width="5"')+R(226,76+i*44,64,10,"#dfe5ea",5);}o+='<path d="M188,81 L195,89 L206,73" stroke="'+c+'" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>';return sc(p,o,"A ballot with check boxes");};
+ART.reveal=function(p){var c=pc(p);return sc(p,R(120,84,240,148,"#fff",14)+PA("M120,92 L240,176 L360,92 Z",c)+C(240,176,22,GOLD)+C(240,176,12,"none",' stroke="#fff" stroke-width="4"'),"A sealed envelope");};
+ART.jury=function(p){var c=pc(p),o="";for(var i=0;i<6;i++){var x=95+i*58;o+=C(x,114,20,c)+PA("M"+(x-28)+",204 Q"+x+",144 "+(x+28)+",204 Z",c,' opacity=".85"');}o+=R(66,204,348,26,"#fff",10);return sc(p,o,"A jury box");};
+ART.notebook=function(p){var c=pc(p);var o=R(168,40,150,208,c,12);for(var i=0;i<6;i++)o+=C(168,66+i*30,7,"#fff");o+=lines(196,72,96,5,30,"#ffffffaa");return sc(p,o,"A juror's notebook");};
+
+/* ============ WORD DOCUMENT (.docx) BUILT IN THE BROWSER, NO LIBRARY NEEDED ============ */
+function crc32(buf){var t=crc32.t;if(!t){t=crc32.t=[];for(var n=0;n<256;n++){var c=n;for(var k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0;}}var c2=0xFFFFFFFF;for(var i=0;i<buf.length;i++)c2=t[(c2^buf[i])&255]^(c2>>>8);return(c2^0xFFFFFFFF)>>>0;}
+function zipStore(files,mime){
+  var enc=new TextEncoder(),parts=[],central=[],offset=0;
+  files.forEach(function(f){
+    var name=enc.encode(f.name),data=enc.encode(f.text),crc=crc32(data),sz=data.length;
+    var lh=new Uint8Array(30+name.length),dv=new DataView(lh.buffer);
+    dv.setUint32(0,0x04034b50,true);dv.setUint16(4,20,true);dv.setUint16(6,0x0800,true);dv.setUint16(8,0,true);dv.setUint16(10,0,true);dv.setUint16(12,0x21,true);
+    dv.setUint32(14,crc,true);dv.setUint32(18,sz,true);dv.setUint32(22,sz,true);dv.setUint16(26,name.length,true);dv.setUint16(28,0,true);lh.set(name,30);
+    parts.push(lh,data);
+    var ch=new Uint8Array(46+name.length),cv=new DataView(ch.buffer);
+    cv.setUint32(0,0x02014b50,true);cv.setUint16(4,20,true);cv.setUint16(6,20,true);cv.setUint16(8,0x0800,true);cv.setUint16(10,0,true);cv.setUint16(12,0,true);cv.setUint16(14,0x21,true);
+    cv.setUint32(16,crc,true);cv.setUint32(20,sz,true);cv.setUint32(24,sz,true);cv.setUint16(28,name.length,true);cv.setUint32(42,offset,true);ch.set(name,46);
+    central.push(ch);offset+=lh.length+sz;
+  });
+  var cdSize=0;central.forEach(function(c){cdSize+=c.length;});
+  var end=new Uint8Array(22),ev=new DataView(end.buffer);
+  ev.setUint32(0,0x06054b50,true);ev.setUint16(8,files.length,true);ev.setUint16(10,files.length,true);ev.setUint32(12,cdSize,true);ev.setUint32(16,offset,true);
+  return new Blob(parts.concat(central,[end]),{type:mime});
+}
+function xmlEsc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g,"");}
+function certDate(){var d=new Date();try{return d.toLocaleDateString("en-US",{year:"numeric",month:"long",day:"numeric"});}catch(e){return d.toDateString();}}
+function hash8(str){var h=2166136261;for(var i=0;i<str.length;i++){h^=str.charCodeAt(i);h=Math.imul(h,16777619)>>>0;}var x=("00000000"+h.toString(16)).slice(-8).toUpperCase();return x.slice(0,4)+"-"+x.slice(4);}
+/* opts: {title, name, sections:[{h1, note, items:[{h2, text, tag}]}], record} */
+function buildDocx(opts){
+  var W='xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"',HD='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n';
+  var name=opts.name||"Student";
+  function run(t,o){o=o||{};var pr="";if(o.b)pr+="<w:b/>";if(o.i)pr+="<w:i/>";if(o.color)pr+='<w:color w:val="'+o.color+'"/>';return"<w:r>"+(pr?"<w:rPr>"+pr+"</w:rPr>":"")+'<w:t xml:space="preserve">'+xmlEsc(t)+"</w:t></w:r>";}
+  function para(style,runs){return"<w:p>"+(style?'<w:pPr><w:pStyle w:val="'+style+'"/></w:pPr>':"")+runs+"</w:p>";}
+  function body(text){var ps=String(text||"").split(/\n+/).filter(function(p){return p.trim()!=="";});return ps.map(function(p){return para("BodyText",run(p));}).join("");}
+  var missing=para("BodyText",run("(Not written.)",{i:1,color:"666666"}));
+  var b=[para(null,run(name)),para(null,run(opts.dateStr||certDate())),para("Title",run(opts.title))];
+  opts.sections.forEach(function(s){
+    b.push(para("Heading1",run(s.h1)));
+    if(s.note)b.push(para("Note",run(s.note)));
+    s.items.forEach(function(it){
+      b.push(para("Heading2",run(it.h2)));
+      if(it.tag)b.push(para("Note",run(it.tag)));
+      b.push(it.text&&String(it.text).trim()?body(it.text):missing);
+    });
+  });
+  if(opts.record)b.push(para("Record",run(opts.record)));
+  var sect='<w:sectPr><w:headerReference w:type="default" r:id="rId2"/><w:headerReference w:type="first" r:id="rId3"/><w:pgSz w:w="12240" w:h="15840"/><w:pgMar w:top="1440" w:right="1440" w:bottom="1440" w:left="1440" w:header="720" w:footer="720" w:gutter="0"/><w:titlePg/></w:sectPr>';
+  var doc=HD+'<w:document '+W+' xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><w:body>'+b.join("")+sect+'</w:body></w:document>';
+  function sty(id,nm,extra,ppr,rpr,based){return'<w:style w:type="paragraph" w:styleId="'+id+'"><w:name w:val="'+nm+'"/>'+(based?'<w:basedOn w:val="Normal"/>':"")+(extra||"")+'<w:qFormat/>'+(ppr?"<w:pPr>"+ppr+"</w:pPr>":"")+(rpr?"<w:rPr>"+rpr+"</w:rPr>":"")+"</w:style>";}
+  var styles=HD+'<w:styles '+W+'><w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:eastAsia="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="24"/><w:szCs w:val="24"/><w:lang w:val="en-US"/></w:rPr></w:rPrDefault><w:pPrDefault><w:pPr><w:spacing w:after="0" w:line="360" w:lineRule="auto"/></w:pPr></w:pPrDefault></w:docDefaults>'
+   +'<w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/><w:qFormat/></w:style>'
+   +sty("Title","Title",'<w:next w:val="Normal"/>','<w:spacing w:before="240" w:after="240"/><w:jc w:val="center"/>','<w:b/><w:sz w:val="32"/><w:szCs w:val="32"/>',1)
+   +sty("Heading1","heading 1",'<w:next w:val="Normal"/>','<w:keepNext/><w:spacing w:before="360" w:after="60"/><w:outlineLvl w:val="0"/>','<w:b/><w:sz w:val="28"/><w:szCs w:val="28"/>',1)
+   +sty("Heading2","heading 2",'<w:next w:val="BodyText"/>','<w:keepNext/><w:spacing w:before="160" w:after="0"/><w:outlineLvl w:val="1"/>','<w:b/><w:sz w:val="24"/><w:szCs w:val="24"/>',1)
+   +sty("BodyText","Body Text",null,'<w:spacing w:after="120"/><w:ind w:firstLine="720"/>',null,1)
+   +sty("Note","Note",null,'<w:keepNext/><w:spacing w:after="40" w:line="240" w:lineRule="auto"/>','<w:i/><w:color w:val="666666"/><w:sz w:val="20"/><w:szCs w:val="20"/>',1)
+   +sty("Record","Completion record",null,'<w:pBdr><w:top w:val="single" w:sz="4" w:space="8" w:color="BBBBBB"/></w:pBdr><w:spacing w:before="480"/><w:jc w:val="center"/>','<w:color w:val="666666"/><w:sz w:val="18"/><w:szCs w:val="18"/>',1)
+   +'</w:styles>';
+  var hdr1=HD+'<w:hdr '+W+'><w:p><w:pPr><w:jc w:val="right"/></w:pPr><w:r><w:t xml:space="preserve">'+xmlEsc(name)+'  </w:t></w:r><w:r><w:fldChar w:fldCharType="begin"/></w:r><w:r><w:instrText xml:space="preserve"> PAGE </w:instrText></w:r><w:r><w:fldChar w:fldCharType="separate"/></w:r><w:r><w:t>2</w:t></w:r><w:r><w:fldChar w:fldCharType="end"/></w:r></w:p></w:hdr>';
+  var hdr2=HD+'<w:hdr '+W+'><w:p/></w:hdr>';
+  var RELNS="http://schemas.openxmlformats.org/package/2006/relationships",OD="http://schemas.openxmlformats.org/officeDocument/2006/relationships";
+  var ct=HD+'<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/>'
+   +'<Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>'
+   +'<Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/>'
+   +'<Override PartName="/word/header1.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.header+xml"/>'
+   +'<Override PartName="/word/header2.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.header+xml"/>'
+   +'<Override PartName="/docProps/core.xml" ContentType="application/vnd.openxmlformats-package.core-properties+xml"/></Types>';
+  var rels=HD+'<Relationships xmlns="'+RELNS+'"><Relationship Id="rId1" Type="'+OD+'/officeDocument" Target="word/document.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties" Target="docProps/core.xml"/></Relationships>';
+  var drels=HD+'<Relationships xmlns="'+RELNS+'"><Relationship Id="rId1" Type="'+OD+'/styles" Target="styles.xml"/><Relationship Id="rId2" Type="'+OD+'/header" Target="header1.xml"/><Relationship Id="rId3" Type="'+OD+'/header" Target="header2.xml"/></Relationships>';
+  var core=HD+'<cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/"><dc:title>'+xmlEsc(opts.title+" - "+name)+'</dc:title><dc:creator>'+xmlEsc(name)+'</dc:creator></cp:coreProperties>';
+  return zipStore([{name:"[Content_Types].xml",text:ct},{name:"_rels/.rels",text:rels},{name:"word/document.xml",text:doc},{name:"word/styles.xml",text:styles},{name:"word/_rels/document.xml.rels",text:drels},{name:"word/header1.xml",text:hdr1},{name:"word/header2.xml",text:hdr2},{name:"docProps/core.xml",text:core}],"application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+}
+
+/* ============ STATE ============ */
+function fresh(){return{name:"",mode:"class",started:false,ans:{},seen:{},sort:{},verdict:{},locked:false,lockedOn:"",dl:{}};}
+function load(){try{var r=localStorage.getItem(CFG.key);if(r)return Object.assign(fresh(),JSON.parse(r));}catch(e){}return fresh();}
+function save(){try{localStorage.setItem(CFG.key,JSON.stringify(S));}catch(e){}}
+var S=window.S=load();
+function $(id){return document.getElementById(id);}
+function el(tag,attrs){
+  var e=document.createElement(tag);attrs=attrs||{};
+  Object.keys(attrs).forEach(function(k){var v=attrs[k];
+    if(k==="class")e.className=v;else if(k==="html")e.innerHTML=v;else if(k==="text")e.textContent=v;
+    else if(k.slice(0,2)==="on")e.addEventListener(k.slice(2),v);else if(v===true)e.setAttribute(k,"");else if(v!==false&&v!=null)e.setAttribute(k,v);});
+  for(var i=2;i<arguments.length;i++){var c=arguments[i];if(c==null||c===false)continue;
+    if(Array.isArray(c))c.forEach(function(x){if(x)e.append(x);});else e.append(c.nodeType?c:document.createTextNode(c));}
+  return e;
+}
+function wc(t){t=String(t||"").trim();return t?t.split(/\s+/).length:0;}
+function toast(m){var t=$("toast");t.textContent=m;t.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(function(){t.classList.remove("on");},4200);}
+function byId(id){for(var i=0;i<STATIONS.length;i++)if(STATIONS[i].id===id)return STATIONS[i];return null;}
+function numOf(st){return STATIONS.indexOf(st)+1;}
+function dayOf(st){return DAYS[st.day-1];}
+function dayStyle(d){return"--pc:"+d.color+";--ps:"+d.soft;}
+
+/* ---- progress ---- */
+function prompts(st){return st.qs||[];}
+function reqd(q){return q.type==="q"||S.mode==="solo";}
+function qOk(q){return wc(S.ans[q.id])>=q.min;}
+function stDone(st){
+  var ok=prompts(st).every(function(q){return !reqd(q)||qOk(q);});
+  if(st.verdict)ok=ok&&!!S.locked;
+  return ok;
+}
+function isLocked(st){return !!st.reveal&&!S.locked;}
+function counts(list){var t=0,d=0;list.forEach(function(st){prompts(st).forEach(function(q){if(reqd(q)){t++;if(qOk(q))d++;}});if(st.verdict){t++;if(S.locked)d++;}});return{t:t,d:d};}
+function updateProg(){var c=counts(STATIONS);$("prog").textContent=c.d+" of "+c.t+" done";$("progbar").style.width=(c.t?Math.round(100*c.d/c.t):0)+"%";}
+
+/* ---- clip windows ---- */
+var CLIPOV=(function(){try{return JSON.parse(localStorage.getItem("flynn_clip_overrides")||"{}");}catch(e){return{};}})();
+function clipTimes(c){var o=CLIPOV[c.id];return o?{s:o[0],e:o[1]}:{s:c.start||0,e:c.end||0};}
+function fmt(sec){sec=Math.max(0,Math.round(sec));return Math.floor(sec/60)+":"+("0"+(sec%60)).slice(-2);}
+function parseTime(s){s=String(s||"").trim();if(!s)return 0;if(s.indexOf(":")<0)return Math.max(0,parseInt(s,10)||0);var p=s.split(":");return Math.max(0,(parseInt(p[0],10)||0)*60+(parseInt(p[1],10)||0));}
+function windowLabel(c){var t=clipTimes(c);if(!t.e)return t.s?"Watch from "+fmt(t.s)+" to the end":"Watch the whole clip";var m=Math.round((t.e-t.s)/60);return"Watch "+fmt(t.s)+" to "+fmt(t.e)+" · about "+(m<1?"under 1":m)+" min";}
+function watchUrl(c){var t=clipTimes(c);return"https://www.youtube.com/watch?v="+c.yt+(t.s?"&t="+t.s+"s":"");}
+function embedRaw(yt,s,e){return"https://www.youtube-nocookie.com/embed/"+yt+"?"+(s?"start="+s+"&":"")+(e?"end="+e+"&":"")+"rel=0&modestbranding=1&autoplay=1";}
+function embedUrl(c){var t=clipTimes(c);return embedRaw(c.yt,t.s,t.e);}
+
+/* ============ TIMELINE (vertical) ============ */
+function buildTimeline(){
+  var tl=$("tl");tl.replaceChildren();
+  DAYS.forEach(function(day){
+    var sts=STATIONS.filter(function(s){return s.day===day.id;});
+    var c=counts(sts),mins=sts.reduce(function(a,s){return a+s.mins;},0);
+    var any=sts.some(function(s){return prompts(s).some(function(q){return wc(S.ans[q.id])>0;});});
+    var sec=el("section",{class:"day",id:"day"+day.id,style:dayStyle(day),"data-day":day.id});
+    sec.append(el("div",{class:"dayhd"},
+      el("div",{},el("small",{},day.short+" · about "+mins+" minutes"),el("h2",{text:day.name}),el("p",{text:day.goal})),
+      el("div",{class:"dp"},el("span",{},c.d+" of "+c.t+" done"),
+        el("button",{type:"button",class:"btn sm",disabled:!any,onclick:function(){downloadNotebook([day.id]);}},"Download "+day.short+" notebook"))));
+    sts.forEach(function(st,i){
+      var n=numOf(st),lock=isLocked(st),nreqd=prompts(st).filter(reqd).length+(st.verdict?1:0),done=!lock&&(nreqd>0?stDone(st):!!S.seen[st.id]);
+      var nclips=CFG.videos===false?0:(st.clips||[]).length;
+      var nreq=prompts(st).length;
+      var card=el("button",{type:"button",class:"card"+(lock?" lockd":""),"data-st":st.id,"aria-label":"Station "+n+": "+st.title+(lock?" (locked until you lock in your verdict)":done?" (done)":""),onclick:function(){openStation(st.id);}},
+        el("div",{class:"cart",html:ART[st.art](day)}),
+        el("div",{class:"cardb"},el("span",{class:"sn"},"Station "+n),el("h3",{text:st.title}),
+          el("div",{class:"chips"},el("span",{class:"chip"},st.mins+" min"),nclips?el("span",{class:"chip"},"▶ "+nclips+(nclips>1?" clips":" clip")):null,nreq?el("span",{class:"chip"},"✎ "+nreq):null)));
+      var node=el("div",{class:"nd"+(done?" done":"")+(lock?" lock":""),"aria-hidden":"true"},done||lock?null:String(n));
+      sec.append(el("div",{class:"row"+(i%2?" r":""),role:"listitem"},card,node));
+    });
+    tl.append(sec);
+  });
+  var dn=$("daynav");if(dn){dn.replaceChildren();DAYS.forEach(function(day){var c=counts(STATIONS.filter(function(s){return s.day===day.id;}));
+    dn.append(el("a",{href:"#day"+day.id,style:dayStyle(day),class:c.d===c.t&&c.t>0?"dn ok":"dn"},day.short+" · "+c.d+"/"+c.t));});}
+  updateProg();
+}
+
+/* ============ STATION PANEL ============ */
+var cur={id:null,step:null};
+function stepsOf(st){
+  var a=[];
+  if(st.ideas||st.more||st.rule||st.read||st.who||st.sort||st.elems||st.reveal||st.verdict)a.push("learn");
+  if(CFG.videos!==false&&st.clips&&st.clips.length)a.push("watch");
+  if(prompts(st).length)a.push("respond");
+  return a;
+}
+function stepName(s){return s==="learn"?"Learn":s==="watch"?"Watch":"Respond";}
+function openStation(id,step){
+  var st=byId(id);if(!st)return;
+  if(isLocked(st)){toast("Lock in your verdict at station 21 first. Then this station opens.");return;}
+  S.seen[id]=1;save();cur.id=id;var steps=stepsOf(st);cur.step=steps.indexOf(step)>=0?step:steps[0];renderPanel();
+}
+function closePanel(){var ov=$("ov");ov.hidden=true;ov.replaceChildren();document.body.classList.remove("noscroll");cur.id=null;buildTimeline();}
+function renderPanel(){
+  var st=byId(cur.id),day=dayOf(st),n=numOf(st),steps=stepsOf(st),ov=$("ov");
+  var body=cur.step==="learn"?learnBody(st):cur.step==="watch"?watchBody(st):respondBody(st);
+  var tabs=el("div",{class:"steps",role:"tablist"},steps.map(function(s,i){
+    var ok=s==="respond"&&stDone(st);
+    return el("button",{type:"button",role:"tab","aria-selected":s===cur.step?"true":"false",class:ok?"ok":"",onclick:function(){cur.step=s;renderPanel();}},(i+1)+" "+stepName(s));}));
+  var idx=steps.indexOf(cur.step),last=idx===steps.length-1;
+  var foot=el("div",{class:"pf"});
+  var prev=STATIONS[n-2],next=STATIONS[n];
+  foot.append(el("button",{type:"button",class:"btn ghost sm",disabled:!prev||isLocked(prev),onclick:function(){if(prev)openStation(prev.id);}},"◀ Station "+(n-1)));
+  foot.append(el("button",{type:"button",class:"btn ghost sm",onclick:closePanel},"Back to the timeline"));
+  if(!last)foot.append(el("button",{type:"button",class:"btn sm",onclick:function(){cur.step=steps[idx+1];renderPanel();}},"Next: "+stepName(steps[idx+1])+" ▶"));
+  else foot.append(el("button",{type:"button",class:"btn sm",disabled:!next||isLocked(next),onclick:function(){if(next)openStation(next.id);}},next?"Station "+(n+1)+" ▶":"Finish"));
+  var panel=el("div",{class:"panel",style:dayStyle(day),role:"dialog","aria-modal":"true","aria-label":st.title},
+    el("div",{class:"ph"},el("span",{},day.short+" · Station "+n+" of "+STATIONS.length),el("button",{type:"button",class:"x",onclick:closePanel,"aria-label":"Close"},"✕")),
+    el("div",{class:"pt"},el("div",{class:"sub"},"About "+st.mins+" minutes · "+(S.mode==="class"?"With my class":"On my own")),el("h2",{text:st.title})),
+    tabs,el("div",{class:"pbody"},body),foot);
+  ov.replaceChildren(panel);ov.hidden=false;document.body.classList.add("noscroll");
+  var pb=panel.querySelector(".pbody");if(pb)pb.scrollTop=0;
+}
+function learnBody(st){
+  var b=el("div",{});
+  if(st.reveal)b.append(revealBlock());
+  (st.ideas||[]).forEach(function(i){b.append(el("div",{class:"idea"},el("b",{text:i.t}),el("span",{text:i.x})));});
+  if(st.more){var solo=S.mode==="solo";b.append(el("details",{class:"dd",open:solo},el("summary",{},solo?"The full explanation":"More explanation (your teacher may cover this)"),el("div",{class:"ddb"},st.more.map(function(p){return el("p",{text:p});}))));}
+  if(st.rule)b.append(el("div",{class:"rulebox"},el("b",{text:st.rule.t}),el("span",{text:st.rule.x})));
+  if(st.who){var tb=el("table",{class:"mini"});WHO.forEach(function(w){tb.append(el("tr",{},el("td",{text:w[0]}),el("td",{text:w[1]})));});b.append(el("details",{class:"dd",open:true},el("summary",{},"Who is who in the courtroom"),el("div",{class:"ddb"},tb)));}
+  if(st.elems){var te=el("table",{class:"mini"});ELEMS.forEach(function(w){te.append(el("tr",{},el("td",{text:w[0]}),el("td",{},w[1],el("br"),el("em",{text:w[2]}))));});b.append(el("details",{class:"dd",open:true},el("summary",{},"The charges and what the state must prove"),el("div",{class:"ddb"},te)));}
+  if(st.sort)b.append(sorter(st));
+  if(st.read)b.append(el("div",{class:"reads"},st.read.map(function(r){return el("a",{href:r.u,target:"_blank",rel:"noopener noreferrer"},"Read: "+r.t.replace(/^Read: /,"")+" ↗");})));
+  return b;
+}
+function sorter(st){
+  var sd=S.sort[st.id]=S.sort[st.id]||{};
+  var box=el("div",{class:"sorter"},el("h4",{text:st.sort.title}));
+  st.sort.items.forEach(function(it,i){
+    var fb=el("div",{class:"fb"});var opts=el("div",{class:"opts"});
+    function paint(){opts.querySelectorAll("button").forEach(function(bt,k){bt.className=sd[i]===k?"pick":"";});
+      if(sd[i]==null){fb.textContent="";fb.className="fb";}else if(sd[i]===it.a){fb.textContent="Correct. "+it.why;fb.className="fb good";}else{fb.textContent="Not quite. "+it.why;fb.className="fb bad";}}
+    st.sort.opts.forEach(function(o,k){opts.append(el("button",{type:"button",onclick:function(){sd[i]=k;save();paint();}},o));});
+    box.append(el("div",{class:"sit"},el("p",{text:it.t}),opts,fb));paint();
+  });
+  return box;
+}
+function revealBlock(){
+  var r=el("div",{class:"reveal"},el("b",{text:"What the jury decided"}));
+  REVEAL.facts.forEach(function(f){r.append(el("p",{text:f}));});
+  r.append(el("div",{class:"reads"},REVEAL.src.map(function(s){return el("a",{href:s.u,target:"_blank",rel:"noopener noreferrer"},s.t+" ↗");})));
+  return r;
+}
+function watchBody(st){
+  var b=el("div",{});
+  b.append(el("p",{class:"hint2",text:"Watch only the window shown for each clip. The video will start there."}));
+  st.clips.forEach(function(c){b.append(clipCard(c));});
+  b.append(el("p",{class:"vnote",text:"Some moments are emotional. You can pause, look away, or skip a clip, and tell your teacher if you need to."}));
+  return b;
+}
+function clipCard(c){
+  var holder=el("div",{class:"vplayer"});
+  holder.append(el("button",{type:"button",class:"vbtn","aria-label":"Play clip: "+c.t,onclick:function(){
+    holder.replaceChildren(el("div",{class:"vframe"},el("iframe",{src:embedUrl(c),title:c.t,allow:"autoplay; fullscreen; encrypted-media; picture-in-picture",allowfullscreen:true,referrerpolicy:"strict-origin-when-cross-origin"})));
+  }},el("span",{class:"vplay"},"▶"),el("span",{},"Play this clip")));
+  return el("div",{class:"clip"},
+    el("div",{class:"cw"},el("span",{class:"win",text:windowLabel(c)})),
+    el("div",{class:"ct2"},el("b",{text:c.t}),el("span",{text:c.s})),
+    c.watch?el("div",{class:"wf"},el("b",{text:"Watch for"}),el("ul",{},c.watch.map(function(w){return el("li",{text:w});}))):null,
+    holder,el("a",{class:"vlink",href:watchUrl(c),target:"_blank",rel:"noopener noreferrer"},"Open on YouTube ↗"));
+}
+function respondBody(st){
+  var b=el("div",{});
+  if(S.mode==="class"&&prompts(st).some(function(q){return q.type==="d";}))b.append(el("p",{class:"hint2",text:"Questions marked “class discussion” are talked through together. Add a note if it helps you."}));
+  if(st.verdict)b.append(verdictBlock());
+  prompts(st).forEach(function(q){b.append(qBlock(q));});
+  if(st.verdict)b.append(lockBlock(st));
+  return b;
+}
+function qBlock(q){
+  var ta=el("textarea",{class:"ans",id:"ta_"+q.id,"aria-describedby":"wc_"+q.id,placeholder:"Type your response here…"});ta.value=S.ans[q.id]||"";
+  var cnt=el("div",{class:"wcnt",id:"wc_"+q.id});
+  function paint(){var n=wc(ta.value);cnt.textContent=n+" word"+(n===1?"":"s")+(reqd(q)?" · aim for at least "+q.min:" · optional")+(n>=q.min?" ✓":"");cnt.className="wcnt"+(n>=q.min?" ok":"");}
+  ta.addEventListener("input",function(){S.ans[q.id]=ta.value;save();paint();updateProg();syncLock();});
+  paint();
+  var tag=q.type==="d"?(S.mode==="class"?"Class discussion · optional note":"Discussion question"):null;
+  return el("div",{class:"q"},el("label",{for:"ta_"+q.id},q.q,tag?el("span",{class:"tag",text:tag}):null),q.hint?el("p",{class:"hint",text:"Hint: "+q.hint}):null,ta,cnt);
+}
+function verdictBlock(){
+  var b=el("div",{class:"dd",style:"padding:6px 14px 10px;border-style:solid"});
+  b.append(el("b",{style:"font:800 .95rem system-ui,sans-serif",text:"For each charge, how do you vote?"}));
+  VERDICT_COUNTS.forEach(function(c){
+    var g=el("div",{class:"g"});
+    [["G","Guilty"],["N","Not guilty"]].forEach(function(o){
+      var inp=el("input",{type:"radio",name:"v_"+c.id,value:o[0],disabled:!!S.locked});if(S.verdict[c.id]===o[0])inp.checked=true;
+      inp.addEventListener("change",function(){S.verdict[c.id]=o[0];save();syncLock();});
+      g.append(el("label",{},inp,o[1]));});
+    b.append(el("div",{class:"vrow"},el("div",{},el("b",{text:c.t}),el("small",{text:c.x})),g));
+  });
+  return b;
+}
+function lockReady(){var st=byId("s21");return VERDICT_COUNTS.every(function(c){return S.verdict[c.id];})&&qOk(prompts(st)[0]);}
+function lockBlock(st){
+  var wrap=el("div",{id:"lockwrap"});
+  if(S.locked){wrap.append(el("div",{class:"lockmsg",text:"Your verdict is locked in. You can still improve your explanation. Station 22 is now open."}));return wrap;}
+  wrap.append(el("button",{type:"button",class:"btn",id:"lockbtn",disabled:!lockReady(),onclick:function(){
+    if(!lockReady())return;S.locked=true;S.lockedOn=new Date().toISOString();save();toast("Verdict locked in. Station 22 is open.");buildTimeline();renderPanel();}},"Lock in my verdict and open Station 22"));
+  wrap.append(el("div",{class:"lockmsg",text:"Choose a vote for every charge and write at least "+prompts(st)[0].min+" words explaining your reasoning. Once you lock it in, you will see what the jury decided."}));
+  return wrap;
+}
+function syncLock(){var b=$("lockbtn");if(b)b.disabled=!lockReady();}
+
+/* ============ NOTEBOOK (WORD) ============ */
+function notebookSections(dayIds){
+  return dayIds.map(function(did){
+    var day=DAYS[did-1],items=[];
+    STATIONS.filter(function(s){return s.day===did;}).forEach(function(st){
+      var n=numOf(st);
+      if(st.verdict)items.push({h2:"My verdict",tag:"Station "+n+": "+st.title,text:VERDICT_COUNTS.map(function(c){return c.t+": "+(S.verdict[c.id]==="G"?"Guilty":S.verdict[c.id]==="N"?"Not guilty":"(not chosen)");}).join("\n")});
+      prompts(st).forEach(function(q){var has=wc(S.ans[q.id])>0;if(q.type==="q"||S.mode==="solo"||has)items.push({h2:q.q,tag:"Station "+n+": "+st.title+(q.type==="d"?" (discussion)":""),text:S.ans[q.id]||""});});
+    });
+    return{h1:day.short+": "+day.name,items:items};
+  });
+}
+function notebookCode(dayIds){var s=[S.name].concat(dayIds.map(function(d){return STATIONS.filter(function(x){return x.day===d;}).map(function(st){return prompts(st).map(function(q){return q.id+":"+(S.ans[q.id]||"");}).join("|");}).join("|");})).join("|");return"FL-"+hash8(s);}
+function notebookFile(dayIds){var n=String(S.name||"Student").replace(/[^A-Za-z0-9]+/g,"-").replace(/^-+|-+$/g,"")||"Student";return"Flynn-Trial-Notebook-"+(dayIds.length===1?"Day-"+dayIds[0]:"Complete")+"-"+n+".docx";}
+function notebookBlob(dayIds){
+  var sts=STATIONS.filter(function(s){return dayIds.indexOf(s.day)>=0;}),c=counts(sts);
+  return buildDocx({title:"Juror’s Notebook: State of Ohio v. Caleb Flynn"+(dayIds.length===1?" ("+DAYS[dayIds[0]-1].short+")":""),name:S.name||"Student",sections:notebookSections(dayIds),
+    record:"Completed in the Trial Lab  |  "+c.d+" of "+c.t+" required responses  |  Completion code "+notebookCode(dayIds)});
+}
+function notebookText(dayIds){var o=[S.name||"Student",certDate(),"","Juror’s Notebook: State of Ohio v. Caleb Flynn",""];notebookSections(dayIds).forEach(function(s){o.push(s.h1.toUpperCase(),"");s.items.forEach(function(it){o.push(it.h2,it.tag,String(it.text||"").trim()||"(Not written.)","");});});return o.join("\n");}
+function downloadNotebook(dayIds){
+  var blob=notebookBlob(dayIds),a=document.createElement("a"),url=URL.createObjectURL(blob);
+  a.href=url;a.download=notebookFile(dayIds);document.body.append(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url);},4000);
+  S.dl[dayIds.join("-")]=new Date().toISOString();save();toast("Your Word notebook was downloaded: "+notebookFile(dayIds));
+}
+function copyNotebook(dayIds){var t=notebookText(dayIds);try{navigator.clipboard.writeText(t).then(function(){toast("Copied. Paste it into a document.");},function(){fallbackCopy(t);});}catch(e){fallbackCopy(t);}}
+function fallbackCopy(t){var ta=el("textarea",{style:"position:fixed;opacity:0"});ta.value=t;document.body.append(ta);ta.select();try{document.execCommand("copy");toast("Copied. Paste it into a document.");}catch(e){toast("Could not copy. Use the download button instead.");}ta.remove();}
+
+/* ============ DRAWER (guide, notebook, clip times) ============ */
+var DR={kind:null,tab:null};
+function openDrawer(kind,tab){DR.kind=kind;DR.tab=tab||null;renderDrawer();$("dr").hidden=false;}
+function closeDrawer(){$("dr").hidden=true;DR.kind=null;}
+function renderDrawer(){
+  var bar=$("drbar"),body=$("drbody");bar.replaceChildren();body.replaceChildren();
+  if(DR.kind==="guide"){
+    $("drt").textContent="Courtroom guide";
+    var tabs=[["who","Who’s who"],["steps","Trial steps"],["terms","Key terms"],["charges","Charges"]];DR.tab=DR.tab||"who";
+    tabs.forEach(function(t){bar.append(el("button",{type:"button",role:"tab","aria-selected":DR.tab===t[0]?"true":"false",onclick:function(){DR.tab=t[0];renderDrawer();}},t[1]));});
+    if(DR.tab==="who"){var tb=el("table",{class:"mini"});WHO.forEach(function(w){tb.append(el("tr",{},el("td",{text:w[0]}),el("td",{text:w[1]})));});body.append(tb);}
+    if(DR.tab==="steps"){body.append(el("p",{text:"The order of a jury trial. Open a step to jump to its station."}));STEPS.forEach(function(s,i){body.append(el("div",{class:"srow"},el("span",{},el("b",{text:(i+1)+". "+s[0]}),el("br"),s[1]),el("button",{type:"button",class:"btn ghost sm",onclick:function(){closeDrawer();var st=STATIONS[s[2]-1];if(!$("ov").hidden)closePanel();openStation(st.id);}},"Station "+s[2])));});}
+    if(DR.tab==="terms"){var tt=el("table",{class:"mini"});TERMS.forEach(function(w){tt.append(el("tr",{},el("td",{text:w[0]}),el("td",{text:w[1]})));});body.append(tt);}
+    if(DR.tab==="charges"){var tc=el("table",{class:"mini"});ELEMS.forEach(function(w){tc.append(el("tr",{},el("td",{text:w[0]}),el("td",{},w[1],el("br"),el("em",{text:w[2]}))));});body.append(tc);}
+  }
+  if(DR.kind==="notebook"){
+    $("drt").textContent="My notebook";
+    body.append(el("p",{text:"Each day has its own Word notebook, so you can turn in work day by day. If you were absent, switch to “On my own” and complete the missed day."}));
+    DAYS.forEach(function(d){
+      var sts=STATIONS.filter(function(s){return s.day===d.id;}),c=counts(sts),any=sts.some(function(s){return prompts(s).some(function(q){return wc(S.ans[q.id])>0;});});
+      body.append(el("div",{class:"dayrow"},el("div",{},el("b",{text:d.short+": "+d.name}),el("small",{text:c.d+" of "+c.t+" done"+(S.dl[String(d.id)]?" · downloaded":"")})),
+        el("button",{type:"button",class:"btn sm",disabled:!any,onclick:function(){downloadNotebook([d.id]);}},"Download")));
+    });
+    var all=counts(STATIONS),ids=DAYS.map(function(d){return d.id;});
+    body.append(el("div",{class:"dayrow"},el("div",{},el("b",{text:"Complete notebook (all four days)"}),el("small",{text:all.d+" of "+all.t+" done"})),el("button",{type:"button",class:"btn sm",id:"dlall",onclick:function(){downloadNotebook(ids);}},"Download")));
+    body.append(el("p",{},el("button",{type:"button",class:"link",onclick:function(){copyNotebook(ids);}},"Copy everything as text instead")));
+    body.append(el("p",{class:"vnote",text:"Your work is saved in this browser. Use the same device and web address to come back to it."}));
+  }
+  if(DR.kind==="clips"){
+    $("drt").textContent="Clip times (teacher)";
+    body.append(el("p",{text:"Set where each clip starts and ends. Times are m:ss. Use Preview to check, Save here to keep the change in this browser, and Copy list to paste into data.js."}));
+    var ed={};
+    STATIONS.forEach(function(st){(st.clips||[]).forEach(function(c){
+      var t=clipTimes(c),a=el("input",{value:fmt(t.s),"aria-label":"Start for "+c.t}),z=el("input",{value:t.e?fmt(t.e):"","aria-label":"End for "+c.t,placeholder:"end"});ed[c.id]={a:a,z:z,c:c};
+      var pv=el("div",{});
+      body.append(el("div",{class:"srow"},el("span",{},el("b",{text:"Station "+numOf(st)+": "+c.t}),el("br"),c.s+" · "+(c.tn||(c.est?"estimated window":"window set by you"))),
+        el("span",{},a," to ",z," ",el("button",{type:"button",class:"btn ghost sm",onclick:function(){var s=parseTime(a.value),e=parseTime(z.value);pv.replaceChildren(el("div",{class:"vframe"},el("iframe",{src:embedRaw(c.yt,s,e),title:"Preview",allow:"autoplay; fullscreen",allowfullscreen:true})));}},"Preview"))),pv);
+    });});
+    function collect(){var o={};Object.keys(ed).forEach(function(k){o[k]=[parseTime(ed[k].a.value),parseTime(ed[k].z.value)];});return o;}
+    body.append(el("p",{},el("button",{type:"button",class:"btn sm",onclick:function(){CLIPOV=collect();try{localStorage.setItem("flynn_clip_overrides",JSON.stringify(CLIPOV));}catch(e){}toast("Saved in this browser.");}},"Save here")," ",
+      el("button",{type:"button",class:"btn ghost sm",onclick:function(){var o=collect(),t=Object.keys(o).map(function(k){return k+": start:"+o[k][0]+", end:"+o[k][1];}).join("\n");try{navigator.clipboard.writeText(t);}catch(e){}toast("Copied. In data.js, set start and end for each clip id.");}},"Copy list")," ",
+      el("button",{type:"button",class:"link",onclick:function(){CLIPOV={};try{localStorage.removeItem("flynn_clip_overrides");}catch(e){}toast("Back to the built-in times.");renderDrawer();}},"Reset")));
+  }
+}
+
+/* ============ START, MODE, BOOT ============ */
+function setMode(m){S.mode=m;save();$("mclass").setAttribute("aria-pressed",m==="class");$("msolo").setAttribute("aria-pressed",m==="solo");buildTimeline();if(cur.id&&!$("ov").hidden)renderPanel();}
+function showApp(){$("cover").hidden=true;$("app").hidden=false;$("top").classList.add("on");$("mclass").setAttribute("aria-pressed",S.mode==="class");$("msolo").setAttribute("aria-pressed",S.mode==="solo");buildTimeline();window.scrollTo(0,0);}
+function route(){
+  var h=(location.hash||"").replace("#","");
+  $("tcbtn").hidden=h.indexOf("teacher")<0&&!window.__teacher;
+  if(h.indexOf("teacher")>=0)window.__teacher=true;
+  if(!S.started)return;
+  var m=h.match(/^day([1-4])/);if(m){var d=$("day"+m[1]);if(d)d.scrollIntoView();}
+  var s=h.match(/^(s\d+)$/);if(s&&byId(s[1])&&!isLocked(byId(s[1])))openStation(s[1]);
+}
+(function boot(){
+  $("cvart").innerHTML='<div class="c1">'+ART.case(DAYS[0])+'</div><div class="c2">'+ART.expert(DAYS[2])+'</div><div class="c3">'+ART.ballot(DAYS[3])+'</div>';
+  if(S.name)$("nm").value=S.name;
+  if(S.started)$("cont").hidden=false;
+  if(S.mode==="solo"){var r=document.querySelector('input[name=mode][value=solo]');if(r)r.checked=true;}
+  $("begin").addEventListener("click",function(){
+    var nm=$("nm").value.trim();if(!nm){toast("Please type your name first.");$("nm").focus();return;}
+    var m=document.querySelector('input[name=mode]:checked');S.name=nm;S.mode=m?m.value:"class";S.started=true;save();showApp();route();
+  });
+  $("cont").addEventListener("click",function(){S.name=$("nm").value.trim()||S.name;save();showApp();route();});
+  $("mclass").addEventListener("click",function(){setMode("class");});
+  $("msolo").addEventListener("click",function(){setMode("solo");});
+  $("gdbtn").addEventListener("click",function(){openDrawer("guide");});
+  $("nbbtn").addEventListener("click",function(){openDrawer("notebook");});
+  $("tcbtn").addEventListener("click",function(){openDrawer("clips");});
+  $("drx").addEventListener("click",closeDrawer);
+  document.addEventListener("keydown",function(e){
+    if(e.key==="Escape"){if(!$("dr").hidden)closeDrawer();else if(!$("ov").hidden)closePanel();return;}
+    if($("ov").hidden||!cur.id)return;var tag=(e.target&&e.target.tagName)||"";if(tag==="TEXTAREA"||tag==="INPUT")return;
+    var n=numOf(byId(cur.id));if(e.key==="ArrowRight"&&STATIONS[n]&&!isLocked(STATIONS[n]))openStation(STATIONS[n].id);if(e.key==="ArrowLeft"&&STATIONS[n-2])openStation(STATIONS[n-2].id);
+  });
+  window.addEventListener("hashchange",route);
+  updateProg();route();
+})();
+
+</script>
+</body>
+</html>
