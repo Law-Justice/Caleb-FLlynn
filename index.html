@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Trial Lab: State of Ohio v. Caleb Flynn | Law &amp; Justice</title>
 <style>
+
 :root{--ink:#1b2440;--paper:#f6f1e6;--muted:#5a6480;--gold:#ffc83d;--line:#e3dfd3;--pc:#0f9d8f;--ps:#d9f4f0}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -26,11 +27,11 @@ button{font:inherit;cursor:pointer}
 #top{position:sticky;top:0;z-index:30;display:none;align-items:center;gap:14px;background:#fff;padding:10px 18px;box-shadow:0 2px 14px rgba(27,36,64,.12)}
 #top.on{display:flex}
 .brand{font-weight:800;letter-spacing:-.01em;display:flex;align-items:center;gap:9px}
-.brand i{display:inline-block;width:26px;height:26px;border-radius:8px;background:conic-gradient(#0f9d8f 0 33%,#6c5ce7 0 66%,#ef5b5b 0)}
+.brand i{display:inline-block;width:26px;height:26px;border-radius:8px;background:conic-gradient(#0f9d8f 0 25%,#6c5ce7 0 50%,#ef5b5b 0 75%,#e08a00 0)}
 .pg{flex:1;display:flex;align-items:center;gap:10px;justify-content:center;min-width:0}
 .prog{font-weight:700;font-size:.9rem;white-space:nowrap}
 .bar{width:min(220px,30vw);height:10px;border-radius:999px;background:#e8e4d8;overflow:hidden}
-#progbar{height:100%;width:0;background:linear-gradient(90deg,#0f9d8f,#6c5ce7,#ef5b5b);transition:width .3s}
+#progbar{height:100%;width:0;background:linear-gradient(90deg,#0f9d8f,#6c5ce7,#ef5b5b,#e08a00);transition:width .3s}
 /* cover */
 #cover{min-height:100vh;display:grid;grid-template-columns:1.05fr 1fr;gap:40px;align-items:center;padding:48px max(24px,6vw);background:radial-gradient(1200px 600px at 85% 10%,#fff3d1,transparent),radial-gradient(900px 500px at 0% 100%,#d9f4f0,transparent),var(--paper)}
 .eyebrow{display:inline-block;background:var(--ink);color:#fff;font:700 .78rem system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;padding:6px 14px;border-radius:999px}
@@ -195,7 +196,7 @@ button{font:inherit;cursor:pointer}
    <label class="mc"><input type="radio" name="mode" value="solo"><span><b>On my own</b>Missed class? Everything your teacher would explain is here, and discussion questions become typed responses.</span></label>
   </div>
   <div class="start"><button type="button" class="btn big" id="begin">Start the trial</button><button type="button" class="btn ghost" id="cont" hidden>Continue where I left off</button></div>
-  <div class="how"><div><b>3</b>class periods of about 70 minutes</div><div><b>16</b>stations: learn, watch a short clip, respond</div><div><b>1</b>Word notebook for each day and for the whole unit</div></div>
+  <div class="how"><div><b>4</b>class periods of about 70 minutes</div><div><b>19</b>stations: learn, watch a short clip, respond</div><div><b>1</b>Word notebook for each day and for the whole unit</div></div>
  </div>
  <div id="cvart" aria-hidden="true"></div>
 </section>
@@ -210,9 +211,10 @@ button{font:inherit;cursor:pointer}
 <aside id="dr" hidden aria-label="Drawer"><div class="drh"><b id="drt">Courtroom guide</b><button type="button" class="x" id="drx" aria-label="Close">✕</button></div><div id="drbar" role="tablist"></div><div id="drbody"></div></aside>
 <div id="toast" role="status" aria-live="polite"></div>
 <script>
-/* ============ CONTENT: STATE OF OHIO v. CALEB FLYNN (3 periods of 70 minutes) ============
-   Clip windows are in seconds (start, end). est:1 marks a window chosen from the order of testimony; tn explains the basis. */
-var CFG={key:"flynn_trial_v2",videos:true};
+/* ============ CONTENT: STATE OF OHIO v. CALEB FLYNN (4 periods of 70 minutes) ============
+   Clip windows are in seconds (start, end). est:1 marks a window chosen from the clip’s description or the order of testimony; tn explains the basis. */
+/* Saved progress lives under CFG.key. Never change it. Older keys are listed in legacy so earlier saves are merged in automatically. */
+var CFG={key:"flynn_trial_v3",legacy:["flynn_trial_v1","flynn_trial_v2"],videos:true};
 var DAYS=[
  {
   id: 1,
@@ -232,11 +234,19 @@ var DAYS=[
  },
  {
   id: 3,
-  name: "Witnesses, Closing Arguments, and Your Verdict",
+  name: "Witnesses: Texts, Cross-Examination, and Experts",
   short: "Day 3",
   color: "#ef5b5b",
   soft: "#fde3e3",
-  goal: "Compare lay and expert witnesses, weigh both closings, and reach your own verdict before you learn the jury’s."
+  goal: "Watch the state’s key text-message witness face direct and cross-examination, then compare lay and expert witnesses."
+ },
+ {
+  id: 4,
+  name: "Closing Arguments and Your Verdict",
+  short: "Day 4",
+  color: "#e08a00",
+  soft: "#fdf0d2",
+  goal: "Weigh the evidence, compare both closings, and reach your own verdict before you learn the jury’s."
  }
 ];
 var STATIONS=[
@@ -862,7 +872,7 @@ var STATIONS=[
    },
    {
     t: "Compare the tone",
-    x: "Notice how the defense treats her compared with the officer on the last clip."
+    x: "Notice how the defense treats her compared with the officer on the last clip. You will compare a third cross-examination on a later station."
    }
   ],
   clips: [
@@ -900,6 +910,208 @@ var STATIONS=[
   ]
  },
  {
+  id: "sb1",
+  day: 3,
+  title: "Alleigha Botner: direct examination and the texts",
+  art: "chat",
+  mins: 22,
+  ideas: [
+   {
+    t: "A lay witness who was there",
+    x: "Alleigha Botner, who had a relationship with Caleb Flynn, testified because she took part in the messages. She can say who wrote them and what was going on, which is what personal knowledge means."
+   },
+   {
+    t: "Putting texts in front of a jury",
+    x: "The state wanted jurors to hear the messages in her voice. The prosecutor asked her to read them aloud from binders of exhibits, which also let her explain what she understood them to mean."
+   },
+   {
+    t: "A party’s own words",
+    x: "What Flynn wrote can be used against him. The rules treat a party’s own statements differently from other hearsay."
+   }
+  ],
+  more: [
+   "Botner, 24, testified for the state on September 23 and 24, for almost seven hours. The state said she and Flynn exchanged about 107,000 messages. Printouts were bound into dozens of books that were wheeled into the courtroom. She read many aloud, including messages in which Flynn said he hated his wife and wanted her gone, and a final exchange shortly after midnight on February 16 that included “Actions will come tomorrow.”",
+   "She told jurors she understood those words to mean he planned to talk to his wife about divorce that day. She also said that on February 15 she sent him screenshots about divorce proceedings and about deleting messages, because she was afraid their messages would come out. After she learned Ashley Flynn was dead, she began to believe Flynn had killed her.",
+   "Botner has not been charged with a crime, and she testified that prosecutors promised her nothing. Some of the messages use harsh language about a real person."
+  ],
+  rule: {
+   t: "Ohio Rules of Evidence",
+   x: "Rule 901: a witness with knowledge can authenticate an item. Rule 801(D)(2): a statement by the opposing party is not hearsay when offered against that party. Rule 701: a lay witness may give limited opinions based on what they perceived."
+  },
+  clips: [
+   {
+    id: "cb1",
+    yt: "wyjbPkV-GjQ",
+    t: "“Actions Will Come Tomorrow”: Alleigha Botner reads Caleb Flynn’s texts",
+    s: "Trial clip (YouTube)",
+    start: 0,
+    end: 0,
+    tn: "whole short clip; publisher not confirmed",
+    watch: [
+     "Which messages does she read?",
+     "What does she say Flynn still had to do?"
+    ]
+   },
+   {
+    id: "cb2",
+    yt: "UBK06UwaJtI",
+    t: "Caleb Flynn wished he could kill his wife, not go to jail: Mistress",
+    s: "Court TV",
+    start: 0,
+    end: 300,
+    est: 1,
+    watch: [
+     "What does Botner say Flynn repeatedly told her?",
+     "How does the prosecutor keep the testimony moving with short questions?"
+    ]
+   },
+   {
+    id: "cb3",
+    yt: "DUjeV1e4k9M",
+    t: "Pastor’s mistress reveals his first words after wife’s murder",
+    s: "Court TV",
+    start: 0,
+    end: 240,
+    est: 1,
+    watch: [
+     "What did she do the morning of February 16?",
+     "What does she say Flynn told her in person?"
+    ]
+   }
+  ],
+  qs: [
+   {
+    id: "qb1a",
+    type: "q",
+    min: 25,
+    q: "Why is Alleigha Botner a lay witness, and how does her role in the conversations let her help the state show the jury that the messages are genuine?",
+    hint: "Think about personal knowledge, who wrote the messages, and how she recognized them."
+   },
+   {
+    id: "qb1b",
+    type: "q",
+    min: 30,
+    q: "How did the prosecutor use direct examination to get the text messages in front of the jury? Why might having Botner read them aloud be more powerful than handing the jury the printouts?",
+    hint: "Think about voice, emotion, and what a witness can explain that a page cannot."
+   },
+   {
+    id: "qb1c",
+    type: "q",
+    min: 30,
+    q: "List three messages or statements from the clips that the state most wants the jury to remember. For each, explain what the state wants the jury to infer.",
+    hint: "These are circumstantial evidence. Name the message, then what it is supposed to suggest."
+   },
+   {
+    id: "qb1d",
+    type: "q",
+    min: 30,
+    q: "Botner said she understood “Actions will come tomorrow” to mean a divorce. How could the prosecution and the defense each interpret those words?",
+    hint: "Write one sentence from each attorney’s point of view."
+   },
+   {
+    id: "qb1e",
+    type: "q",
+    min: 35,
+    q: "Does Botner’s testimony make you lean more toward guilt or innocence? Explain your reasoning, and say what you would still want to know.",
+    hint: "Be specific about which testimony moved you and which did not."
+   }
+  ]
+ },
+ {
+  id: "sb2",
+  day: 3,
+  title: "Cross-examining Alleigha Botner",
+  art: "cross",
+  mins: 20,
+  ideas: [
+   {
+    t: "Testing credibility",
+    x: "Cross-examination can show that a witness has a bias, a motive, or a reason to be doubted, or it can bring out facts that help the questioner’s side."
+   },
+   {
+    t: "The defense’s goal here",
+    x: "The defense admitted Flynn wrote ugly, hurtful messages, but argued he wrote them to calm and please a jealous Botner, and that she herself understood he meant divorce, not murder."
+   },
+   {
+    t: "Weighing a witness",
+    x: "Jurors decide whether to believe all, part, or none of any witness’s testimony."
+   }
+  ],
+  more: [
+   "Defense attorney Emily Smith cross-examined Botner on September 24. She brought out that Botner wanted to marry Flynn and have children with him, resented Ashley Flynn, and had written messages of her own about wanting Ashley gone. Botner agreed she sent about twice as many messages as Flynn, that she sometimes asked him for videos proving he was home alone, and that he might have said he hated his wife to make her feel better.",
+   "Botner admitted she lied about the affair in her first FBI interview on February 20 to protect her reputation and her job, and that she searched online for unsolved homicides after Ashley Flynn’s death. Investigators did not search her home or car or collect her DNA or fingerprints. Botner said she did not believe Flynn was capable of killing his wife, and that she later told the FBI she suspected him because it was “way too much of a coincidence.”"
+  ],
+  rule: {
+   t: "Ohio Rules of Evidence",
+   x: "Rule 607: any party may attack a witness’s credibility. Rule 611(B) and (C): cross-examination may cover credibility, and leading questions are generally allowed."
+  },
+  clips: [
+   {
+    id: "cb4",
+    yt: "MOT82SSD1-8",
+    t: "Caleb Flynn’s mistress believed he killed his wife",
+    s: "Court TV",
+    start: 0,
+    end: 300,
+    est: 1,
+    watch: [
+     "What searches does the defense ask about?",
+     "How does Botner explain her suspicions and when she shared them?"
+    ]
+   },
+   {
+    id: "cb5",
+    yt: "EUQcV-kRL9A",
+    t: "Pastor’s mistress admits she resented his wife",
+    s: "Court TV",
+    start: 0,
+    end: 420,
+    est: 1,
+    watch: [
+     "What does the defense bring out about her feelings toward Ashley?",
+     "What reasons does Botner give for why Flynn wrote what he did?"
+    ]
+   }
+  ],
+  qs: [
+   {
+    id: "qb2a",
+    type: "q",
+    min: 30,
+    q: "What did the defense bring out about Botner’s feelings toward Ashley Flynn and her relationship with Caleb Flynn? Why would the defense want the jury to hear it?",
+    hint: "Think about bias and motive."
+   },
+   {
+    id: "qb2b",
+    type: "q",
+    min: 35,
+    q: "Botner admitted she lied to the FBI in her first interview and searched for unsolved homicides after Ashley died. How might each fact affect how much the jury believes her? How might the state respond?",
+    hint: "Consider both what the defense wants jurors to conclude and what the prosecutor could say on redirect."
+   },
+   {
+    id: "qb2c",
+    type: "q",
+    min: 30,
+    q: "How did the defense try to reframe Flynn’s hateful messages? What did Botner agree to that helps this reframing, and what did she not agree to?",
+    hint: "Look for jealousy, reassurance, and what she says she understood “free” to mean."
+   },
+   {
+    id: "qb2d",
+    type: "q",
+    min: 30,
+    q: "Botner said she did not believe Flynn could kill his wife, but later became suspicious. Does the way she changed her mind make you trust her more or less? Explain.",
+    hint: "Separate what she believed then from what she says now, and why her testimony might be shaped by that."
+   },
+   {
+    id: "qb2e",
+    type: "d",
+    min: 25,
+    q: "Compare the manner of this cross-examination with the cross-examinations of the officer and Ashley’s sister. What stayed the same, and what differed? Why?",
+    hint: "Think about what each witness could help or hurt, and how each was treated."
+   }
+  ]
+ },
+ {
   id: "s15",
   day: 3,
   title: "Expert witnesses",
@@ -920,7 +1132,7 @@ var STATIONS=[
    }
   ],
   more: [
-   "In this trial a lay witness such as the 911 director described facts. Several witnesses gave opinions based on specialized training: an Ohio Bureau of Criminal Investigation (BCI) special agent who spent about 12 hours at the home and testified his concern was that the scene was staged as a burglary, a BCI firearms examiner, and digital forensic examiners who explained data on Flynn’s devices.",
+   "In this trial lay witnesses such as the 911 director and Alleigha Botner described facts they personally knew. Several witnesses gave opinions based on specialized training: an Ohio Bureau of Criminal Investigation (BCI) special agent who spent about 12 hours at the home and testified his concern was that the scene was staged as a burglary, a BCI firearms examiner, and digital forensic examiners who explained data on Flynn’s devices.",
    "Cross-examination of an expert often targets what the expert did not do, the limits of the method, or whether the facts really support the opinion."
   ],
   rule: {
@@ -968,8 +1180,30 @@ var STATIONS=[
   ]
  },
  {
+  id: "s16",
+  day: 4,
+  title: "Your evidence ledger",
+  art: "ledger",
+  mins: 6,
+  ideas: [
+   {
+    t: "Weighing the evidence",
+    x: "Jurors do not need to decide each piece by itself. They weigh the whole picture."
+   }
+  ],
+  qs: [
+   {
+    id: "q16a",
+    type: "q",
+    min: 50,
+    q: "Evidence ledger: List the three pieces of evidence that most point toward guilt and the three that most raise doubt. Label each one direct or circumstantial.",
+    hint: "Use a short line for each: the evidence, direct or circumstantial, and why it matters."
+   }
+  ]
+ },
+ {
   id: "s17",
-  day: 3,
+  day: 4,
   title: "The defense rests",
   art: "rests",
   mins: 5,
@@ -1002,7 +1236,7 @@ var STATIONS=[
  },
  {
   id: "s18",
-  day: 3,
+  day: 4,
   title: "Closing arguments",
   art: "closing",
   mins: 15,
@@ -1084,7 +1318,7 @@ var STATIONS=[
  },
  {
   id: "s21",
-  day: 3,
+  day: 4,
   title: "Your verdict",
   art: "ballot",
   mins: 14,
@@ -1112,7 +1346,7 @@ var STATIONS=[
  },
  {
   id: "s22",
-  day: 3,
+  day: 4,
   title: "What the jury decided",
   art: "reveal",
   mins: 7,
@@ -1329,6 +1563,7 @@ var ELEMS=[
  ]
 ];
 
+
 /* ============ ILLUSTRATIONS: flat vector scenes drawn in code ============ */
 var FONT='font-family="system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif"';
 function R(x,y,w,h,f,rx,ex){return '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" fill="'+f+'"'+(rx?' rx="'+rx+'"':'')+(ex||'')+'/>';}
@@ -1366,6 +1601,7 @@ ART.ballot=function(p){var c=pc(p);var o=R(160,40,160,202,"#fff",14);for(var i=0
 ART.reveal=function(p){var c=pc(p);return sc(p,R(120,84,240,148,"#fff",14)+PA("M120,92 L240,176 L360,92 Z",c)+C(240,176,22,GOLD)+C(240,176,12,"none",' stroke="#fff" stroke-width="4"'),"A sealed envelope");};
 ART.jury=function(p){var c=pc(p),o="";for(var i=0;i<6;i++){var x=95+i*58;o+=C(x,114,20,c)+PA("M"+(x-28)+",204 Q"+x+",144 "+(x+28)+",204 Z",c,' opacity=".85"');}o+=R(66,204,348,26,"#fff",10);return sc(p,o,"A jury box");};
 ART.notebook=function(p){var c=pc(p);var o=R(168,40,150,208,c,12);for(var i=0;i<6;i++)o+=C(168,66+i*30,7,"#fff");o+=lines(196,72,96,5,30,"#ffffffaa");return sc(p,o,"A juror's notebook");};
+
 
 /* ============ WORD DOCUMENT (.docx) BUILT IN THE BROWSER, NO LIBRARY NEEDED ============ */
 function crc32(buf){var t=crc32.t;if(!t){t=crc32.t=[];for(var n=0;n<256;n++){var c=n;for(var k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0;}}var c2=0xFFFFFFFF;for(var i=0;i<buf.length;i++)c2=t[(c2^buf[i])&255]^(c2>>>8);return(c2^0xFFFFFFFF)>>>0;}
@@ -1436,9 +1672,30 @@ function buildDocx(opts){
   return zipStore([{name:"[Content_Types].xml",text:ct},{name:"_rels/.rels",text:rels},{name:"word/document.xml",text:doc},{name:"word/styles.xml",text:styles},{name:"word/_rels/document.xml.rels",text:drels},{name:"word/header1.xml",text:hdr1},{name:"word/header2.xml",text:hdr2},{name:"docProps/core.xml",text:core}],"application/vnd.openxmlformats-officedocument.wordprocessingml.document");
 }
 
+
 /* ============ STATE ============ */
 function fresh(){return{name:"",mode:"class",started:false,ans:{},seen:{},sort:{},verdict:{},locked:false,lockedOn:"",dl:{}};}
-function load(){try{var r=localStorage.getItem(CFG.key);if(r)return Object.assign(fresh(),JSON.parse(r));}catch(e){}return fresh();}
+function parseKey(k){try{var r=localStorage.getItem(k);return r?JSON.parse(r):null;}catch(e){return null;}}
+function mergeSaves(a,b){
+  /* b is the newer save. Written work is never lost: for every prompt the longer text wins. */
+  var m=Object.assign(fresh(),a,b);
+  m.ans={};var ids={};Object.keys(a.ans||{}).concat(Object.keys(b.ans||{})).forEach(function(k){ids[k]=1;});
+  Object.keys(ids).forEach(function(k){var x=(a.ans||{})[k]||"",y=(b.ans||{})[k]||"";m.ans[k]=y.length>=x.length?y:x;});
+  m.seen=Object.assign({},a.seen||{},b.seen||{});m.sort=Object.assign({},a.sort||{},b.sort||{});
+  Object.keys(a.sort||{}).forEach(function(k){m.sort[k]=Object.assign({},a.sort[k],(b.sort||{})[k]||{});});
+  m.verdict=Object.assign({},a.verdict||{},b.verdict||{});
+  m.locked=!!(a.locked||b.locked);m.lockedOn=b.lockedOn||a.lockedOn||"";
+  m.started=!!(a.started||b.started);m.name=b.name||a.name||"";m.mode=b.mode||a.mode||"class";
+  return m;
+}
+function load(){
+  var cur=parseKey(CFG.key);
+  if(cur)return Object.assign(fresh(),cur);
+  var merged=null;
+  (CFG.legacy||[]).forEach(function(k){var o=parseKey(k);if(!o)return;merged=merged?mergeSaves(merged,o):Object.assign(fresh(),o);});
+  if(merged){merged.dl={};try{localStorage.setItem(CFG.key,JSON.stringify(merged));}catch(e){}return merged;}
+  return fresh();
+}
 function save(){try{localStorage.setItem(CFG.key,JSON.stringify(S));}catch(e){}}
 var S=window.S=load();
 function $(id){return document.getElementById(id);}
@@ -1581,7 +1838,7 @@ function watchBody(st){
   var b=el("div",{});
   b.append(el("p",{class:"hint2",text:"Watch only the window shown for each clip. The video will start there."}));
   st.clips.forEach(function(c){b.append(clipCard(c));});
-  b.append(el("p",{class:"vnote",text:"Some moments are emotional. You can pause, look away, or skip a clip, and tell your teacher if you need to."}));
+  b.append(el("p",{class:"vnote",text:"Some moments are emotional, and some messages use harsh language about a real person. You can pause, look away, or skip a clip, and tell your teacher if you need to."}));
   return b;
 }
 function clipCard(c){
@@ -1688,7 +1945,7 @@ function renderDrawer(){
         el("button",{type:"button",class:"btn sm",disabled:!any,onclick:function(){downloadNotebook([d.id]);}},"Download")));
     });
     var all=counts(STATIONS),ids=DAYS.map(function(d){return d.id;});
-    body.append(el("div",{class:"dayrow"},el("div",{},el("b",{text:"Complete notebook (all three days)"}),el("small",{text:all.d+" of "+all.t+" done"})),el("button",{type:"button",class:"btn sm",id:"dlall",onclick:function(){downloadNotebook(ids);}},"Download")));
+    body.append(el("div",{class:"dayrow"},el("div",{},el("b",{text:"Complete notebook (all four days)"}),el("small",{text:all.d+" of "+all.t+" done"})),el("button",{type:"button",class:"btn sm",id:"dlall",onclick:function(){downloadNotebook(ids);}},"Download")));
     body.append(el("p",{},el("button",{type:"button",class:"link",onclick:function(){copyNotebook(ids);}},"Copy everything as text instead")));
     body.append(el("p",{class:"vnote",text:"Your work is saved in this browser. Use the same device and web address to come back to it."}));
   }
@@ -1717,7 +1974,7 @@ function route(){
   $("tcbtn").hidden=h.indexOf("teacher")<0&&!window.__teacher;
   if(h.indexOf("teacher")>=0)window.__teacher=true;
   if(!S.started)return;
-  var m=h.match(/^day([1-3])/);if(m){var d=$("day"+m[1]);if(d)d.scrollIntoView();}
+  var m=h.match(/^day([1-4])/);if(m){var d=$("day"+m[1]);if(d)d.scrollIntoView();}
   var s=h.match(/^(s\d+)$/);if(s&&byId(s[1])&&!isLocked(byId(s[1])))openStation(s[1]);
 }
 (function boot(){
