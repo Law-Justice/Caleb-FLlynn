@@ -174,6 +174,11 @@ button{font:inherit;cursor:pointer}
 .dn{background:var(--pc);color:#fff;text-decoration:none;font:800 .8rem system-ui,sans-serif;border-radius:999px;padding:5px 14px}
 .dn.ok::after{content:" ✓"}
 
+.link{background:none;border:0;padding:0;color:#2b4fd6;text-decoration:underline;font:700 .88rem system-ui,sans-serif;cursor:pointer}
+.xfer{margin:10px 0 0}
+.lockmsg.bad{background:#fde3e3;color:#7a1410}
+#drbody input[type=file]{font:600 .85rem system-ui,sans-serif;max-width:100%}
+
 </style>
 </head>
 <body>
@@ -196,7 +201,8 @@ button{font:inherit;cursor:pointer}
    <label class="mc"><input type="radio" name="mode" value="solo"><span><b>On my own</b>Missed class? Everything your teacher would explain is here, and discussion questions become typed responses.</span></label>
   </div>
   <div class="start"><button type="button" class="btn big" id="begin">Start the trial</button><button type="button" class="btn ghost" id="cont" hidden>Continue where I left off</button></div>
-  <div class="how"><div><b>4</b>class periods of about 70 minutes</div><div><b>19</b>stations: learn, watch a short clip, respond</div><div><b>1</b>Word notebook for each day and for the whole unit</div></div>
+  <p class="xfer"><button type="button" class="link" id="xfercv">Using a new device? Load my saved progress</button></p>
+  <div class="how"><div><b>4</b>class periods of about 70 minutes</div><div><b>20</b>stations: learn, watch a short clip, respond</div><div><b>1</b>Word notebook for each day and for the whole unit</div></div>
  </div>
  <div id="cvart" aria-hidden="true"></div>
 </section>
@@ -234,19 +240,19 @@ var DAYS=[
  },
  {
   id: 3,
-  name: "Witnesses: Texts, Cross-Examination, and Experts",
+  name: "Alleigha Botner: The Witness Behind the Texts",
   short: "Day 3",
   color: "#ef5b5b",
   soft: "#fde3e3",
-  goal: "Watch the state’s key text-message witness face direct and cross-examination, then compare lay and expert witnesses."
+  goal: "Follow the state’s key text-message witness from the start of her direct examination through the texts and the defense cross-examination."
  },
  {
   id: 4,
-  name: "Closing Arguments and Your Verdict",
+  name: "Experts, Closing Arguments, and Your Verdict",
   short: "Day 4",
   color: "#e08a00",
   soft: "#fdf0d2",
-  goal: "Weigh the evidence, compare both closings, and reach your own verdict before you learn the jury’s."
+  goal: "Compare lay and expert witnesses, weigh the evidence and both closings, and reach your own verdict before you learn the jury’s."
  }
 ];
 var STATIONS=[
@@ -861,7 +867,7 @@ var STATIONS=[
  },
  {
   id: "s14",
-  day: 3,
+  day: 2,
   title: "Cross-examining a family witness",
   art: "witness",
   mins: 10,
@@ -910,6 +916,105 @@ var STATIONS=[
   ]
  },
  {
+  id: "sb0",
+  day: 3,
+  title: "Alleigha Botner takes the stand: how they met",
+  art: "witness",
+  mins: 22,
+  ideas: [
+   {
+    t: "Starting a direct examination",
+    x: "Direct usually begins with simple questions: who the witness is, her background, and whether she knows the defendant. She is often asked to point him out in court. Easy questions first help jurors get to know a witness before the harder testimony."
+   },
+   {
+    t: "Why the small details?",
+    x: "Where they met, the tattoos, the parking lot, and the trips to other cities were not a side story. The state used them to show how long the relationship lasted and how hard the two worked to hide it."
+   },
+   {
+    t: "Relevant, not unfairly prejudicial",
+    x: "Evidence must be relevant. A judge can exclude relevant evidence if its value is substantially outweighed by the danger of unfair prejudice. Embarrassing is not the same as unfair."
+   }
+  ],
+  more: [
+   "Botner, 24, was called by the state on Wednesday, September 23, 2026. Prosecutor Paul Watkins began by asking whether she knew Caleb Flynn, and she identified him in the courtroom. She said she met him in 2022 at the church where they both worked and worshiped. She was an intern, and he volunteered on the worship team. She said she did not know at first that he was married because he did not wear a wedding ring. (Reports say she was 20 or 21 when they met.)",
+   "She testified that he began to confide in her, said his wife had cheated on him two years earlier, and told her he saw his wife only as a roommate. She said the relationship became sexual in spring 2024, and that by then she knew he was married. “I never morally justified it,” she told jurors.",
+   "She said they bonded over Harry Potter, and that in March 2024 they got matching lightning-bolt tattoos. She showed the jury hers on her forearm and said his was in his armpit because “he didn’t want Ashley to see.” She said they met mostly at her apartment, sometimes in his pickup truck in the parking lot of a Chipotle in Vandalia, and traveled to Columbus, Cincinnati, and Indiana “to be away from people who would know us.” They also used several messaging apps for privacy.",
+   "She added that he once showed her a gun he kept in the center console of his truck. The state’s case involved a missing weapon, so jurors would later have to decide what, if anything, that detail proved.",
+   "When the prosecutor asked how she feels about Flynn now, she answered, “I hate him,” and said she believes he murdered his wife. Botner had her own attorney in the courtroom throughout her testimony. She has not been charged with a crime. Some details in this testimony are personal, and reports differ on exact dates."
+  ],
+  rule: {
+   t: "Ohio Rules of Evidence",
+   x: "Rule 401: relevant evidence makes a fact that matters more or less likely. Rule 403: relevant evidence may be excluded if its probative value is substantially outweighed by the danger of unfair prejudice. Rule 602: a witness must have personal knowledge."
+  },
+  clips: [
+   {
+    id: "cb0a",
+    yt: "BdwRw4SS4es",
+    t: "Part 1, how they met: from Court TV’s “Caleb Flynn Hated Wife, Said She Cheated On Him: Mistress”",
+    s: "Court TV",
+    start: 0,
+    end: 420,
+    est: 1,
+    tn: "estimated: the clip is 45 minutes and opens her direct; adjust in teacher mode",
+    watch: [
+     "How does the prosecutor begin? What does she say about identifying Flynn and when and where they met?",
+     "What does she say Flynn told her about his marriage?"
+    ]
+   },
+   {
+    id: "cb0b",
+    yt: "BdwRw4SS4es",
+    t: "Part 2, keeping it secret: from the same Court TV clip",
+    s: "Court TV",
+    start: 420,
+    end: 840,
+    est: 1,
+    tn: "estimated: adjust in teacher mode to where the tattoo and parking lot testimony falls",
+    watch: [
+     "Where does she say they met, and why did they travel to other cities?",
+     "What does she say about the tattoos?"
+    ]
+   }
+  ],
+  qs: [
+   {
+    id: "qb0a",
+    type: "q",
+    min: 25,
+    q: "How does the prosecutor begin Alleigha Botner’s direct examination? What do the first questions accomplish, and why is that a good way to start?",
+    hint: "Notice who she is, her connection to the defendant, and pointing him out in court."
+   },
+   {
+    id: "qb0b",
+    type: "q",
+    min: 30,
+    q: "How did Botner say she and Caleb Flynn met, and how did their relationship change over time? Which details come from her own personal knowledge?",
+    hint: "Use the order of events. Reports differ on some exact dates, so focus on the sequence."
+   },
+   {
+    id: "qb0c",
+    type: "q",
+    min: 35,
+    q: "Botner described meeting in a Chipotle parking lot, traveling to other cities to avoid people who knew them, and the matching Harry Potter tattoos, with his hidden from his wife. What does the state want jurors to conclude from these details?",
+    hint: "Think about concealment, how long and how serious the relationship was, and motive."
+   },
+   {
+    id: "qb0d",
+    type: "q",
+    min: 35,
+    q: "A judge may exclude relevant evidence if its value is substantially outweighed by the danger of unfair prejudice (Ohio Evid.R. 403). Are these personal details more useful to the jury or more embarrassing than useful? Explain.",
+    hint: "For each detail, say what fact it helps prove."
+   },
+   {
+    id: "qb0e",
+    type: "d",
+    min: 25,
+    q: "Botner admitted she knew the relationship was wrong. Does admitting her own wrongdoing make her more or less believable on direct examination?",
+    hint: "Think about why a prosecutor might want the jury to hear it from her first."
+   }
+  ]
+ },
+ {
   id: "sb1",
   day: 3,
   title: "Alleigha Botner: direct examination and the texts",
@@ -930,7 +1035,7 @@ var STATIONS=[
    }
   ],
   more: [
-   "Botner, 24, testified for the state on September 23 and 24, for almost seven hours. The state said she and Flynn exchanged about 107,000 messages. Printouts were bound into dozens of books that were wheeled into the courtroom. She read many aloud, including messages in which Flynn said he hated his wife and wanted her gone, and a final exchange shortly after midnight on February 16 that included “Actions will come tomorrow.”",
+   "Botner’s testimony lasted almost seven hours over September 23 and 24. The state said she and Flynn exchanged about 107,000 messages. Printouts were bound into dozens of books that were wheeled into the courtroom. She read many aloud, including messages in which Flynn said he hated his wife and wanted her gone, and a final exchange shortly after midnight on February 16 that included “Actions will come tomorrow.”",
    "She told jurors she understood those words to mean he planned to talk to his wife about divorce that day. She also said that on February 15 she sent him screenshots about divorce proceedings and about deleting messages, because she was afraid their messages would come out. After she learned Ashley Flynn was dead, she began to believe Flynn had killed her.",
    "Botner has not been charged with a crime, and she testified that prosecutors promised her nothing. Some of the messages use harsh language about a real person."
   ],
@@ -1113,7 +1218,7 @@ var STATIONS=[
  },
  {
   id: "s15",
-  day: 3,
+  day: 4,
   title: "Expert witnesses",
   art: "expert",
   mins: 12,
@@ -1921,6 +2026,78 @@ function downloadNotebook(dayIds){
 function copyNotebook(dayIds){var t=notebookText(dayIds);try{navigator.clipboard.writeText(t).then(function(){toast("Copied. Paste it into a document.");},function(){fallbackCopy(t);});}catch(e){fallbackCopy(t);}}
 function fallbackCopy(t){var ta=el("textarea",{style:"position:fixed;opacity:0"});ta.value=t;document.body.append(ta);ta.select();try{document.execCommand("copy");toast("Copied. Paste it into a document.");}catch(e){toast("Could not copy. Use the download button instead.");}ta.remove();}
 
+/* ============ MOVE PROGRESS TO ANOTHER DEVICE ============ */
+var APP_ID="flynn-trial-lab";
+function bad(k){return k==="__proto__"||k==="constructor"||k==="prototype"||!/^[A-Za-z0-9_]{1,24}$/.test(k);}
+function cleanSave(d){
+  if(!d||typeof d!=="object")return null;
+  var o=fresh();
+  o.name=typeof d.name==="string"?d.name.slice(0,80):"";
+  o.mode=d.mode==="solo"?"solo":"class";o.started=true;
+  Object.keys(d.ans||{}).forEach(function(k){if(!bad(k)&&typeof d.ans[k]==="string")o.ans[k]=d.ans[k].slice(0,20000);});
+  Object.keys(d.seen||{}).forEach(function(k){if(!bad(k)&&d.seen[k])o.seen[k]=1;});
+  Object.keys(d.sort||{}).forEach(function(k){if(bad(k)||!d.sort[k]||typeof d.sort[k]!=="object")return;o.sort[k]={};Object.keys(d.sort[k]).forEach(function(i){if(/^\d{1,3}$/.test(i)&&(d.sort[k][i]===0||d.sort[k][i]===1))o.sort[k][i]=d.sort[k][i];});});
+  VERDICT_COUNTS.forEach(function(c){var v=(d.verdict||{})[c.id];if(v==="G"||v==="N")o.verdict[c.id]=v;});
+  o.locked=!!d.locked;o.lockedOn=typeof d.lockedOn==="string"?d.lockedOn.slice(0,40):"";
+  return o;
+}
+function makeCode(){
+  var p=JSON.stringify({app:APP_ID,v:1,saved:new Date().toISOString(),data:{name:S.name,mode:S.mode,ans:S.ans,seen:S.seen,sort:S.sort,verdict:S.verdict,locked:S.locked,lockedOn:S.lockedOn}});
+  return"FLYNN1."+btoa(unescape(encodeURIComponent(p)))+"."+hash8(p);
+}
+function parseTransfer(text){
+  text=String(text||"").replace(/\s+/g,"");
+  var m=text.match(/FLYNN1\.([A-Za-z0-9+\/=]+)\.([0-9A-F]{4}-[0-9A-F]{4})/);
+  if(!m)throw new Error("That does not look like a progress file or code from this site.");
+  var json;try{json=decodeURIComponent(escape(atob(m[1])));}catch(e){throw new Error("That code is damaged. Make sure you copied all of it.");}
+  if(hash8(json)!==m[2])throw new Error("That code is incomplete or was changed. Copy it again.");
+  var obj;try{obj=JSON.parse(json);}catch(e){throw new Error("That code is damaged. Make sure you copied all of it.");}
+  var clean=obj&&obj.app===APP_ID?cleanSave(obj.data):null;
+  if(!clean)throw new Error("That code is not from this site.");
+  return{clean:clean,saved:obj.saved};
+}
+function hasProgress(){return Object.keys(S.ans).some(function(k){return wc(S.ans[k])>0;})||Object.keys(S.seen).length>0;}
+function downloadProgress(){
+  var blob=new Blob([makeCode()],{type:"text/plain"}),a=document.createElement("a"),url=URL.createObjectURL(blob);
+  var n=String(S.name||"Student").replace(/[^A-Za-z0-9]+/g,"-").replace(/^-+|-+$/g,"")||"Student";
+  a.href=url;a.download="Flynn-Trial-Progress-"+n+".txt";document.body.append(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url);},4000);
+  toast("Progress file downloaded. Open it on your other device.");
+}
+function copyProgress(){var t=makeCode();try{navigator.clipboard.writeText(t).then(function(){toast("Progress code copied. Paste it on your other device.");},function(){fallbackCopy(t);});}catch(e){fallbackCopy(t);}}
+function offerTransfer(text,box){
+  box.replaceChildren();var r;
+  try{r=parseTransfer(text);}catch(e){box.append(el("div",{class:"lockmsg bad",text:e.message}));return;}
+  var n=Object.keys(r.clean.ans).filter(function(k){return wc(r.clean.ans[k])>0;}).length;
+  var when="";try{when=" Saved "+new Date(r.saved).toLocaleString("en-US",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"})+".";}catch(e){}
+  box.append(el("div",{class:"lockmsg"},el("b",{text:"Progress for "+(r.clean.name||"a student")+": "+n+" written response"+(n===1?"":"s")+(r.clean.locked?", verdict locked in":"")+"."}),el("br"),
+    "Loading combines it with anything already on this device. For each question, the longer answer is kept, so nothing is lost."+when+(S.started&&S.name&&r.clean.name&&S.name!==r.clean.name?" Note: this progress is under a different name than the one on this device.":"")));
+  box.append(el("p",{},el("button",{type:"button",class:"btn sm",onclick:function(){applyTransfer(r.clean);}},"Combine and load"),el("span",{text:" "}),el("button",{type:"button",class:"btn ghost sm",onclick:function(){box.replaceChildren();}},"Cancel")));
+}
+function applyTransfer(clean){
+  var wasStarted=S.started,keepName=S.name,keepMode=S.mode;
+  var m=mergeSaves(S,clean);m.dl=S.dl||{};
+  m.name=(wasStarted&&keepName)?keepName:(clean.name||keepName);m.mode=wasStarted?keepMode:clean.mode;m.started=true;
+  S=window.S=m;save();
+  var n=Object.keys(S.ans).filter(function(k){return wc(S.ans[k])>0;}).length;
+  closeDrawer();toast("Progress loaded: "+n+" written response"+(n===1?"":"s")+".");
+  if($("nm"))$("nm").value=S.name;
+  if(!$("cover").hidden){showApp();route();}else{setMode(S.mode);buildTimeline();}
+}
+function renderTransfer(body){
+  $("drt").textContent="Move my progress";
+  body.append(el("h3",{text:"1. Save it from this device"}),
+    el("p",{text:"Make a progress file or code, then get it to your other device by emailing it to yourself or putting it in Google Drive."}),
+    el("p",{},el("button",{type:"button",class:"btn sm",disabled:!hasProgress(),onclick:downloadProgress},"Download progress file"),el("span",{text:" "}),el("button",{type:"button",class:"btn ghost sm",disabled:!hasProgress(),onclick:copyProgress},"Copy progress code")));
+  if(!hasProgress())body.append(el("p",{class:"vnote",text:"There is no progress on this device yet."}));
+  var box=el("div",{id:"xferres"});
+  var ta=el("textarea",{class:"ans",id:"xfertxt",style:"min-height:70px",placeholder:"Paste a progress code here","aria-label":"Paste a progress code"});
+  body.append(el("h3",{text:"2. Load it on the other device"}),
+    el("p",{text:"Choose the progress file, or paste the code."}),
+    el("p",{},el("input",{type:"file",id:"xferfile",accept:".txt,.json,text/plain","aria-label":"Choose a progress file",onchange:function(e){var f=e.target.files&&e.target.files[0];if(!f)return;var fr=new FileReader();fr.onload=function(){offerTransfer(fr.result,box);};fr.onerror=function(){box.replaceChildren(el("div",{class:"lockmsg bad",text:"That file could not be read."}));};fr.readAsText(f);}})),
+    ta,el("p",{},el("button",{type:"button",class:"btn sm",id:"xferload",onclick:function(){offerTransfer(ta.value,box);}},"Load pasted code")),
+    box,el("p",{class:"vnote",text:"A progress file contains your name and your answers. Only send it to yourself."}));
+}
+
 /* ============ DRAWER (guide, notebook, clip times) ============ */
 var DR={kind:null,tab:null};
 function openDrawer(kind,tab){DR.kind=kind;DR.tab=tab||null;renderDrawer();$("dr").hidden=false;}
@@ -1947,8 +2124,10 @@ function renderDrawer(){
     var all=counts(STATIONS),ids=DAYS.map(function(d){return d.id;});
     body.append(el("div",{class:"dayrow"},el("div",{},el("b",{text:"Complete notebook (all four days)"}),el("small",{text:all.d+" of "+all.t+" done"})),el("button",{type:"button",class:"btn sm",id:"dlall",onclick:function(){downloadNotebook(ids);}},"Download")));
     body.append(el("p",{},el("button",{type:"button",class:"link",onclick:function(){copyNotebook(ids);}},"Copy everything as text instead")));
-    body.append(el("p",{class:"vnote",text:"Your work is saved in this browser. Use the same device and web address to come back to it."}));
+    body.append(el("p",{class:"vnote",text:"Your work is saved in this browser. Use the same device and web address to come back to it, or move it to another device."}));
+    body.append(el("p",{},el("button",{type:"button",class:"btn ghost sm",id:"xferopen",onclick:function(){openDrawer("transfer");}},"Move my progress to another device")));
   }
+  if(DR.kind==="transfer")renderTransfer(body);
   if(DR.kind==="clips"){
     $("drt").textContent="Clip times (teacher)";
     body.append(el("p",{text:"Set where each clip starts and ends. Times are m:ss. Use Preview to check, Save here to keep the change in this browser, and Copy list to paste into data.js."}));
@@ -1989,6 +2168,7 @@ function route(){
   $("cont").addEventListener("click",function(){S.name=$("nm").value.trim()||S.name;save();showApp();route();});
   $("mclass").addEventListener("click",function(){setMode("class");});
   $("msolo").addEventListener("click",function(){setMode("solo");});
+  $("xfercv").addEventListener("click",function(){openDrawer("transfer");});
   $("gdbtn").addEventListener("click",function(){openDrawer("guide");});
   $("nbbtn").addEventListener("click",function(){openDrawer("notebook");});
   $("tcbtn").addEventListener("click",function(){openDrawer("clips");});
