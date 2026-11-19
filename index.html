@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Trial Lab: State of Ohio v. Caleb Flynn | Law &amp; Justice</title>
 <style>
+
 :root{--ink:#1b2440;--paper:#f6f1e6;--muted:#5a6480;--gold:#ffc83d;--line:#e3dfd3;--pc:#0f9d8f;--ps:#d9f4f0}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -173,6 +174,14 @@ button{font:inherit;cursor:pointer}
 .dn{background:var(--pc);color:#fff;text-decoration:none;font:800 .8rem system-ui,sans-serif;border-radius:999px;padding:5px 14px}
 .dn.ok::after{content:" ✓"}
 
+.link{background:none;border:0;padding:0;color:#2b4fd6;text-decoration:underline;font:700 .88rem system-ui,sans-serif;cursor:pointer}
+.xfer{margin:10px 0 0}
+.lockmsg.bad{background:#fde3e3;color:#7a1410}
+#drbody input[type=file]{font:600 .85rem system-ui,sans-serif;max-width:100%}
+
+.win.also{background:var(--ink)}
+.cnote{margin:6px 14px 0;font:700 .92rem/1.4 system-ui,sans-serif;color:var(--ink)}
+
 </style>
 </head>
 <body>
@@ -195,7 +204,8 @@ button{font:inherit;cursor:pointer}
    <label class="mc"><input type="radio" name="mode" value="solo"><span><b>On my own</b>Missed class? Everything your teacher would explain is here, and discussion questions become typed responses.</span></label>
   </div>
   <div class="start"><button type="button" class="btn big" id="begin">Start the trial</button><button type="button" class="btn ghost" id="cont" hidden>Continue where I left off</button></div>
-  <div class="how"><div><b>4</b>class periods of about 90 minutes</div><div><b>22</b>stations: learn, watch a short clip, respond</div><div><b>1</b>Word notebook for each day and for the whole unit</div></div>
+  <p class="xfer"><button type="button" class="link" id="xfercv">Using a new device? Load my saved progress</button></p>
+  <div class="how"><div><b>4</b>class periods of about 70 minutes</div><div><b>20</b>stations: learn, watch a short clip, respond</div><div><b>1</b>Word notebook for each day and for the whole unit</div></div>
  </div>
  <div id="cvart" aria-hidden="true"></div>
 </section>
@@ -210,227 +220,1470 @@ button{font:inherit;cursor:pointer}
 <aside id="dr" hidden aria-label="Drawer"><div class="drh"><b id="drt">Courtroom guide</b><button type="button" class="x" id="drx" aria-label="Close">✕</button></div><div id="drbar" role="tablist"></div><div id="drbody"></div></aside>
 <div id="toast" role="status" aria-live="polite"></div>
 <script>
-/* ============ CONTENT: STATE OF OHIO v. CALEB FLYNN ============ */
-var CFG={key:"flynn_trial_v1",videos:true};
+/* ============ CONTENT: STATE OF OHIO v. CALEB FLYNN (4 periods of 70 minutes) ============
+   Clip windows are in seconds (start, end). est:1 marks a window chosen from the clip’s description or the order of testimony; tn explains the basis. */
+/* Saved progress lives under CFG.key. Never change it. Older keys are listed in legacy so earlier saves are merged in automatically. */
+var CFG={key:"flynn_trial_v3",legacy:["flynn_trial_v1","flynn_trial_v2"],videos:true};
 var DAYS=[
- {id:1,name:"The Jury and the Evidence",short:"Day 1",color:"#0f9d8f",soft:"#d9f4f0",goal:"Learn the juror’s job, the standard of proof, and the two kinds of evidence. Hear both openings."},
- {id:2,name:"Admitting Evidence and Direct Examination",short:"Day 2",color:"#6c5ce7",soft:"#e6e2fb",goal:"See how evidence gets in front of a jury and how lay witnesses tell their story."},
- {id:3,name:"Cross-Examination and the Investigation",short:"Day 3",color:"#ef5b5b",soft:"#fde3e3",goal:"See how a defense attorney tests witnesses and the investigation. Compare lay and expert witnesses."},
- {id:4,name:"Closing Arguments and Your Verdict",short:"Day 4",color:"#e08a00",soft:"#fdf0d2",goal:"Weigh both closings, review the law, and reach your own verdict before you learn the jury’s."}
+ {
+  id: 1,
+  name: "The Jury, the Evidence, and the Openings",
+  short: "Day 1",
+  color: "#0f9d8f",
+  soft: "#d9f4f0",
+  goal: "Learn the juror’s job, the standard of proof, and the two kinds of evidence. Hear both openings."
+ },
+ {
+  id: 2,
+  name: "Admitting Evidence, Direct Examination, and Cross",
+  short: "Day 2",
+  color: "#6c5ce7",
+  soft: "#e6e2fb",
+  goal: "See how evidence gets in front of a jury, how witnesses tell their story, and how the defense tests the investigation."
+ },
+ {
+  id: 3,
+  name: "Alleigha Botner: The Witness Behind the Texts",
+  short: "Day 3",
+  color: "#ef5b5b",
+  soft: "#fde3e3",
+  goal: "Follow the state’s key text-message witness from the start of her direct examination through the texts and the defense cross-examination."
+ },
+ {
+  id: 4,
+  name: "Experts, Closing Arguments, and Your Verdict",
+  short: "Day 4",
+  color: "#e08a00",
+  soft: "#fdf0d2",
+  goal: "Compare lay and expert witnesses, weigh the evidence and both closings, and reach your own verdict before you learn the jury’s."
+ }
 ];
-/* clip windows are in seconds. est:1 marks a window chosen from the order of testimony, to be fine-tuned in teacher mode */
 var STATIONS=[
-{id:"s1",day:1,title:"The case in brief",art:"case",mins:10,
- ideas:[{t:"You are the juror",x:"Twelve people decide the facts. Your job is to listen, weigh the evidence, and follow the judge’s instructions about the law."},
-        {t:"A real, finished trial",x:"This case went to trial in 2026. You will decide your own verdict before you learn what the jury decided, so please do not look up the outcome."}],
- more:["Early on February 16, 2026, Caleb Flynn, 40, called 911 from his home in Tipp City, Ohio. He said an intruder had broken in and shot his wife, Ashley Flynn, 37, a middle-school volleyball coach and mother of two. He told police he had been lying in his daughters’ bedroom when he heard a gunshot. Three days later he was arrested.","Flynn is a former worship pastor who auditioned for American Idol in 2013. He pleaded not guilty to aggravated murder, murder, felonious assault, and tampering with evidence. The trial was held in the Miami County Court of Common Pleas in Troy, Ohio, before Judge Jeannine Pratt.","Ashley Flynn was a real person who was loved by her family and community. Please discuss this case with respect for her, her daughters, and everyone affected."],
- who:true,
- read:[{t:"Case overview: State of Ohio v. Caleb Flynn (Hindustan Times)",u:"https://www.hindustantimes.com/world-news/us-news/caleb-flynn-trial-was-ex-american-idol-contestant-having-an-affair-texts-in-focus-amid-ashleys-death-101789759994256.html?utm_source=gemini"}],
- qs:[{id:"d1a",type:"d",min:20,q:"What do you already know or assume about this case? What would you want to know before judging it?",hint:"Be honest about first impressions. A good juror notices them and then tests them against the evidence."}]},
-{id:"s2",day:1,title:"The rules for jurors",art:"rules",mins:15,
- ideas:[{t:"Presumption of innocence",x:"The defendant starts the trial presumed innocent. The state must prove guilt. The defendant does not have to prove anything."},
-        {t:"Beyond a reasonable doubt",x:"The highest standard in the law. Jurors must be “firmly convinced” of the truth of the charge."},
-        {t:"Not evidence",x:"Opening statements, closing arguments, and the lawyers’ questions are not evidence. Testimony and exhibits are."}],
- more:["The judge tells jurors the rules before the lawyers speak. Jurors may take notes, must decide only from what is presented in court, and may not research the case or talk about it outside the jury room.","Ohio law (R.C. 2901.05) says reasonable doubt is present when, after jurors carefully consider and compare all the evidence, they cannot say they are firmly convinced of the truth of the charge. It is not a mere possible doubt. It is proof of such a character that an ordinary person would be willing to rely and act on it in the most important affairs of their own life."],
- rule:{t:"Ohio law: R.C. 2901.05",x:"Every person is presumed innocent until proven guilty beyond a reasonable doubt, and the burden of proof stays with the state throughout the trial."},
- read:[{t:"Reasonable doubt standard in Ohio",u:"https://www.columbuscriminalattorney.com/what-is-reasonable-doubt/"}],
- clips:[{id:"c2",yt:"FAJOnzLDrVg",t:"Jury instructions from the judge",s:"Trial video (YouTube)",start:0,end:600,est:1,watch:["What are jurors told they may and may not do?","How does the judge describe the state’s burden of proof?"]}],
- qs:[{id:"q2a",type:"q",min:30,q:"In your own words, what does “beyond a reasonable doubt” mean? Use Ohio’s definition in your answer.",hint:"Use the phrases “firmly convinced” and “truth of the charge,” then explain what they mean in everyday language."},
-     {id:"d2b",type:"d",min:25,q:"Why does the law make the prosecution prove guilt instead of making the defendant prove innocence?",hint:"Think about who has the power of the government and what could go wrong if the burden were reversed."}]},
-{id:"s3",day:1,title:"Two kinds of evidence",art:"evidence",mins:15,
- ideas:[{t:"Direct evidence",x:"Proves a fact without needing an inference. An eyewitness who saw the act, a video of it, or a confession."},
-        {t:"Circumstantial evidence",x:"Points to a fact and asks you to infer the rest. Fingerprints, motive, timing, text messages, missing items."},
-        {t:"Same legal weight",x:"Ohio law gives both kinds equal weight. A conviction can rest on circumstantial evidence alone if it proves every element beyond a reasonable doubt."}],
- more:["Think of snow on the ground. If you saw it fall, that is direct evidence. If you wake up and see snow and footprints, you infer it fell overnight and someone walked through it. That is circumstantial evidence. Strong circumstantial evidence can be very persuasive, and weak circumstantial evidence can be easy to explain away.","The Ohio Supreme Court has said that circumstantial and direct evidence have the same probative value (State v. Jenks, 1991). What jurors must ask is whether all the evidence, taken together, leaves them firmly convinced."],
- rule:{t:"Ohio law: State v. Jenks (1991)",x:"Circumstantial evidence and direct evidence “inherently possess the same probative value.” Jurors weigh all of it against the beyond a reasonable doubt standard."},
- sort:{title:"Quick check: direct or circumstantial?",opts:["Direct","Circumstantial"],items:[
-   {t:"A neighbor testifies, “I watched Dana take the cash from the register.”",a:0,why:"An eyewitness who saw the act itself is direct evidence."},
-   {t:"Dana’s fingerprints are on the cash drawer, and she has no job duties near it.",a:1,why:"Fingerprints show she touched the drawer. The jury must infer she took the cash."},
-   {t:"A security video shows Dana putting money in her pocket.",a:0,why:"A recording of the act itself is direct evidence."},
-   {t:"Dana bought an expensive phone the day after the cash went missing.",a:1,why:"The timing suggests a link, but the jury must infer it."},
-   {t:"Dana texts a friend, “I took the money.”",a:0,why:"A confession proves the fact directly."},
-   {t:"Wet footprints lead from the sink to the bedroom.",a:1,why:"The jury must infer who made them and when."}]},
- qs:[{id:"q3a",type:"q",min:30,q:"What is direct evidence, and what is circumstantial evidence?",hint:"Define both in your own words and give one example of each that is not from the Flynn case."}]},
-{id:"s4",day:1,title:"The state’s opening statement",art:"opening",mins:20,
- ideas:[{t:"A roadmap",x:"The opening is each side’s preview of what it says the evidence will show. It is not evidence."},
-        {t:"State goes first",x:"The state has the burden of proof, so it opens first and closes last."}],
- clips:[{id:"c4",yt:"1C1nbHmC1lc",t:"State’s opening statement and key exhibits",s:"Trial video (YouTube)",start:0,end:720,est:1,watch:["What is the state’s theory of what happened?","Which pieces of evidence does the prosecutor promise to show the jury?","Is there any direct evidence of who fired the gun?"]}],
- qs:[{id:"q4a",type:"q",min:20,q:"What direct evidence does the prosecution possess in this case?",hint:"Look for a witness who saw the shooting, a recording of it, or a confession. If none exists, say so and explain what that means."},
-     {id:"q4b",type:"q",min:30,q:"Based on the Prosecution's opening statement, list three pieces of circumstantial evidence the state plans to use against Caleb Flynn.",hint:"Name the evidence, then add a few words about what the state wants the jury to infer from each."},
-     {id:"q4c",type:"q",min:40,q:"How do you think the prosecution will use text messages, a missing weapon, and a damaged door to build a case without direct eyewitness testimony?",hint:"Think of each piece as a link in a chain. What does each one suggest about motive, opportunity, or the intruder story?"}]},
-{id:"s5",day:1,title:"The defense’s opening statement",art:"opening",mins:15,
- ideas:[{t:"The defense may wait or go now",x:"The defense can open right after the state or hold its opening until its own case. This defense opened right away."},
-        {t:"Raising doubt",x:"The defense does not have to prove anything. Its job is often to show the jury where the state’s proof falls short."}],
- clips:[{id:"c5",yt:"5ieQh6BiIIg",t:"Defense counsel’s opening statement",s:"Trial video (YouTube)",start:0,end:600,est:1,watch:["What does the defense admit?","What does the defense say the state has not shown?"]}],
- qs:[{id:"q5a",type:"q",min:25,q:"What does the defense say about the affair and text messages?",hint:"Describe what the defense admits and what it argues those facts do and do not prove."},
-     {id:"d5b",type:"d",min:25,q:"Why might a defense attorney admit the affair in the opening statement instead of hiding it?",hint:"Think about credibility with the jury and about when jurors will first hear damaging facts."}]},
-{id:"s6",day:1,title:"Your first check-in as a juror",art:"notebook",mins:10,
- ideas:[{t:"Keep an open mind",x:"No evidence has been presented yet. Jurors are told not to make up their minds until they have heard everything."}],
- qs:[{id:"q6a",type:"q",min:40,q:"Do you believe circumstantial evidence alone can prove guilt “beyond a reasonable doubt”? Explain your reasoning.",hint:"Use what you learned about Ohio law and what you heard in the openings."},
-     {id:"q6b",type:"q",min:25,q:"What additional pieces of direct evidence would make the prosecution's case significantly stronger?",hint:"Be specific: who would need to testify, or what recording or object would need to exist?"},
-     {id:"q6c",type:"q",min:25,q:"What are questions that you would like to be answered by the prosecution or defense to help you come to a verdict?",hint:"Write two or three questions. Keep them for the rest of the unit and see which ones get answered."}]},
-
-{id:"s7",day:2,title:"How evidence gets in",art:"stamp",mins:10,
- ideas:[{t:"Foundation",x:"Before an item can be shown to a jury, a witness must show what it is and why it can be trusted."},
-        {t:"Authentication",x:"Showing an item is what its owner says it is. A witness with knowledge can do this."},
-        {t:"Admitted into evidence",x:"The attorney asks the judge to admit the exhibit. If the other side does not object and the rules are met, the judge admits it and the jury may consider it."}],
- more:["Evidence cannot just be shown to the jury. Each recording, photo, document, or object needs a witness to explain what it is. The judge also checks that it is relevant (it helps prove or disprove something that matters) and that it is allowed under the rules of evidence.","Attorneys may object if they think a rule is being broken. The judge rules on the objection. The jury is not supposed to see or hear things the judge has excluded."],
- rule:{t:"Ohio Rules of Evidence",x:"Rule 401: relevant evidence makes a fact that matters more or less likely. Rule 901: the party offering an item must show it is what they claim it is."},
- qs:[{id:"d7a",type:"d",min:25,q:"Why do you think courts require a witness to “lay a foundation” before a recording or document can be shown to the jury?",hint:"Think about how easily a recording could be edited, mislabeled, or misunderstood."}]},
-{id:"s8",day:2,title:"Direct examination and lay witnesses",art:"witness",mins:15,
- ideas:[{t:"Direct examination",x:"The side that calls a witness questions that witness first. The goal is to let the witness tell their story."},
-        {t:"Open-ended questions",x:"“What happened next?” invites a story. Leading questions suggest the answer, so they are usually not allowed on direct."},
-        {t:"Lay witness",x:"An ordinary person testifying to what they saw, heard, or did. Lay witnesses mostly report facts, not expert opinions."}],
- more:["Most witnesses in a trial are lay witnesses: a 911 records director, a patrol officer, a family member. They must have personal knowledge of what they describe. They may share limited opinions that come from their own perception, like “he seemed upset,” but they may not give expert opinions.","After direct, the other side may cross-examine. If new topics come up, the first side may ask follow-up questions on redirect."],
- rule:{t:"Ohio Rules of Evidence",x:"Rule 602: a witness must have personal knowledge. Rule 701: a lay witness’s opinions must come from their own perception and help the jury. Rule 611(C): leading questions are generally not allowed on direct."},
- sort:{title:"Quick check: open-ended or leading?",opts:["Open-ended","Leading"],items:[
-   {t:"“Tell the jury what you saw next.”",a:0,why:"It invites the witness to tell the story in their own words."},
-   {t:"“You saw the car run the red light, didn’t you?”",a:1,why:"It suggests the answer the attorney wants."},
-   {t:"“What happened after you arrived?”",a:0,why:"Open-ended questions often begin with Who, What, How, or Describe."},
-   {t:"“The door was open when you got there, correct?”",a:1,why:"It supplies the fact and asks the witness to agree."},
-   {t:"“How did you secure the recording?”",a:0,why:"The witness has to explain the process."},
-   {t:"“Isn’t it true you never checked the lock?”",a:1,why:"A leading question like this is allowed on cross-examination."}]},
- qs:[{id:"d8a",type:"d",min:25,q:"Why is an attorney usually not allowed to lead their own witness on direct examination?",hint:"Think about whose words the jury should be hearing."}]},
-{id:"s9",day:2,title:"The 911 witness: laying the foundation",art:"phone",mins:25,
- ideas:[{t:"The first witness",x:"The state called the director of the county 911 center to explain how 911 calls are recorded and kept."},
-        {t:"What to track",x:"Notice each step the prosecutor takes before the recording is played."}],
- clips:[{id:"c9",yt:"TBlPqMj8rIg",t:"Caleb Flynn breaks down hearing his own 911 call in court",s:"Court TV",start:0,end:480,est:1,watch:["How does the witness explain her job and her knowledge of the system?","How does she show the audio is accurate and unaltered?","When does the prosecutor ask for the recording to be admitted?"]}],
- qs:[{id:"q9a",type:"q",min:25,q:"How does the prosecution establish that Beth Hall is qualified to authenticate the 911 recording?",hint:"Look at her job, her experience, and her knowledge of how recordings are made and stored."},
-     {id:"q9b",type:"q",min:30,q:"How does the prosecutor prove that the 911 audio file is secure, accurate, and has not been altered or edited?",hint:"List the steps: how the call is recorded, where it is stored, who can access it, and how the copy was checked."},
-     {id:"q9c",type:"q",min:15,q:"At what point in the testimony does the prosecution officially ask the judge to enter the recording into evidence?",hint:"Say what happened right before that moment and why the order matters."},
-     {id:"q9d",type:"q",min:30,q:"How well did the prosecutor do at asking open-ended questions (e.g., “Who,” “What,” “How”) to allow the witness to tell their story?",hint:"Give at least one example of a question you thought worked well, or one that was more leading."},
-     {id:"q9e",type:"q",min:25,q:"Why do you think the defense attorney chose to ask “no questions” on cross-examination for this witness?",hint:"Think about whether she said anything harmful to the defense, and whether cross would have helped."}]},
-{id:"s10",day:2,title:"Hearing the 911 call",art:"phone",mins:20,
- ideas:[{t:"Evidence of what was said",x:"Once admitted, the jury hears the call itself. Jurors judge sincerity, consistency, and details."},
-        {t:"Demeanor",x:"Jurors may consider how a person sounds and acts, but should be careful not to read too much into emotion."}],
- more:["This part includes the recording of a man describing his wife’s shooting. It is upsetting. You can look away or pause the video and listen later, but try to listen at least once with a juror’s attention."],
- clips:[{id:"c10",yt:"TBlPqMj8rIg",t:"Caleb Flynn breaks down hearing his own 911 call in court",s:"Court TV",start:480,end:1080,est:1,watch:["What facts does he give the dispatcher?","What does the dispatcher ask or tell him?","How does he react in the courtroom as the call plays?"]}],
- qs:[{id:"q10a",type:"q",min:30,q:"What key facts does Caleb Flynn state to the 911 dispatcher during the call?",hint:"Include where he says he was, what he heard, what he saw, and what he says about the garage door."},
-     {id:"q10b",type:"q",min:30,q:"How does the caller’s demeanor and physical reaction in court impact a jury’s view of witness credibility?",hint:"Consider both how it could help him and how a juror might also look at it carefully."},
-     {id:"q10c",type:"q",min:40,q:"What did you pick up on in regards to the phone call? Does he sound sincere? Do you believe his story? What questions do you have after this phone call?",hint:"Point to specific moments in the call. Then separate what you noticed from what you can prove."}]},
-{id:"s11",day:2,title:"Texts and other digital evidence",art:"chat",mins:20,
- ideas:[{t:"Digital evidence",x:"Text messages, phone data, smartwatch records, and deleted apps can all be evidence."},
-        {t:"A party’s own words",x:"What a defendant said or wrote can be used against him. The rules treat a party’s own statements differently from other hearsay."},
-        {t:"A witness who was there",x:"Alleigha Botner, who had a relationship with Flynn, read messages aloud and explained them. She was a lay witness."}],
- more:["In this trial jurors heard that investigators recovered more than 100,000 messages between Caleb Flynn and Alleigha Botner, and that his devices recorded movement in the hours before the 911 call. The state used witnesses to explain where the data came from and how it was collected.","Hearsay is an out-of-court statement offered to prove the truth of what it says. There are many exceptions. One of them is a statement by the opposing party, which is why the state could offer Flynn’s own messages."],
- rule:{t:"Ohio Rules of Evidence",x:"Rule 901: the offering side must show an item is genuine. Rule 801(D)(2): a statement made by the opposing party is not hearsay when offered against that party."},
- qs:[{id:"q11a",type:"q",min:30,q:"Texts, smartwatch steps, and deleted apps are all digital evidence. Choose one and explain how the state could show the jury it is genuine (authentic).",hint:"Think about who could testify to where it came from and how it was saved or recovered."},
-     {id:"d11b",type:"d",min:25,q:"A defendant’s own texts can be used against him. Why isn’t that unfair?",hint:"Think about what makes a statement reliable when the person who said it is on trial."}]},
-
-{id:"s12",day:3,title:"Cross-examination: testing the witness",art:"cross",mins:10,
- ideas:[{t:"Cross-examination",x:"The other side questions a witness after direct. The goal is to test credibility, show gaps, or bring out facts that help."},
-        {t:"Leading questions allowed",x:"On cross, attorneys may lead. Short questions that call for “yes” or “no” keep control with the lawyer."},
-        {t:"Choosing not to cross",x:"Sometimes the best strategy is to ask nothing. Cross can reinforce what the witness said."}],
- more:["Common cross-examination goals: show the witness is mistaken, biased, or unsure; show the investigation missed something; or get helpful facts from a witness the other side called.","Tone matters too. An attorney may be sharp with a professional witness who made choices that can be challenged, and gentle with a grieving relative whose sympathy the jury may share."],
- rule:{t:"Ohio Rules of Evidence",x:"Rule 611(B) and (C): cross-examination is allowed on the subject matter of direct and on credibility, and leading questions are generally allowed."},
- qs:[{id:"d12a",type:"d",min:25,q:"Why might a lawyer decide to ask a witness no questions on cross-examination?",hint:"Go back to the 911 center director. What would cross have risked?"}]},
-{id:"s13",day:3,title:"Body camera footage and the first officers",art:"bodycam",mins:25,
- ideas:[{t:"Body camera as evidence",x:"A body camera shows what the officer saw and heard. It is authenticated by the officer who wore it."},
-        {t:"Challenging the investigation",x:"The defense may argue the police missed leads, rushed to a conclusion, or failed to protect the scene."}],
- more:["The state played about 24 minutes of more than two hours of body camera video from a responding patrol officer. The defense then cross-examined responding officers about what was and was not recorded and preserved."],
- clips:[{id:"c13",yt:"sJFDYO6J6_4",t:"Caleb Flynn bodycam footage: “Ashley’s Dead, She’s Gone”",s:"Court TV",start:1063,end:1963,est:1,tn:"start 17:43 is from your assignment; the end is estimated",watch:["What does Flynn say and do on the footage?","What does the defense ask the officer about evidence and the scene?"]}],
- qs:[{id:"q13a",type:"q",min:30,q:"What potential evidence does the defense criticize the officers for not preserving properly?",hint:"Name the evidence and what the defense says could have been learned from it."},
-     {id:"q13b",type:"q",min:40,q:"How did the defense attempt to show that the responding officers failed to preserve potential evidence or immediately treat the scene as a possible crime scene?",hint:"Describe the kinds of questions the attorney asked and what the officer admitted."},
-     {id:"q13c",type:"q",min:30,q:"What key behaviors, statements, or physical reactions from Caleb Flynn are captured on the responding officer’s body camera footage?",hint:"Stick to what you can see and hear on the footage. Do not add what you assume."},
-     {id:"q13d",type:"q",min:40,q:"How might the prosecution and the defense interpret Caleb Flynn’s emotional reaction on the body camera footage differently for the jury?",hint:"Write one sentence from each attorney’s point of view."},
-     {id:"q13e",type:"q",min:40,q:"Does the body camera evidence make you lean more toward guilt or innocence? Explain your reasoning.",hint:"It is fine to say it did not move you much. Explain why."}]},
-{id:"s14",day:3,title:"Cross-examining a family witness",art:"witness",mins:20,
- ideas:[{t:"A different kind of witness",x:"Ashley’s sister, Kayla Keyt, was Caleb Flynn’s sister-in-law. She testified about what he told the family and what she had believed at first."},
-        {t:"Compare the tone",x:"Notice how the defense treats her compared with the officer on the last clip."}],
- clips:[{id:"c14",yt:"BKrwojn2aXg",t:"Caleb Flynn sister-in-law testimony",s:"Trial video (YouTube)",start:1200,end:1800,est:1,tn:"start 20:00 is from your assignment; the end is estimated",watch:["What does she say Caleb told the family?","How does the defense attorney speak to her?","What does she say about when she learned of the affair?"]}],
- qs:[{id:"q14a",type:"q",min:50,q:"How did the demeanor & manner of questioning from the defense attorneys stay the same and differ between the two witnesses? Why do you think the attorney would treat these witnesses differently?",hint:"Compare the officer on the last clip with Ashley’s sister. Think about what each witness could help or hurt."},
-     {id:"q14b",type:"q",min:40,q:"How does the victim’s sister’s testimony impact your view of the case? In what ways does her testimony matter to the case?",hint:"Consider what it adds as evidence, and what it might do emotionally. Are those the same thing?"}]},
-{id:"s15",day:3,title:"Expert witnesses",art:"expert",mins:25,
- ideas:[{t:"Expert witness",x:"A witness with special training or experience who may give opinions that help the jury understand the evidence."},
-        {t:"Qualified first",x:"The attorney shows the witness’s training and experience, and the judge decides whether the witness may give opinions."},
-        {t:"Jurors decide",x:"Jurors do not have to accept an expert’s opinion. They weigh it like any other testimony."}],
- more:["In this trial a lay witness such as the 911 director described facts. Several witnesses gave opinions based on specialized training: an Ohio Bureau of Criminal Investigation (BCI) special agent who spent about 12 hours at the home and testified his concern was that the scene was staged as a burglary, a BCI firearms examiner, and digital forensic examiners who explained data on Flynn’s devices.","Cross-examination of an expert often targets what the expert did not do, the limits of the method, or whether the facts really support the opinion."],
- rule:{t:"Ohio Rules of Evidence",x:"Rule 702: a witness qualified by knowledge, skill, experience, training, or education may testify in the form of an opinion when it will help the jury understand evidence or decide a fact."},
- clips:[{id:"c15",yt:"aRN_L4tblps",t:"Caleb Flynn’s defense clashes with crime scene agent",s:"Court TV",start:0,end:0,tn:"whole short clip: nothing to estimate",watch:["What does the defense point out that the agent could not tell?","How does the agent respond when challenged?","Which questions are leading questions?"]}],
- qs:[{id:"q15a",type:"q",min:40,q:"Beth Hall, a police officer, and a family member are lay witnesses. The BCI agent gave an opinion about the scene. Why is he allowed to give an opinion when a lay witness mostly cannot?",hint:"Use the words qualified, training, and helps the jury understand."},
-     {id:"q15b",type:"q",min:40,q:"How did the defense try to limit or challenge the agent’s conclusions on cross-examination?",hint:"Name one question or point from the clip and explain what the defense wanted the jury to take from it."},
-     {id:"d15c",type:"d",min:25,q:"Do jurors have to accept an expert’s opinion? Why or why not?",hint:"Think about experts who disagree, and about opinions that depend on facts the jury has not accepted."}]},
-{id:"s16",day:3,title:"Your evidence ledger",art:"ledger",mins:10,
- ideas:[{t:"Weighing the evidence",x:"Jurors do not need to decide each piece by itself. They weigh the whole picture."}],
- qs:[{id:"q16a",type:"q",min:60,q:"Evidence ledger: List the three pieces of evidence that most point toward guilt and the three that most raise doubt. Label each one direct or circumstantial.",hint:"Use a short line for each: the evidence, direct or circumstantial, and why it matters."}]},
-
-{id:"s17",day:4,title:"The defense rests",art:"rests",mins:10,
- ideas:[{t:"The right to remain silent",x:"The Fifth Amendment protects a defendant from being forced to testify. The judge tells jurors not to hold it against him."},
-        {t:"The burden never shifts",x:"If the defense calls no witnesses, the state must still prove every element beyond a reasonable doubt."}],
- more:["After the state called more than three dozen witnesses over seven days of testimony, it rested its case. The defense also rested without calling witnesses, and Flynn did not testify. Jurors had already heard his own words in the 911 call, the body camera video, his messages, and recorded police interviews."],
- rule:{t:"Constitution and Ohio law",x:"Fifth Amendment: no one may be compelled to be a witness against himself. Griffin v. California (1965): the prosecution may not comment on a defendant’s silence."},
- qs:[{id:"q17a",type:"q",min:30,q:"Why can’t a jury hold it against a defendant that he did not testify?",hint:"Connect your answer to the presumption of innocence and the Fifth Amendment."},
-     {id:"d17b",type:"d",min:25,q:"The defense called no witnesses. Does that change who has to prove the case? Explain.",hint:"Look at who carries the burden of proof."}]},
-{id:"s18",day:4,title:"Closing arguments: the state",art:"closing",mins:20,
- ideas:[{t:"Argument, not evidence",x:"In closings each side argues what the evidence proves. Lawyers may argue reasonable inferences. They may not add new facts."},
-        {t:"Order of closings",x:"The state closes first, the defense second, and the state gets a short rebuttal because it has the burden."}],
- clips:[{id:"c18",yt:"ervJZaGVmsQ",t:"Prosecuting attorney Matt Joseph delivers closing arguments",s:"Courtroom Insider (YouTube)",start:0,end:720,est:1,watch:["How does he connect the separate pieces of evidence?","What does he say about each element the state must prove?"]}],
- qs:[{id:"q18a",type:"q",min:40,q:"Identify two ways the prosecutor tries to connect separate pieces of circumstantial evidence into one story.",hint:"For each, name the evidence and what he asks the jury to infer."},
-     {id:"d18b",type:"d",min:25,q:"Closing arguments are not evidence. Why does the judge tell jurors that?",hint:"Think about what lawyers are paid to do."}]},
-{id:"s19",day:4,title:"Closing arguments: the defense and rebuttal",art:"closing",mins:20,
- ideas:[{t:"Proven versus not proven",x:"The defense’s closing tried to separate what was proven from what was only suspected."},
-        {t:"Rebuttal",x:"The state answers the defense’s points in a short final argument."}],
- read:[{t:"Read: the defense closing (Dayton Daily News live coverage)",u:"https://www.daytondailynews.com/local/crime/caleb-flynn-murder-trial-prosecution-giving-rebuttal/article_673d3137-c07f-4f3d-90f5-5969d68ee90b.html"},{t:"Read: closing arguments as they happened (Courtroom Insider)",u:"https://www.courtroominsider.com/2026/09/live-updates-closing-arguments-planned-for-day-8-of-caleb-flynn-murder-trial/"}],
- clips:[{id:"c19",yt:"fnkY40ecA6Y",t:"Prosecuting attorney Paul Watkins wraps up closing with a rebuttal argument",s:"Courtroom Insider (YouTube)",start:0,end:480,est:1,watch:["Which defense points does he answer?","What does he ask the jury to do?"]}],
- qs:[{id:"q19a",type:"q",min:40,q:"What is the defense’s central argument in closing? Which piece of the state’s evidence does it attack most directly?",hint:"Use the reading for the defense closing and the rebuttal clip to see what the state was answering."},
-     {id:"q19b",type:"q",min:50,q:"Which side’s closing argument was more effective, and why? Use at least one specific example.",hint:"Effective does not mean you agree with the side. Explain what made the argument persuasive or weak."}]},
-{id:"s20",day:4,title:"The law the jury applies",art:"book",mins:10,
- ideas:[{t:"Elements",x:"Each charge has parts, called elements. The state must prove every element beyond a reasonable doubt."},
-        {t:"Unanimous",x:"In a felony trial all twelve jurors must agree on each verdict."}],
- elems:true,
- qs:[{id:"d20a",type:"d",min:30,q:"Pick one charge and explain in your own words what the state has to prove beyond a reasonable doubt.",hint:"For aggravated murder, pay special attention to “prior calculation and design.”"}]},
-{id:"s21",day:4,title:"Your verdict",art:"ballot",mins:15,verdict:true,
- ideas:[{t:"Decide before you learn",x:"Reach your own verdict using only what you have seen and the law. You will lock it in before the jury’s verdict is shown."}],
- qs:[{id:"q21a",type:"q",min:100,q:"Explain your verdict. For the most serious charge, name the evidence you relied on and explain how it meets, or fails to meet, the “beyond a reasonable doubt” standard.",hint:"Use evidence and the law, not just feelings. If you disagree with a classmate, explain why."}]},
-{id:"s22",day:4,title:"What the jury decided",art:"reveal",mins:10,reveal:true,
- qs:[{id:"q22a",type:"q",min:30,q:"How did your verdict compare to the jury’s? If it was different, what do you think accounts for the difference?",hint:"Think about evidence you weighed differently, or instructions you read differently."},
-     {id:"q22b",type:"q",min:40,q:"Which part of the trial procedure most shaped your thinking (openings, direct, cross, experts, closings)? Explain.",hint:"Pick one and describe a moment from it."},
-     {id:"q22c",type:"q",min:30,q:"What is one thing about how a jury trial works that surprised you, or that you would change?",hint:"It can be about evidence rules, the burden of proof, or how lawyers question witnesses."}]}
+ {
+  id: "s1",
+  day: 1,
+  title: "The case in brief",
+  art: "case",
+  mins: 8,
+  ideas: [
+   {
+    t: "You are the juror",
+    x: "Twelve people decide the facts. Your job is to listen, weigh the evidence, and follow the judge’s instructions about the law."
+   },
+   {
+    t: "A real, finished trial",
+    x: "This case went to trial in 2026. You will decide your own verdict before you learn what the jury decided, so please do not look up the outcome."
+   }
+  ],
+  more: [
+   "Early on February 16, 2026, Caleb Flynn, 40, called 911 from his home in Tipp City, Ohio. He said an intruder had broken in and shot his wife, Ashley Flynn, 37, a middle-school volleyball coach and mother of two. He told police he had been lying in his daughters’ bedroom when he heard a gunshot. Three days later he was arrested.",
+   "Flynn is a former worship pastor who auditioned for American Idol in 2013. He pleaded not guilty to aggravated murder, murder, felonious assault, and tampering with evidence. The trial was held in the Miami County Court of Common Pleas in Troy, Ohio, before Judge Jeannine Pratt.",
+   "Ashley Flynn was a real person who was loved by her family and community. Please discuss this case with respect for her, her daughters, and everyone affected."
+  ],
+  who: true,
+  read: [
+   {
+    t: "Case overview: State of Ohio v. Caleb Flynn (Hindustan Times)",
+    u: "https://www.hindustantimes.com/world-news/us-news/caleb-flynn-trial-was-ex-american-idol-contestant-having-an-affair-texts-in-focus-amid-ashleys-death-101789759994256.html?utm_source=gemini"
+   }
+  ],
+  qs: [
+   {
+    id: "d1a",
+    type: "d",
+    min: 15,
+    q: "What do you already know or assume about this case? What would you want to know before judging it?",
+    hint: "Be honest about first impressions. A good juror notices them and then tests them against the evidence."
+   }
+  ]
+ },
+ {
+  id: "s2",
+  day: 1,
+  title: "The rules for jurors",
+  art: "rules",
+  mins: 12,
+  ideas: [
+   {
+    t: "Presumption of innocence",
+    x: "The defendant starts the trial presumed innocent. The state must prove guilt. The defendant does not have to prove anything."
+   },
+   {
+    t: "Beyond a reasonable doubt",
+    x: "The highest standard in the law. Jurors must be “firmly convinced” of the truth of the charge."
+   },
+   {
+    t: "Not evidence",
+    x: "Opening statements, closing arguments, and the lawyers’ questions are not evidence. Testimony and exhibits are."
+   }
+  ],
+  more: [
+   "The judge tells jurors the rules before the lawyers speak. Jurors may take notes, must decide only from what is presented in court, and may not research the case or talk about it outside the jury room.",
+   "Ohio law (R.C. 2901.05) says reasonable doubt is present when, after jurors carefully consider and compare all the evidence, they cannot say they are firmly convinced of the truth of the charge. It is not a mere possible doubt. It is proof of such a character that an ordinary person would be willing to rely and act on it in the most important affairs of their own life."
+  ],
+  rule: {
+   t: "Ohio law: R.C. 2901.05",
+   x: "Every person is presumed innocent until proven guilty beyond a reasonable doubt, and the burden of proof stays with the state throughout the trial."
+  },
+  read: [
+   {
+    t: "Reasonable doubt standard in Ohio",
+    u: "https://www.columbuscriminalattorney.com/what-is-reasonable-doubt/"
+   }
+  ],
+  clips: [
+   {
+    id: "c2",
+    yt: "FAJOnzLDrVg",
+    t: "Jury instructions from the judge",
+    s: "Trial video (YouTube)",
+    start: 0,
+    end: 300,
+    est: 1,
+    watch: [
+     "What are jurors told they may and may not do?",
+     "How does the judge describe the state’s burden of proof?"
+    ]
+   }
+  ],
+  qs: [
+   {
+    id: "q2a",
+    type: "q",
+    min: 25,
+    q: "In your own words, what does “beyond a reasonable doubt” mean? Use Ohio’s definition in your answer.",
+    hint: "Use the phrases “firmly convinced” and “truth of the charge,” then explain what they mean in everyday language."
+   },
+   {
+    id: "d2b",
+    type: "d",
+    min: 20,
+    q: "Why does the law make the prosecution prove guilt instead of making the defendant prove innocence?",
+    hint: "Think about who has the power of the government and what could go wrong if the burden were reversed."
+   }
+  ]
+ },
+ {
+  id: "s3",
+  day: 1,
+  title: "Two kinds of evidence",
+  art: "evidence",
+  mins: 10,
+  ideas: [
+   {
+    t: "Direct evidence",
+    x: "Proves a fact without needing an inference. An eyewitness who saw the act, a video of it, or a confession."
+   },
+   {
+    t: "Circumstantial evidence",
+    x: "Points to a fact and asks you to infer the rest. Fingerprints, motive, timing, text messages, missing items."
+   },
+   {
+    t: "Same legal weight",
+    x: "Ohio law gives both kinds equal weight. A conviction can rest on circumstantial evidence alone if it proves every element beyond a reasonable doubt."
+   }
+  ],
+  more: [
+   "Think of snow on the ground. If you saw it fall, that is direct evidence. If you wake up and see snow and footprints, you infer it fell overnight and someone walked through it. That is circumstantial evidence. Strong circumstantial evidence can be very persuasive, and weak circumstantial evidence can be easy to explain away.",
+   "The Ohio Supreme Court has said that circumstantial and direct evidence have the same probative value (State v. Jenks, 1991). What jurors must ask is whether all the evidence, taken together, leaves them firmly convinced."
+  ],
+  rule: {
+   t: "Ohio law: State v. Jenks (1991)",
+   x: "Circumstantial evidence and direct evidence “inherently possess the same probative value.” Jurors weigh all of it against the beyond a reasonable doubt standard."
+  },
+  sort: {
+   title: "Quick check: direct or circumstantial?",
+   opts: [
+    "Direct",
+    "Circumstantial"
+   ],
+   items: [
+    {
+     t: "A neighbor testifies, “I watched Dana take the cash from the register.”",
+     a: 0,
+     why: "An eyewitness who saw the act itself is direct evidence."
+    },
+    {
+     t: "Dana’s fingerprints are on the cash drawer, and she has no job duties near it.",
+     a: 1,
+     why: "Fingerprints show she touched the drawer. The jury must infer she took the cash."
+    },
+    {
+     t: "A security video shows Dana putting money in her pocket.",
+     a: 0,
+     why: "A recording of the act itself is direct evidence."
+    },
+    {
+     t: "Dana bought an expensive phone the day after the cash went missing.",
+     a: 1,
+     why: "The timing suggests a link, but the jury must infer it."
+    },
+    {
+     t: "Dana texts a friend, “I took the money.”",
+     a: 0,
+     why: "A confession proves the fact directly."
+    },
+    {
+     t: "Wet footprints lead from the sink to the bedroom.",
+     a: 1,
+     why: "The jury must infer who made them and when."
+    }
+   ]
+  },
+  qs: [
+   {
+    id: "q3a",
+    type: "q",
+    min: 25,
+    q: "What is direct evidence, and what is circumstantial evidence?",
+    hint: "Define both in your own words and give one example of each that is not from the Flynn case."
+   }
+  ]
+ },
+ {
+  id: "s4",
+  day: 1,
+  title: "The state’s opening statement",
+  art: "opening",
+  mins: 14,
+  ideas: [
+   {
+    t: "A roadmap",
+    x: "The opening is each side’s preview of what it says the evidence will show. It is not evidence."
+   },
+   {
+    t: "State goes first",
+    x: "The state has the burden of proof, so it opens first and closes last."
+   }
+  ],
+  clips: [
+   {
+    id: "c4",
+    yt: "1C1nbHmC1lc",
+    t: "State’s opening statement and key exhibits",
+    s: "Trial video (YouTube)",
+    start: 0,
+    end: 480,
+    est: 1,
+    watch: [
+     "What is the state’s theory of what happened?",
+     "Which pieces of evidence does the prosecutor promise to show the jury?",
+     "Is there any direct evidence of who fired the gun?"
+    ]
+   }
+  ],
+  qs: [
+   {
+    id: "q4a",
+    type: "q",
+    min: 15,
+    q: "What direct evidence does the prosecution possess in this case?",
+    hint: "Look for a witness who saw the shooting, a recording of it, or a confession. If none exists, say so and explain what that means."
+   },
+   {
+    id: "q4b",
+    type: "q",
+    min: 25,
+    q: "Based on the Prosecution's opening statement, list three pieces of circumstantial evidence the state plans to use against Caleb Flynn.",
+    hint: "Name the evidence, then add a few words about what the state wants the jury to infer from each."
+   },
+   {
+    id: "q4c",
+    type: "q",
+    min: 30,
+    q: "How do you think the prosecution will use text messages, a missing weapon, and a damaged door to build a case without direct eyewitness testimony?",
+    hint: "Think of each piece as a link in a chain. What does each one suggest about motive, opportunity, or the intruder story?"
+   }
+  ]
+ },
+ {
+  id: "s5",
+  day: 1,
+  title: "The defense’s opening statement",
+  art: "opening",
+  mins: 11,
+  ideas: [
+   {
+    t: "The defense may wait or go now",
+    x: "The defense can open right after the state or hold its opening until its own case. This defense opened right away."
+   },
+   {
+    t: "Raising doubt",
+    x: "The defense does not have to prove anything. Its job is often to show the jury where the state’s proof falls short."
+   }
+  ],
+  clips: [
+   {
+    id: "c5",
+    yt: "5ieQh6BiIIg",
+    t: "Defense counsel’s opening statement",
+    s: "Trial video (YouTube)",
+    start: 0,
+    end: 360,
+    est: 1,
+    watch: [
+     "What does the defense admit?",
+     "What does the defense say the state has not shown?"
+    ]
+   }
+  ],
+  qs: [
+   {
+    id: "q5a",
+    type: "q",
+    min: 20,
+    q: "What does the defense say about the affair and text messages?",
+    hint: "Describe what the defense admits and what it argues those facts do and do not prove."
+   },
+   {
+    id: "d5b",
+    type: "d",
+    min: 20,
+    q: "Why might a defense attorney admit the affair in the opening statement instead of hiding it?",
+    hint: "Think about credibility with the jury and about when jurors will first hear damaging facts."
+   }
+  ]
+ },
+ {
+  id: "s6",
+  day: 1,
+  title: "Your first check-in as a juror",
+  art: "notebook",
+  mins: 8,
+  ideas: [
+   {
+    t: "Keep an open mind",
+    x: "No evidence has been presented yet. Jurors are told not to make up their minds until they have heard everything."
+   }
+  ],
+  qs: [
+   {
+    id: "q6a",
+    type: "q",
+    min: 30,
+    q: "Do you believe circumstantial evidence alone can prove guilt “beyond a reasonable doubt”? Explain your reasoning.",
+    hint: "Use what you learned about Ohio law and what you heard in the openings."
+   },
+   {
+    id: "q6b",
+    type: "q",
+    min: 20,
+    q: "What additional pieces of direct evidence would make the prosecution's case significantly stronger?",
+    hint: "Be specific: who would need to testify, or what recording or object would need to exist?"
+   },
+   {
+    id: "q6c",
+    type: "q",
+    min: 20,
+    q: "What are questions that you would like to be answered by the prosecution or defense to help you come to a verdict?",
+    hint: "Write two or three questions. Keep them for the rest of the unit and see which ones get answered."
+   }
+  ]
+ },
+ {
+  id: "s7",
+  day: 2,
+  title: "How evidence gets in, and who tells the story",
+  art: "stamp",
+  mins: 9,
+  ideas: [
+   {
+    t: "Foundation and authentication",
+    x: "Before an exhibit is shown to a jury, a witness must show what it is and why it can be trusted. Then the attorney asks the judge to admit it."
+   },
+   {
+    t: "Direct examination",
+    x: "The side that calls a witness questions that witness first, mostly with open-ended questions like “What happened next?” Leading questions are usually not allowed on direct."
+   },
+   {
+    t: "Lay witness",
+    x: "An ordinary person who testifies to what they personally saw, heard, or did, such as a 911 center director, a patrol officer, or a family member."
+   }
+  ],
+  more: [
+   "Evidence cannot just be handed to the jury. Each recording, photo, or document needs a witness to explain it, and the judge checks that it is relevant and allowed. The other side may object. The judge rules.",
+   "Lay witnesses must have personal knowledge. They may share limited opinions from their own perception, like “he seemed upset,” but not expert opinions. After direct, the other side may cross-examine."
+  ],
+  rule: {
+   t: "Ohio Rules of Evidence",
+   x: "Rule 401: relevant evidence. Rule 901: authentication. Rule 602: personal knowledge. Rule 701: lay opinion. Rule 611(C): leading questions are generally not allowed on direct."
+  },
+  qs: [
+   {
+    id: "d7a",
+    type: "d",
+    min: 15,
+    q: "Why do you think courts require a witness to “lay a foundation” before a recording or document can be shown to the jury?",
+    hint: "Think about how easily a recording could be edited, mislabeled, or misunderstood."
+   }
+  ],
+  sort: {
+   title: "Quick check: open-ended or leading?",
+   opts: [
+    "Open-ended",
+    "Leading"
+   ],
+   items: [
+    {
+     t: "“Tell the jury what you saw next.”",
+     a: 0,
+     why: "It invites the witness to tell the story in their own words."
+    },
+    {
+     t: "“You saw the car run the red light, didn’t you?”",
+     a: 1,
+     why: "It suggests the answer the attorney wants."
+    },
+    {
+     t: "“What happened after you arrived?”",
+     a: 0,
+     why: "Open-ended questions often begin with Who, What, How, or Describe."
+    },
+    {
+     t: "“The door was open when you got there, correct?”",
+     a: 1,
+     why: "It supplies the fact and asks the witness to agree."
+    },
+    {
+     t: "“How did you secure the recording?”",
+     a: 0,
+     why: "The witness has to explain the process."
+    },
+    {
+     t: "“Isn’t it true you never checked the lock?”",
+     a: 1,
+     why: "A leading question like this is allowed on cross-examination."
+    }
+   ]
+  }
+ },
+ {
+  id: "s9",
+  day: 2,
+  title: "The 911 witness: laying the foundation",
+  art: "phone",
+  mins: 14,
+  ideas: [
+   {
+    t: "The first witness",
+    x: "The state called the director of the county 911 center to explain how 911 calls are recorded and kept."
+   },
+   {
+    t: "What to track",
+    x: "Notice each step the prosecutor takes before the recording is played."
+   }
+  ],
+  clips: [
+   {
+    id: "c9",
+    yt: "TBlPqMj8rIg",
+    t: "Caleb Flynn breaks down hearing his own 911 call in court",
+    s: "Court TV",
+    start: 0,
+    end: 480,
+    est: 1,
+    watch: [
+     "How does the witness explain her job and her knowledge of the system?",
+     "How does she show the audio is accurate and unaltered?",
+     "When does the prosecutor ask for the recording to be admitted?"
+    ]
+   }
+  ],
+  qs: [
+   {
+    id: "q9a",
+    type: "q",
+    min: 20,
+    q: "How does the prosecution establish that Beth Hall is qualified to authenticate the 911 recording?",
+    hint: "Look at her job, her experience, and her knowledge of how recordings are made and stored."
+   },
+   {
+    id: "q9b",
+    type: "q",
+    min: 25,
+    q: "How does the prosecutor prove that the 911 audio file is secure, accurate, and has not been altered or edited?",
+    hint: "List the steps: how the call is recorded, where it is stored, who can access it, and how the copy was checked."
+   },
+   {
+    id: "q9c",
+    type: "q",
+    min: 15,
+    q: "At what point in the testimony does the prosecution officially ask the judge to enter the recording into evidence?",
+    hint: "Say what happened right before that moment and why the order matters."
+   },
+   {
+    id: "q9d",
+    type: "q",
+    min: 25,
+    q: "How well did the prosecutor do at asking open-ended questions (e.g., “Who,” “What,” “How”) to allow the witness to tell their story?",
+    hint: "Give at least one example of a question you thought worked well, or one that was more leading."
+   },
+   {
+    id: "q9e",
+    type: "q",
+    min: 20,
+    q: "Why do you think the defense attorney chose to ask “no questions” on cross-examination for this witness?",
+    hint: "Think about whether she said anything harmful to the defense, and whether cross would have helped."
+   }
+  ]
+ },
+ {
+  id: "s10",
+  day: 2,
+  title: "Hearing the 911 call",
+  art: "phone",
+  mins: 12,
+  ideas: [
+   {
+    t: "Evidence of what was said",
+    x: "Once admitted, the jury hears the call itself. Jurors judge sincerity, consistency, and details."
+   },
+   {
+    t: "Demeanor",
+    x: "Jurors may consider how a person sounds and acts, but should be careful not to read too much into emotion."
+   }
+  ],
+  clips: [
+   {
+    id: "c10",
+    yt: "TBlPqMj8rIg",
+    t: "Caleb Flynn breaks down hearing his own 911 call in court",
+    s: "Court TV",
+    start: 480,
+    end: 960,
+    est: 1,
+    watch: [
+     "What facts does he give the dispatcher?",
+     "What does the dispatcher ask or tell him?",
+     "How does he react in the courtroom as the call plays?"
+    ]
+   }
+  ],
+  qs: [
+   {
+    id: "q10a",
+    type: "q",
+    min: 25,
+    q: "What key facts does Caleb Flynn state to the 911 dispatcher during the call?",
+    hint: "Include where he says he was, what he heard, what he saw, and what he says about the garage door."
+   },
+   {
+    id: "q10b",
+    type: "q",
+    min: 25,
+    q: "How does the caller’s demeanor and physical reaction in court impact a jury’s view of witness credibility?",
+    hint: "Consider both how it could help him and how a juror might also look at it carefully."
+   },
+   {
+    id: "q10c",
+    type: "q",
+    min: 30,
+    q: "What did you pick up on in regards to the phone call? Does he sound sincere? Do you believe his story? What questions do you have after this phone call?",
+    hint: "Point to specific moments in the call. Then separate what you noticed from what you can prove."
+   }
+  ]
+ },
+ {
+  id: "s13",
+  day: 2,
+  title: "Cross-examination and the body camera",
+  art: "bodycam",
+  mins: 18,
+  ideas: [
+   {
+    t: "Cross-examination",
+    x: "The other side questions a witness after direct. Leading questions are allowed, and the goal is to test credibility or show gaps. Sometimes the best strategy is to ask nothing."
+   },
+   {
+    t: "Body camera as evidence",
+    x: "A body camera shows what the officer saw and heard. The officer who wore it authenticates it."
+   },
+   {
+    t: "Challenging the investigation",
+    x: "The defense may argue the police missed leads, rushed to a conclusion, or failed to protect the scene."
+   }
+  ],
+  more: [
+   "The state played about 24 minutes of more than two hours of body camera video from a responding patrol officer. The defense then cross-examined responding officers about what was and was not recorded and preserved.",
+   "Tone matters on cross. An attorney may be sharp with a professional witness whose choices can be challenged, and gentle with a grieving relative whose sympathy the jury may share."
+  ],
+  clips: [
+   {
+    id: "c13",
+    yt: "sJFDYO6J6_4",
+    t: "Caleb Flynn bodycam footage: “Ashley’s Dead, She’s Gone”",
+    s: "Court TV",
+    start: 1063,
+    end: 1663,
+    est: 1,
+    tn: "start 17:43 is from your assignment; the end is estimated",
+    watch: [
+     "What does Flynn say and do on the footage?",
+     "What does the defense ask the officer about evidence and the scene?"
+    ]
+   }
+  ],
+  qs: [
+   {
+    id: "q13a",
+    type: "q",
+    min: 25,
+    q: "What potential evidence does the defense criticize the officers for not preserving properly?",
+    hint: "Name the evidence and what the defense says could have been learned from it."
+   },
+   {
+    id: "q13b",
+    type: "q",
+    min: 30,
+    q: "How did the defense attempt to show that the responding officers failed to preserve potential evidence or immediately treat the scene as a possible crime scene?",
+    hint: "Describe the kinds of questions the attorney asked and what the officer admitted."
+   },
+   {
+    id: "q13c",
+    type: "q",
+    min: 25,
+    q: "What key behaviors, statements, or physical reactions from Caleb Flynn are captured on the responding officer’s body camera footage?",
+    hint: "Stick to what you can see and hear on the footage. Do not add what you assume."
+   },
+   {
+    id: "q13d",
+    type: "q",
+    min: 30,
+    q: "How might the prosecution and the defense interpret Caleb Flynn’s emotional reaction on the body camera footage differently for the jury?",
+    hint: "Write one sentence from each attorney’s point of view."
+   },
+   {
+    id: "q13e",
+    type: "q",
+    min: 30,
+    q: "Does the body camera evidence make you lean more toward guilt or innocence? Explain your reasoning.",
+    hint: "It is fine to say it did not move you much. Explain why."
+   }
+  ],
+  rule: {
+   t: "Ohio Rules of Evidence",
+   x: "Rule 611(B) and (C): cross-examination may cover the subject of direct and credibility, and leading questions are generally allowed."
+  }
+ },
+ {
+  id: "s14",
+  day: 2,
+  title: "Cross-examining a family witness",
+  art: "witness",
+  mins: 10,
+  ideas: [
+   {
+    t: "A different kind of witness",
+    x: "Ashley’s sister, Kayla Keyt, was Caleb Flynn’s sister-in-law. She testified about what he told the family and what she had believed at first."
+   },
+   {
+    t: "Compare the tone",
+    x: "Notice how the defense treats her compared with the officer on the last clip. You will compare a third cross-examination on a later station."
+   }
+  ],
+  clips: [
+   {
+    id: "c14",
+    yt: "BKrwojn2aXg",
+    t: "Caleb Flynn sister-in-law testimony",
+    s: "Trial video (YouTube)",
+    start: 1200,
+    end: 1680,
+    est: 1,
+    tn: "start 20:00 is from your assignment; the end is estimated",
+    watch: [
+     "What does she say Caleb told the family?",
+     "How does the defense attorney speak to her?",
+     "What does she say about when she learned of the affair?"
+    ]
+   }
+  ],
+  qs: [
+   {
+    id: "q14a",
+    type: "q",
+    min: 40,
+    q: "How did the demeanor & manner of questioning from the defense attorneys stay the same and differ between the two witnesses? Why do you think the attorney would treat these witnesses differently?",
+    hint: "Compare the officer on the last clip with Ashley’s sister. Think about what each witness could help or hurt."
+   },
+   {
+    id: "q14b",
+    type: "q",
+    min: 30,
+    q: "How does the victim’s sister’s testimony impact your view of the case? In what ways does her testimony matter to the case?",
+    hint: "Consider what it adds as evidence, and what it might do emotionally. Are those the same thing?"
+   }
+  ]
+ },
+ {
+  id: "sb0",
+  day: 3,
+  title: "Alleigha Botner takes the stand: how they met",
+  art: "witness",
+  mins: 30,
+  ideas: [
+   {
+    t: "Starting a direct examination",
+    x: "Direct usually begins with simple questions: who the witness is, her background, and whether she knows the defendant. She is often asked to point him out in court. Easy questions first help jurors get to know a witness before the harder testimony."
+   },
+   {
+    t: "Why the small details?",
+    x: "Where they met, the tattoos, the parking lot, and the trips to other cities were not a side story. The state used them to show how long the relationship lasted and how hard the two worked to hide it."
+   },
+   {
+    t: "Relevant, not unfairly prejudicial",
+    x: "Evidence must be relevant. A judge can exclude relevant evidence if its value is substantially outweighed by the danger of unfair prejudice. Embarrassing is not the same as unfair."
+   }
+  ],
+  more: [
+   "Botner, 24, was called by the state on Wednesday, September 23, 2026. Prosecutor Paul Watkins began by asking whether she knew Caleb Flynn, and she identified him in the courtroom. She said she met him in 2022 at the church where they both worked and worshiped. She was an intern, and he volunteered on the worship team. She said she did not know at first that he was married because he did not wear a wedding ring. (Reports say she was 20 or 21 when they met.)",
+   "She testified that he began to confide in her, said his wife had cheated on him two years earlier, and told her he saw his wife only as a roommate. She said the relationship became sexual in spring 2024, and that by then she knew he was married. “I never morally justified it,” she told jurors.",
+   "She said they bonded over Harry Potter, and that in March 2024 they got matching lightning-bolt tattoos. She showed the jury hers on her forearm and said his was in his armpit because “he didn’t want Ashley to see.” She said they met mostly at her apartment, sometimes in his pickup truck in the parking lot of a Chipotle in Vandalia, and traveled to Columbus, Cincinnati, and Indiana “to be away from people who would know us.” They also used several messaging apps for privacy.",
+   "She added that he once showed her a gun he kept in the center console of his truck. The state’s case involved a missing weapon, so jurors would later have to decide what, if anything, that detail proved.",
+   "When the prosecutor asked how she feels about Flynn now, she answered, “I hate him,” and said she believes he murdered his wife. Botner had her own attorney in the courtroom throughout her testimony. She has not been charged with a crime. Reports differ on some exact dates."
+  ],
+  rule: {
+   t: "Ohio Rules of Evidence",
+   x: "Rule 401: relevant evidence makes a fact that matters more or less likely. Rule 403: relevant evidence may be excluded if its probative value is substantially outweighed by the danger of unfair prejudice. Rule 602: a witness must have personal knowledge."
+  },
+  clips: [
+   {
+    id: "cb0a",
+    yt: "BdwRw4SS4es",
+    t: "Part 1, how they met: from Court TV’s “Caleb Flynn Hated Wife, Said She Cheated On Him: Mistress”",
+    s: "Court TV",
+    start: 0,
+    end: 420,
+    est: 1,
+    tn: "estimated: the clip is 45 minutes and opens her direct; adjust in teacher mode",
+    watch: [
+     "How does the prosecutor begin? What does she say about identifying Flynn and when and where they met?",
+     "What does she say Flynn told her about his marriage?"
+    ]
+   },
+   {
+    id: "cb0b",
+    yt: "BdwRw4SS4es",
+    t: "Part 2, keeping it secret: from the same Court TV clip",
+    s: "Court TV",
+    start: 420,
+    end: 840,
+    est: 1,
+    tn: "estimated: adjust in teacher mode to where the tattoo and parking lot testimony falls",
+    watch: [
+     "Where does she say they met, and why did they travel to other cities?",
+     "What does she say about the tattoos?"
+    ]
+   },
+   {
+    id: "cb0c",
+    yt: "BdwRw4SS4es",
+    t: "Part 3, how the relationship evolved: from the same Court TV clip",
+    s: "Court TV",
+    start: 840,
+    end: 1500,
+    est: 1,
+    also: true,
+    note: "Also watch this part, 14:00 to 25:00 of the same video, to see more detail about how their relationship evolved.",
+    tn: "requested window; continues from Part 2",
+    watch: [
+     "How does the relationship change over time, and what stays the same?",
+     "What new details does she add about their plans, their arguments, or Flynn’s promises?"
+    ]
+   }
+  ],
+  qs: [
+   {
+    id: "qb0a",
+    type: "q",
+    min: 25,
+    q: "How does the prosecutor begin Alleigha Botner’s direct examination? What do the first questions accomplish, and why is that a good way to start?",
+    hint: "Notice who she is, her connection to the defendant, and pointing him out in court."
+   },
+   {
+    id: "qb0b",
+    type: "q",
+    min: 30,
+    q: "How did Botner say she and Caleb Flynn met, and how did their relationship change over time? Which details come from her own personal knowledge?",
+    hint: "Use the order of events. Reports differ on some exact dates, so focus on the sequence."
+   },
+   {
+    id: "qb0c",
+    type: "q",
+    min: 35,
+    q: "Botner described meeting in a Chipotle parking lot, traveling to other cities to avoid people who knew them, and the matching Harry Potter tattoos, with his hidden from his wife. What does the state want jurors to conclude from these details?",
+    hint: "Think about concealment, how long and how serious the relationship was, and motive."
+   },
+   {
+    id: "qb0d",
+    type: "q",
+    min: 35,
+    q: "A judge may exclude relevant evidence if its value is substantially outweighed by the danger of unfair prejudice (Ohio Evid.R. 403). Are these personal details more useful to the jury or more embarrassing than useful? Explain.",
+    hint: "For each detail, say what fact it helps prove."
+   },
+   {
+    id: "qb0e",
+    type: "d",
+    min: 25,
+    q: "Botner admitted she knew the relationship was wrong. Does admitting her own wrongdoing make her more or less believable on direct examination?",
+    hint: "Think about why a prosecutor might want the jury to hear it from her first."
+   }
+  ]
+ },
+ {
+  id: "sb1",
+  day: 3,
+  title: "Alleigha Botner: direct examination and the texts",
+  art: "chat",
+  mins: 22,
+  ideas: [
+   {
+    t: "A lay witness who was there",
+    x: "Alleigha Botner, who had a relationship with Caleb Flynn, testified because she took part in the messages. She can say who wrote them and what was going on, which is what personal knowledge means."
+   },
+   {
+    t: "Putting texts in front of a jury",
+    x: "The state wanted jurors to hear the messages in her voice. The prosecutor asked her to read them aloud from binders of exhibits, which also let her explain what she understood them to mean."
+   },
+   {
+    t: "A party’s own words",
+    x: "What Flynn wrote can be used against him. The rules treat a party’s own statements differently from other hearsay."
+   }
+  ],
+  more: [
+   "Botner’s testimony lasted almost seven hours over September 23 and 24. The state said she and Flynn exchanged about 107,000 messages. Printouts were bound into dozens of books that were wheeled into the courtroom. She read many aloud, including messages in which Flynn said he hated his wife and wanted her gone, and a final exchange shortly after midnight on February 16 that included “Actions will come tomorrow.”",
+   "She told jurors she understood those words to mean he planned to talk to his wife about divorce that day. She also said that on February 15 she sent him screenshots about divorce proceedings and about deleting messages, because she was afraid their messages would come out. After she learned Ashley Flynn was dead, she began to believe Flynn had killed her.",
+   "Botner has not been charged with a crime, and she testified that prosecutors promised her nothing."
+  ],
+  rule: {
+   t: "Ohio Rules of Evidence",
+   x: "Rule 901: a witness with knowledge can authenticate an item. Rule 801(D)(2): a statement by the opposing party is not hearsay when offered against that party. Rule 701: a lay witness may give limited opinions based on what they perceived."
+  },
+  clips: [
+   {
+    id: "cb1",
+    yt: "wyjbPkV-GjQ",
+    t: "“Actions Will Come Tomorrow”: Alleigha Botner reads Caleb Flynn’s texts",
+    s: "Trial clip (YouTube)",
+    start: 0,
+    end: 0,
+    tn: "whole short clip; publisher not confirmed",
+    watch: [
+     "Which messages does she read?",
+     "What does she say Flynn still had to do?"
+    ]
+   },
+   {
+    id: "cb2",
+    yt: "UBK06UwaJtI",
+    t: "Caleb Flynn wished he could kill his wife, not go to jail: Mistress",
+    s: "Court TV",
+    start: 0,
+    end: 300,
+    est: 1,
+    watch: [
+     "What does Botner say Flynn repeatedly told her?",
+     "How does the prosecutor keep the testimony moving with short questions?"
+    ]
+   },
+   {
+    id: "cb3",
+    yt: "DUjeV1e4k9M",
+    t: "Pastor’s mistress reveals his first words after wife’s murder",
+    s: "Court TV",
+    start: 0,
+    end: 240,
+    est: 1,
+    watch: [
+     "What did she do the morning of February 16?",
+     "What does she say Flynn told her in person?"
+    ]
+   }
+  ],
+  qs: [
+   {
+    id: "qb1a",
+    type: "q",
+    min: 25,
+    q: "Why is Alleigha Botner a lay witness, and how does her role in the conversations let her help the state show the jury that the messages are genuine?",
+    hint: "Think about personal knowledge, who wrote the messages, and how she recognized them."
+   },
+   {
+    id: "qb1b",
+    type: "q",
+    min: 30,
+    q: "How did the prosecutor use direct examination to get the text messages in front of the jury? Why might having Botner read them aloud be more powerful than handing the jury the printouts?",
+    hint: "Think about voice, emotion, and what a witness can explain that a page cannot."
+   },
+   {
+    id: "qb1c",
+    type: "q",
+    min: 30,
+    q: "List three messages or statements from the clips that the state most wants the jury to remember. For each, explain what the state wants the jury to infer.",
+    hint: "These are circumstantial evidence. Name the message, then what it is supposed to suggest."
+   },
+   {
+    id: "qb1d",
+    type: "q",
+    min: 30,
+    q: "Botner said she understood “Actions will come tomorrow” to mean a divorce. How could the prosecution and the defense each interpret those words?",
+    hint: "Write one sentence from each attorney’s point of view."
+   },
+   {
+    id: "qb1e",
+    type: "q",
+    min: 35,
+    q: "Does Botner’s testimony make you lean more toward guilt or innocence? Explain your reasoning, and say what you would still want to know.",
+    hint: "Be specific about which testimony moved you and which did not."
+   }
+  ]
+ },
+ {
+  id: "sb2",
+  day: 3,
+  title: "Cross-examining Alleigha Botner",
+  art: "cross",
+  mins: 20,
+  ideas: [
+   {
+    t: "Testing credibility",
+    x: "Cross-examination can show that a witness has a bias, a motive, or a reason to be doubted, or it can bring out facts that help the questioner’s side."
+   },
+   {
+    t: "The defense’s goal here",
+    x: "The defense admitted Flynn wrote ugly, hurtful messages, but argued he wrote them to calm and please a jealous Botner, and that she herself understood he meant divorce, not murder."
+   },
+   {
+    t: "Weighing a witness",
+    x: "Jurors decide whether to believe all, part, or none of any witness’s testimony."
+   }
+  ],
+  more: [
+   "Defense attorney Emily Smith cross-examined Botner on September 24. She brought out that Botner wanted to marry Flynn and have children with him, resented Ashley Flynn, and had written messages of her own about wanting Ashley gone. Botner agreed she sent about twice as many messages as Flynn, that she sometimes asked him for videos proving he was home alone, and that he might have said he hated his wife to make her feel better.",
+   "Botner admitted she lied about the affair in her first FBI interview on February 20 to protect her reputation and her job, and that she searched online for unsolved homicides after Ashley Flynn’s death. Investigators did not search her home or car or collect her DNA or fingerprints. Botner said she did not believe Flynn was capable of killing his wife, and that she later told the FBI she suspected him because it was “way too much of a coincidence.”"
+  ],
+  rule: {
+   t: "Ohio Rules of Evidence",
+   x: "Rule 607: any party may attack a witness’s credibility. Rule 611(B) and (C): cross-examination may cover credibility, and leading questions are generally allowed."
+  },
+  clips: [
+   {
+    id: "cb4",
+    yt: "MOT82SSD1-8",
+    t: "Caleb Flynn’s mistress believed he killed his wife",
+    s: "Court TV",
+    start: 0,
+    end: 300,
+    est: 1,
+    watch: [
+     "What searches does the defense ask about?",
+     "How does Botner explain her suspicions and when she shared them?"
+    ]
+   },
+   {
+    id: "cb5",
+    yt: "EUQcV-kRL9A",
+    t: "Pastor’s mistress admits she resented his wife",
+    s: "Court TV",
+    start: 0,
+    end: 420,
+    est: 1,
+    watch: [
+     "What does the defense bring out about her feelings toward Ashley?",
+     "What reasons does Botner give for why Flynn wrote what he did?"
+    ]
+   }
+  ],
+  qs: [
+   {
+    id: "qb2a",
+    type: "q",
+    min: 30,
+    q: "What did the defense bring out about Botner’s feelings toward Ashley Flynn and her relationship with Caleb Flynn? Why would the defense want the jury to hear it?",
+    hint: "Think about bias and motive."
+   },
+   {
+    id: "qb2b",
+    type: "q",
+    min: 35,
+    q: "Botner admitted she lied to the FBI in her first interview and searched for unsolved homicides after Ashley died. How might each fact affect how much the jury believes her? How might the state respond?",
+    hint: "Consider both what the defense wants jurors to conclude and what the prosecutor could say on redirect."
+   },
+   {
+    id: "qb2c",
+    type: "q",
+    min: 30,
+    q: "How did the defense try to reframe Flynn’s hateful messages? What did Botner agree to that helps this reframing, and what did she not agree to?",
+    hint: "Look for jealousy, reassurance, and what she says she understood “free” to mean."
+   },
+   {
+    id: "qb2d",
+    type: "q",
+    min: 30,
+    q: "Botner said she did not believe Flynn could kill his wife, but later became suspicious. Does the way she changed her mind make you trust her more or less? Explain.",
+    hint: "Separate what she believed then from what she says now, and why her testimony might be shaped by that."
+   },
+   {
+    id: "qb2e",
+    type: "d",
+    min: 25,
+    q: "Compare the manner of this cross-examination with the cross-examinations of the officer and Ashley’s sister. What stayed the same, and what differed? Why?",
+    hint: "Think about what each witness could help or hurt, and how each was treated."
+   }
+  ]
+ },
+ {
+  id: "s15",
+  day: 4,
+  title: "Expert witnesses",
+  art: "expert",
+  mins: 12,
+  ideas: [
+   {
+    t: "Expert witness",
+    x: "A witness with special training or experience who may give opinions that help the jury understand the evidence."
+   },
+   {
+    t: "Qualified first",
+    x: "The attorney shows the witness’s training and experience, and the judge decides whether the witness may give opinions."
+   },
+   {
+    t: "Jurors decide",
+    x: "Jurors do not have to accept an expert’s opinion. They weigh it like any other testimony."
+   }
+  ],
+  more: [
+   "In this trial lay witnesses such as the 911 director and Alleigha Botner described facts they personally knew. Several witnesses gave opinions based on specialized training: an Ohio Bureau of Criminal Investigation (BCI) special agent who spent about 12 hours at the home and testified his concern was that the scene was staged as a burglary, a BCI firearms examiner, and digital forensic examiners who explained data on Flynn’s devices.",
+   "Cross-examination of an expert often targets what the expert did not do, the limits of the method, or whether the facts really support the opinion."
+  ],
+  rule: {
+   t: "Ohio Rules of Evidence",
+   x: "Rule 702: a witness qualified by knowledge, skill, experience, training, or education may testify in the form of an opinion when it will help the jury understand evidence or decide a fact."
+  },
+  clips: [
+   {
+    id: "c15",
+    yt: "aRN_L4tblps",
+    t: "Caleb Flynn’s defense clashes with crime scene agent",
+    s: "Court TV",
+    start: 0,
+    end: 0,
+    tn: "whole short clip: nothing to estimate",
+    watch: [
+     "What does the defense point out that the agent could not tell?",
+     "How does the agent respond when challenged?",
+     "Which questions are leading questions?"
+    ]
+   }
+  ],
+  qs: [
+   {
+    id: "q15a",
+    type: "q",
+    min: 30,
+    q: "Beth Hall, a police officer, and a family member are lay witnesses. The BCI agent gave an opinion about the scene. Why is he allowed to give an opinion when a lay witness mostly cannot?",
+    hint: "Use the words qualified, training, and helps the jury understand."
+   },
+   {
+    id: "q15b",
+    type: "q",
+    min: 30,
+    q: "How did the defense try to limit or challenge the agent’s conclusions on cross-examination?",
+    hint: "Name one question or point from the clip and explain what the defense wanted the jury to take from it."
+   },
+   {
+    id: "d15c",
+    type: "d",
+    min: 20,
+    q: "Do jurors have to accept an expert’s opinion? Why or why not?",
+    hint: "Think about experts who disagree, and about opinions that depend on facts the jury has not accepted."
+   }
+  ]
+ },
+ {
+  id: "s16",
+  day: 4,
+  title: "Your evidence ledger",
+  art: "ledger",
+  mins: 6,
+  ideas: [
+   {
+    t: "Weighing the evidence",
+    x: "Jurors do not need to decide each piece by itself. They weigh the whole picture."
+   }
+  ],
+  qs: [
+   {
+    id: "q16a",
+    type: "q",
+    min: 50,
+    q: "Evidence ledger: List the three pieces of evidence that most point toward guilt and the three that most raise doubt. Label each one direct or circumstantial.",
+    hint: "Use a short line for each: the evidence, direct or circumstantial, and why it matters."
+   }
+  ]
+ },
+ {
+  id: "s17",
+  day: 4,
+  title: "The defense rests",
+  art: "rests",
+  mins: 5,
+  ideas: [
+   {
+    t: "The right to remain silent",
+    x: "The Fifth Amendment protects a defendant from being forced to testify. The judge tells jurors not to hold it against him."
+   },
+   {
+    t: "The burden never shifts",
+    x: "If the defense calls no witnesses, the state must still prove every element beyond a reasonable doubt."
+   }
+  ],
+  more: [
+   "After the state called more than three dozen witnesses over seven days of testimony, it rested its case. The defense also rested without calling witnesses, and Flynn did not testify. Jurors had already heard his own words in the 911 call, the body camera video, his messages, and recorded police interviews."
+  ],
+  rule: {
+   t: "Constitution and Ohio law",
+   x: "Fifth Amendment: no one may be compelled to be a witness against himself. Griffin v. California (1965): the prosecution may not comment on a defendant’s silence."
+  },
+  qs: [
+   {
+    id: "q17a",
+    type: "q",
+    min: 25,
+    q: "Why can’t a jury hold it against a defendant that he did not testify?",
+    hint: "Connect your answer to the presumption of innocence and the Fifth Amendment."
+   }
+  ]
+ },
+ {
+  id: "s18",
+  day: 4,
+  title: "Closing arguments",
+  art: "closing",
+  mins: 15,
+  ideas: [
+   {
+    t: "Argument, not evidence",
+    x: "In closings each side argues what the evidence proves. Lawyers may argue reasonable inferences but may not add new facts."
+   },
+   {
+    t: "Order of closings",
+    x: "The state closes first, the defense second, and the state gets a short rebuttal because it has the burden."
+   },
+   {
+    t: "Proven versus not proven",
+    x: "The defense’s closing tried to separate what was proven from what was only suspected."
+   }
+  ],
+  clips: [
+   {
+    id: "c18",
+    yt: "ervJZaGVmsQ",
+    t: "State’s closing: Prosecuting attorney Matt Joseph",
+    s: "Courtroom Insider (YouTube)",
+    start: 0,
+    end: 360,
+    est: 1,
+    watch: [
+     "How does he connect the separate pieces of evidence?",
+     "What does he say about each element the state must prove?"
+    ]
+   },
+   {
+    id: "c19",
+    yt: "fnkY40ecA6Y",
+    t: "State’s rebuttal: Prosecuting attorney Paul Watkins",
+    s: "Courtroom Insider (YouTube)",
+    start: 0,
+    end: 300,
+    est: 1,
+    watch: [
+     "Which defense points does he answer?",
+     "What does he ask the jury to do?"
+    ]
+   }
+  ],
+  qs: [
+   {
+    id: "q18a",
+    type: "q",
+    min: 30,
+    q: "Identify two ways the prosecutor tries to connect separate pieces of circumstantial evidence into one story.",
+    hint: "For each, name the evidence and what he asks the jury to infer."
+   },
+   {
+    id: "q19a",
+    type: "q",
+    min: 30,
+    q: "What is the defense’s central argument in closing? Which piece of the state’s evidence does it attack most directly?",
+    hint: "Use the reading for the defense closing and the rebuttal clip to see what the state was answering."
+   },
+   {
+    id: "q19b",
+    type: "q",
+    min: 40,
+    q: "Which side’s closing argument was more effective, and why? Use at least one specific example.",
+    hint: "Effective does not mean you agree with the side. Explain what made the argument persuasive or weak."
+   }
+  ],
+  read: [
+   {
+    t: "Read: the defense closing (Dayton Daily News live coverage)",
+    u: "https://www.daytondailynews.com/local/crime/caleb-flynn-murder-trial-prosecution-giving-rebuttal/article_673d3137-c07f-4f3d-90f5-5969d68ee90b.html"
+   },
+   {
+    t: "Read: closing arguments as they happened (Courtroom Insider)",
+    u: "https://www.courtroominsider.com/2026/09/live-updates-closing-arguments-planned-for-day-8-of-caleb-flynn-murder-trial/"
+   }
+  ]
+ },
+ {
+  id: "s21",
+  day: 4,
+  title: "Your verdict",
+  art: "ballot",
+  mins: 14,
+  verdict: true,
+  ideas: [
+   {
+    t: "Elements",
+    x: "Each charge has parts, called elements. The state must prove every element beyond a reasonable doubt. In a felony trial all twelve jurors must agree."
+   },
+   {
+    t: "Decide before you learn",
+    x: "Reach your own verdict using only what you have seen and the law. You will lock it in before the jury’s verdict is shown."
+   }
+  ],
+  qs: [
+   {
+    id: "q21a",
+    type: "q",
+    min: 80,
+    q: "Explain your verdict. For the most serious charge, name the evidence you relied on and explain how it meets, or fails to meet, the “beyond a reasonable doubt” standard.",
+    hint: "Use evidence and the law, not just feelings. If you disagree with a classmate, explain why."
+   }
+  ],
+  elems: true
+ },
+ {
+  id: "s22",
+  day: 4,
+  title: "What the jury decided",
+  art: "reveal",
+  mins: 7,
+  reveal: true,
+  qs: [
+   {
+    id: "q22a",
+    type: "q",
+    min: 25,
+    q: "How did your verdict compare to the jury’s? If it was different, what do you think accounts for the difference?",
+    hint: "Think about evidence you weighed differently, or instructions you read differently."
+   },
+   {
+    id: "q22b",
+    type: "q",
+    min: 30,
+    q: "Which part of the trial procedure most shaped your thinking (openings, direct, cross, experts, closings)? Explain.",
+    hint: "Pick one and describe a moment from it."
+   }
+  ]
+ }
 ];
 var VERDICT_COUNTS=[
- {id:"agg",t:"Aggravated murder",x:"Caused Ashley Flynn’s death purposely and with prior calculation and design (R.C. 2903.01)."},
- {id:"mur",t:"Murder",x:"Purposely caused her death (R.C. 2903.02). This also includes causing death while committing felonious assault."},
- {id:"fel",t:"Felonious assault",x:"Knowingly caused serious physical harm, or caused harm with a deadly weapon (R.C. 2903.11)."},
- {id:"tam",t:"Tampering with evidence",x:"Knowing an investigation was likely, altered or hid something to keep it from being used as evidence (R.C. 2921.12)."}];
+ {
+  id: "agg",
+  t: "Aggravated murder",
+  x: "Caused Ashley Flynn’s death purposely and with prior calculation and design (R.C. 2903.01)."
+ },
+ {
+  id: "mur",
+  t: "Murder",
+  x: "Purposely caused her death (R.C. 2903.02). This also includes causing death while committing felonious assault."
+ },
+ {
+  id: "fel",
+  t: "Felonious assault",
+  x: "Knowingly caused serious physical harm, or caused harm with a deadly weapon (R.C. 2903.11)."
+ },
+ {
+  id: "tam",
+  t: "Tampering with evidence",
+  x: "Knowing an investigation was likely, altered or hid something to keep it from being used as evidence (R.C. 2921.12)."
+ }
+];
 var REVEAL={
- facts:["On September 29, 2026, after about two to two and a half hours of deliberation (reports vary), the jury found Caleb Flynn guilty on all nine counts. Each juror was asked in open court whether the verdict was theirs.","The nine counts were one count of aggravated murder, three of murder, two of felonious assault, and three of tampering with evidence. The jury also found he used a firearm in connection with several counts.","The defense called no witnesses, and Flynn did not testify. After the verdict, defense attorney Patrick Mulligan said he expected an appeal and that there was “a lack of evidence on prior calculation and design.”","On October 5, 2026, Judge Jeannine Pratt sentenced Flynn to life in prison without the possibility of parole. Flynn told the court, “I did not kill my wife,” and said he would continue to fight for his innocence."],
- src:[{t:"ABC News: verdict and closing arguments",u:"https://abcnews.com/US/caleb-flynn-former-american-idol-contestant-murder-trial-wife-closing-arguments/story?id=136849417"},{t:"CBS News: sentencing",u:"https://www.cbsnews.com/news/caleb-flynn-sentenced-american-idol-contestant/"},{t:"NBC News: jury reaches verdict",u:"https://www.nbcnews.com/news/us-news/jury-reaches-verdict-case-caleb-flynn-american-idol-singer-charged-wif-rcna600448"}]};
+ facts: [
+  "On September 29, 2026, after about two to two and a half hours of deliberation (reports vary), the jury found Caleb Flynn guilty on all nine counts. Each juror was asked in open court whether the verdict was theirs.",
+  "The nine counts were one count of aggravated murder, three of murder, two of felonious assault, and three of tampering with evidence. The jury also found he used a firearm in connection with several counts.",
+  "The defense called no witnesses, and Flynn did not testify. After the verdict, defense attorney Patrick Mulligan said he expected an appeal and that there was “a lack of evidence on prior calculation and design.”",
+  "On October 5, 2026, Judge Jeannine Pratt sentenced Flynn to life in prison without the possibility of parole. Flynn told the court, “I did not kill my wife,” and said he would continue to fight for his innocence."
+ ],
+ src: [
+  {
+   t: "ABC News: verdict and closing arguments",
+   u: "https://abcnews.com/US/caleb-flynn-former-american-idol-contestant-murder-trial-wife-closing-arguments/story?id=136849417"
+  },
+  {
+   t: "CBS News: sentencing",
+   u: "https://www.cbsnews.com/news/caleb-flynn-sentenced-american-idol-contestant/"
+  },
+  {
+   t: "NBC News: jury reaches verdict",
+   u: "https://www.nbcnews.com/news/us-news/jury-reaches-verdict-case-caleb-flynn-american-idol-singer-charged-wif-rcna600448"
+  }
+ ]
+};
 var WHO=[
- ["Judge Jeannine Pratt","Presides over the trial, rules on objections, and instructs the jury on the law."],
- ["Paul Watkins and Matthew Joseph","Miami County prosecutors. They represent the State of Ohio and have the burden of proof."],
- ["L. Patrick Mulligan and Emily Smith","Defense attorneys for Caleb Flynn."],
- ["Caleb Flynn","The defendant. Presumed innocent unless the state proves guilt beyond a reasonable doubt."],
- ["The jury","Twelve jurors who decide the facts and the verdict. Four alternates also sat through the trial."],
- ["Witnesses","Lay witnesses describe what they saw, heard, or did. Expert witnesses give opinions based on special training."]];
+ [
+  "Judge Jeannine Pratt",
+  "Presides over the trial, rules on objections, and instructs the jury on the law."
+ ],
+ [
+  "Paul Watkins and Matthew Joseph",
+  "Miami County prosecutors. They represent the State of Ohio and have the burden of proof."
+ ],
+ [
+  "L. Patrick Mulligan and Emily Smith",
+  "Defense attorneys for Caleb Flynn."
+ ],
+ [
+  "Caleb Flynn",
+  "The defendant. Presumed innocent unless the state proves guilt beyond a reasonable doubt."
+ ],
+ [
+  "The jury",
+  "Twelve jurors who decide the facts and the verdict. Four alternates also sat through the trial."
+ ],
+ [
+  "Witnesses",
+  "Lay witnesses describe what they saw, heard, or did. Expert witnesses give opinions based on special training."
+ ]
+];
 var STEPS=[
- ["Jury selection","Attorneys and the judge question possible jurors.",1],
- ["Preliminary instructions","The judge explains the rules for jurors.",2],
- ["Opening statements","State, then defense. A preview, not evidence.",4],
- ["State’s case","Direct, cross, and sometimes redirect for each witness.",9],
- ["Defense case","The defense may call witnesses or rest.",17],
- ["Closing arguments","State, defense, then state’s rebuttal.",18],
- ["Final instructions","The judge reads the law the jury must apply.",20],
- ["Deliberations and verdict","Jurors discuss privately and must agree unanimously.",21],
- ["Sentencing","If there is a conviction, the judge imposes the sentence.",22]];
+ [
+  "Jury selection",
+  "Attorneys and the judge question possible jurors.",
+  "s1"
+ ],
+ [
+  "Preliminary instructions",
+  "The judge explains the rules for jurors.",
+  "s2"
+ ],
+ [
+  "Opening statements",
+  "State, then defense. A preview, not evidence.",
+  "s4"
+ ],
+ [
+  "State’s case",
+  "Direct, cross, and sometimes redirect for each witness.",
+  "s9"
+ ],
+ [
+  "Defense case",
+  "The defense may call witnesses or rest.",
+  "s17"
+ ],
+ [
+  "Closing arguments",
+  "State, defense, then state’s rebuttal.",
+  "s18"
+ ],
+ [
+  "Final instructions",
+  "The judge reads the law the jury must apply.",
+  "s21"
+ ],
+ [
+  "Deliberations and verdict",
+  "Jurors discuss privately and must agree unanimously.",
+  "s21"
+ ],
+ [
+  "Sentencing",
+  "If there is a conviction, the judge imposes the sentence.",
+  "s22"
+ ]
+];
 var TERMS=[
- ["Burden of proof","The duty to prove the case. In a criminal trial it stays with the state."],
- ["Beyond a reasonable doubt","Proof that leaves jurors firmly convinced of the truth of the charge."],
- ["Direct evidence","Evidence that proves a fact without needing an inference."],
- ["Circumstantial evidence","Evidence from which a fact may be inferred."],
- ["Foundation","The testimony that shows an exhibit is what it claims to be."],
- ["Authentication","Showing that an item is genuine."],
- ["Direct examination","Questions from the side that called the witness."],
- ["Cross-examination","Questions from the other side, often leading."],
- ["Lay witness","A witness who reports what they personally saw, heard, or did."],
- ["Expert witness","A qualified witness who may give opinions based on special training."],
- ["Hearsay","An out-of-court statement offered to prove its truth, with many exceptions."],
- ["Objection","A lawyer’s formal challenge to a question or evidence."],
- ["Elements","The parts of a charge that the state must prove."]];
+ [
+  "Burden of proof",
+  "The duty to prove the case. In a criminal trial it stays with the state."
+ ],
+ [
+  "Beyond a reasonable doubt",
+  "Proof that leaves jurors firmly convinced of the truth of the charge."
+ ],
+ [
+  "Direct evidence",
+  "Evidence that proves a fact without needing an inference."
+ ],
+ [
+  "Circumstantial evidence",
+  "Evidence from which a fact may be inferred."
+ ],
+ [
+  "Foundation",
+  "The testimony that shows an exhibit is what it claims to be."
+ ],
+ [
+  "Authentication",
+  "Showing that an item is genuine."
+ ],
+ [
+  "Direct examination",
+  "Questions from the side that called the witness."
+ ],
+ [
+  "Cross-examination",
+  "Questions from the other side, often leading."
+ ],
+ [
+  "Lay witness",
+  "A witness who reports what they personally saw, heard, or did."
+ ],
+ [
+  "Expert witness",
+  "A qualified witness who may give opinions based on special training."
+ ],
+ [
+  "Hearsay",
+  "An out-of-court statement offered to prove its truth, with many exceptions."
+ ],
+ [
+  "Objection",
+  "A lawyer’s formal challenge to a question or evidence."
+ ],
+ [
+  "Elements",
+  "The parts of a charge that the state must prove."
+ ]
+];
 var ELEMS=[
- ["Aggravated murder (R.C. 2903.01)","Purposely caused the death of another, with prior calculation and design.","“Prior calculation and design” means planning more than a spur-of-the-moment act."],
- ["Murder (R.C. 2903.02)","Purposely caused the death of another. A separate count covers causing death as a result of committing felonious assault.","“Purposely” means it was the person’s specific intention."],
- ["Felonious assault (R.C. 2903.11)","Knowingly caused serious physical harm to another, or caused physical harm with a deadly weapon.","“Knowingly” means aware that the conduct will probably cause that result."],
- ["Tampering with evidence (R.C. 2921.12)","Knowing an investigation was in progress or likely, altered, destroyed, or hid something to impair its use as evidence.","Counts in this case involved the missing firearm, the garage door, and digital messages."]];
+ [
+  "Aggravated murder (R.C. 2903.01)",
+  "Purposely caused the death of another, with prior calculation and design.",
+  "“Prior calculation and design” means planning more than a spur-of-the-moment act."
+ ],
+ [
+  "Murder (R.C. 2903.02)",
+  "Purposely caused the death of another. A separate count covers causing death as a result of committing felonious assault.",
+  "“Purposely” means it was the person’s specific intention."
+ ],
+ [
+  "Felonious assault (R.C. 2903.11)",
+  "Knowingly caused serious physical harm to another, or caused physical harm with a deadly weapon.",
+  "“Knowingly” means aware that the conduct will probably cause that result."
+ ],
+ [
+  "Tampering with evidence (R.C. 2921.12)",
+  "Knowing an investigation was in progress or likely, altered, destroyed, or hid something to impair its use as evidence.",
+  "Counts in this case involved the missing firearm, the garage door, and digital messages."
+ ]
+];
+
 
 /* ============ ILLUSTRATIONS: flat vector scenes drawn in code ============ */
 var FONT='font-family="system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif"';
@@ -469,6 +1722,7 @@ ART.ballot=function(p){var c=pc(p);var o=R(160,40,160,202,"#fff",14);for(var i=0
 ART.reveal=function(p){var c=pc(p);return sc(p,R(120,84,240,148,"#fff",14)+PA("M120,92 L240,176 L360,92 Z",c)+C(240,176,22,GOLD)+C(240,176,12,"none",' stroke="#fff" stroke-width="4"'),"A sealed envelope");};
 ART.jury=function(p){var c=pc(p),o="";for(var i=0;i<6;i++){var x=95+i*58;o+=C(x,114,20,c)+PA("M"+(x-28)+",204 Q"+x+",144 "+(x+28)+",204 Z",c,' opacity=".85"');}o+=R(66,204,348,26,"#fff",10);return sc(p,o,"A jury box");};
 ART.notebook=function(p){var c=pc(p);var o=R(168,40,150,208,c,12);for(var i=0;i<6;i++)o+=C(168,66+i*30,7,"#fff");o+=lines(196,72,96,5,30,"#ffffffaa");return sc(p,o,"A juror's notebook");};
+
 
 /* ============ WORD DOCUMENT (.docx) BUILT IN THE BROWSER, NO LIBRARY NEEDED ============ */
 function crc32(buf){var t=crc32.t;if(!t){t=crc32.t=[];for(var n=0;n<256;n++){var c=n;for(var k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0;}}var c2=0xFFFFFFFF;for(var i=0;i<buf.length;i++)c2=t[(c2^buf[i])&255]^(c2>>>8);return(c2^0xFFFFFFFF)>>>0;}
@@ -539,9 +1793,30 @@ function buildDocx(opts){
   return zipStore([{name:"[Content_Types].xml",text:ct},{name:"_rels/.rels",text:rels},{name:"word/document.xml",text:doc},{name:"word/styles.xml",text:styles},{name:"word/_rels/document.xml.rels",text:drels},{name:"word/header1.xml",text:hdr1},{name:"word/header2.xml",text:hdr2},{name:"docProps/core.xml",text:core}],"application/vnd.openxmlformats-officedocument.wordprocessingml.document");
 }
 
+
 /* ============ STATE ============ */
 function fresh(){return{name:"",mode:"class",started:false,ans:{},seen:{},sort:{},verdict:{},locked:false,lockedOn:"",dl:{}};}
-function load(){try{var r=localStorage.getItem(CFG.key);if(r)return Object.assign(fresh(),JSON.parse(r));}catch(e){}return fresh();}
+function parseKey(k){try{var r=localStorage.getItem(k);return r?JSON.parse(r):null;}catch(e){return null;}}
+function mergeSaves(a,b){
+  /* b is the newer save. Written work is never lost: for every prompt the longer text wins. */
+  var m=Object.assign(fresh(),a,b);
+  m.ans={};var ids={};Object.keys(a.ans||{}).concat(Object.keys(b.ans||{})).forEach(function(k){ids[k]=1;});
+  Object.keys(ids).forEach(function(k){var x=(a.ans||{})[k]||"",y=(b.ans||{})[k]||"";m.ans[k]=y.length>=x.length?y:x;});
+  m.seen=Object.assign({},a.seen||{},b.seen||{});m.sort=Object.assign({},a.sort||{},b.sort||{});
+  Object.keys(a.sort||{}).forEach(function(k){m.sort[k]=Object.assign({},a.sort[k],(b.sort||{})[k]||{});});
+  m.verdict=Object.assign({},a.verdict||{},b.verdict||{});
+  m.locked=!!(a.locked||b.locked);m.lockedOn=b.lockedOn||a.lockedOn||"";
+  m.started=!!(a.started||b.started);m.name=b.name||a.name||"";m.mode=b.mode||a.mode||"class";
+  return m;
+}
+function load(){
+  var cur=parseKey(CFG.key);
+  if(cur)return Object.assign(fresh(),cur);
+  var merged=null;
+  (CFG.legacy||[]).forEach(function(k){var o=parseKey(k);if(!o)return;merged=merged?mergeSaves(merged,o):Object.assign(fresh(),o);});
+  if(merged){merged.dl={};try{localStorage.setItem(CFG.key,JSON.stringify(merged));}catch(e){}return merged;}
+  return fresh();
+}
 function save(){try{localStorage.setItem(CFG.key,JSON.stringify(S));}catch(e){}}
 var S=window.S=load();
 function $(id){return document.getElementById(id);}
@@ -626,7 +1901,7 @@ function stepsOf(st){
 function stepName(s){return s==="learn"?"Learn":s==="watch"?"Watch":"Respond";}
 function openStation(id,step){
   var st=byId(id);if(!st)return;
-  if(isLocked(st)){toast("Lock in your verdict at station 21 first. Then this station opens.");return;}
+  if(isLocked(st)){toast("Lock in your verdict at station "+numOf(byId("s21"))+" first. Then this station opens.");return;}
   S.seen[id]=1;save();cur.id=id;var steps=stepsOf(st);cur.step=steps.indexOf(step)>=0?step:steps[0];renderPanel();
 }
 function closePanel(){var ov=$("ov");ov.hidden=true;ov.replaceChildren();document.body.classList.remove("noscroll");cur.id=null;buildTimeline();}
@@ -684,7 +1959,6 @@ function watchBody(st){
   var b=el("div",{});
   b.append(el("p",{class:"hint2",text:"Watch only the window shown for each clip. The video will start there."}));
   st.clips.forEach(function(c){b.append(clipCard(c));});
-  b.append(el("p",{class:"vnote",text:"Some moments are emotional. You can pause, look away, or skip a clip, and tell your teacher if you need to."}));
   return b;
 }
 function clipCard(c){
@@ -693,7 +1967,8 @@ function clipCard(c){
     holder.replaceChildren(el("div",{class:"vframe"},el("iframe",{src:embedUrl(c),title:c.t,allow:"autoplay; fullscreen; encrypted-media; picture-in-picture",allowfullscreen:true,referrerpolicy:"strict-origin-when-cross-origin"})));
   }},el("span",{class:"vplay"},"▶"),el("span",{},"Play this clip")));
   return el("div",{class:"clip"},
-    el("div",{class:"cw"},el("span",{class:"win",text:windowLabel(c)})),
+    el("div",{class:"cw"},c.also?el("span",{class:"win also",text:"Also watch"}):null,el("span",{class:"win",text:windowLabel(c)})),
+    c.note?el("p",{class:"cnote",text:c.note}):null,
     el("div",{class:"ct2"},el("b",{text:c.t}),el("span",{text:c.s})),
     c.watch?el("div",{class:"wf"},el("b",{text:"Watch for"}),el("ul",{},c.watch.map(function(w){return el("li",{text:w});}))):null,
     holder,el("a",{class:"vlink",href:watchUrl(c),target:"_blank",rel:"noopener noreferrer"},"Open on YouTube ↗"));
@@ -731,9 +2006,9 @@ function verdictBlock(){
 function lockReady(){var st=byId("s21");return VERDICT_COUNTS.every(function(c){return S.verdict[c.id];})&&qOk(prompts(st)[0]);}
 function lockBlock(st){
   var wrap=el("div",{id:"lockwrap"});
-  if(S.locked){wrap.append(el("div",{class:"lockmsg",text:"Your verdict is locked in. You can still improve your explanation. Station 22 is now open."}));return wrap;}
+  if(S.locked){wrap.append(el("div",{class:"lockmsg",text:"Your verdict is locked in. You can still improve your explanation. Station "+numOf(byId("s22"))+" is now open."}));return wrap;}
   wrap.append(el("button",{type:"button",class:"btn",id:"lockbtn",disabled:!lockReady(),onclick:function(){
-    if(!lockReady())return;S.locked=true;S.lockedOn=new Date().toISOString();save();toast("Verdict locked in. Station 22 is open.");buildTimeline();renderPanel();}},"Lock in my verdict and open Station 22"));
+    if(!lockReady())return;S.locked=true;S.lockedOn=new Date().toISOString();save();toast("Verdict locked in. Station "+numOf(byId("s22"))+" is open.");buildTimeline();renderPanel();}},"Lock in my verdict and open Station "+numOf(byId("s22"))));
   wrap.append(el("div",{class:"lockmsg",text:"Choose a vote for every charge and write at least "+prompts(st)[0].min+" words explaining your reasoning. Once you lock it in, you will see what the jury decided."}));
   return wrap;
 }
@@ -767,6 +2042,78 @@ function downloadNotebook(dayIds){
 function copyNotebook(dayIds){var t=notebookText(dayIds);try{navigator.clipboard.writeText(t).then(function(){toast("Copied. Paste it into a document.");},function(){fallbackCopy(t);});}catch(e){fallbackCopy(t);}}
 function fallbackCopy(t){var ta=el("textarea",{style:"position:fixed;opacity:0"});ta.value=t;document.body.append(ta);ta.select();try{document.execCommand("copy");toast("Copied. Paste it into a document.");}catch(e){toast("Could not copy. Use the download button instead.");}ta.remove();}
 
+/* ============ MOVE PROGRESS TO ANOTHER DEVICE ============ */
+var APP_ID="flynn-trial-lab";
+function bad(k){return k==="__proto__"||k==="constructor"||k==="prototype"||!/^[A-Za-z0-9_]{1,24}$/.test(k);}
+function cleanSave(d){
+  if(!d||typeof d!=="object")return null;
+  var o=fresh();
+  o.name=typeof d.name==="string"?d.name.slice(0,80):"";
+  o.mode=d.mode==="solo"?"solo":"class";o.started=true;
+  Object.keys(d.ans||{}).forEach(function(k){if(!bad(k)&&typeof d.ans[k]==="string")o.ans[k]=d.ans[k].slice(0,20000);});
+  Object.keys(d.seen||{}).forEach(function(k){if(!bad(k)&&d.seen[k])o.seen[k]=1;});
+  Object.keys(d.sort||{}).forEach(function(k){if(bad(k)||!d.sort[k]||typeof d.sort[k]!=="object")return;o.sort[k]={};Object.keys(d.sort[k]).forEach(function(i){if(/^\d{1,3}$/.test(i)&&(d.sort[k][i]===0||d.sort[k][i]===1))o.sort[k][i]=d.sort[k][i];});});
+  VERDICT_COUNTS.forEach(function(c){var v=(d.verdict||{})[c.id];if(v==="G"||v==="N")o.verdict[c.id]=v;});
+  o.locked=!!d.locked;o.lockedOn=typeof d.lockedOn==="string"?d.lockedOn.slice(0,40):"";
+  return o;
+}
+function makeCode(){
+  var p=JSON.stringify({app:APP_ID,v:1,saved:new Date().toISOString(),data:{name:S.name,mode:S.mode,ans:S.ans,seen:S.seen,sort:S.sort,verdict:S.verdict,locked:S.locked,lockedOn:S.lockedOn}});
+  return"FLYNN1."+btoa(unescape(encodeURIComponent(p)))+"."+hash8(p);
+}
+function parseTransfer(text){
+  text=String(text||"").replace(/\s+/g,"");
+  var m=text.match(/FLYNN1\.([A-Za-z0-9+\/=]+)\.([0-9A-F]{4}-[0-9A-F]{4})/);
+  if(!m)throw new Error("That does not look like a progress file or code from this site.");
+  var json;try{json=decodeURIComponent(escape(atob(m[1])));}catch(e){throw new Error("That code is damaged. Make sure you copied all of it.");}
+  if(hash8(json)!==m[2])throw new Error("That code is incomplete or was changed. Copy it again.");
+  var obj;try{obj=JSON.parse(json);}catch(e){throw new Error("That code is damaged. Make sure you copied all of it.");}
+  var clean=obj&&obj.app===APP_ID?cleanSave(obj.data):null;
+  if(!clean)throw new Error("That code is not from this site.");
+  return{clean:clean,saved:obj.saved};
+}
+function hasProgress(){return Object.keys(S.ans).some(function(k){return wc(S.ans[k])>0;})||Object.keys(S.seen).length>0;}
+function downloadProgress(){
+  var blob=new Blob([makeCode()],{type:"text/plain"}),a=document.createElement("a"),url=URL.createObjectURL(blob);
+  var n=String(S.name||"Student").replace(/[^A-Za-z0-9]+/g,"-").replace(/^-+|-+$/g,"")||"Student";
+  a.href=url;a.download="Flynn-Trial-Progress-"+n+".txt";document.body.append(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url);},4000);
+  toast("Progress file downloaded. Open it on your other device.");
+}
+function copyProgress(){var t=makeCode();try{navigator.clipboard.writeText(t).then(function(){toast("Progress code copied. Paste it on your other device.");},function(){fallbackCopy(t);});}catch(e){fallbackCopy(t);}}
+function offerTransfer(text,box){
+  box.replaceChildren();var r;
+  try{r=parseTransfer(text);}catch(e){box.append(el("div",{class:"lockmsg bad",text:e.message}));return;}
+  var n=Object.keys(r.clean.ans).filter(function(k){return wc(r.clean.ans[k])>0;}).length;
+  var when="";try{when=" Saved "+new Date(r.saved).toLocaleString("en-US",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"})+".";}catch(e){}
+  box.append(el("div",{class:"lockmsg"},el("b",{text:"Progress for "+(r.clean.name||"a student")+": "+n+" written response"+(n===1?"":"s")+(r.clean.locked?", verdict locked in":"")+"."}),el("br"),
+    "Loading combines it with anything already on this device. For each question, the longer answer is kept, so nothing is lost."+when+(S.started&&S.name&&r.clean.name&&S.name!==r.clean.name?" Note: this progress is under a different name than the one on this device.":"")));
+  box.append(el("p",{},el("button",{type:"button",class:"btn sm",onclick:function(){applyTransfer(r.clean);}},"Combine and load"),el("span",{text:" "}),el("button",{type:"button",class:"btn ghost sm",onclick:function(){box.replaceChildren();}},"Cancel")));
+}
+function applyTransfer(clean){
+  var wasStarted=S.started,keepName=S.name,keepMode=S.mode;
+  var m=mergeSaves(S,clean);m.dl=S.dl||{};
+  m.name=(wasStarted&&keepName)?keepName:(clean.name||keepName);m.mode=wasStarted?keepMode:clean.mode;m.started=true;
+  S=window.S=m;save();
+  var n=Object.keys(S.ans).filter(function(k){return wc(S.ans[k])>0;}).length;
+  closeDrawer();toast("Progress loaded: "+n+" written response"+(n===1?"":"s")+".");
+  if($("nm"))$("nm").value=S.name;
+  if(!$("cover").hidden){showApp();route();}else{setMode(S.mode);buildTimeline();}
+}
+function renderTransfer(body){
+  $("drt").textContent="Move my progress";
+  body.append(el("h3",{text:"1. Save it from this device"}),
+    el("p",{text:"Make a progress file or code, then get it to your other device by emailing it to yourself or putting it in Google Drive."}),
+    el("p",{},el("button",{type:"button",class:"btn sm",disabled:!hasProgress(),onclick:downloadProgress},"Download progress file"),el("span",{text:" "}),el("button",{type:"button",class:"btn ghost sm",disabled:!hasProgress(),onclick:copyProgress},"Copy progress code")));
+  if(!hasProgress())body.append(el("p",{class:"vnote",text:"There is no progress on this device yet."}));
+  var box=el("div",{id:"xferres"});
+  var ta=el("textarea",{class:"ans",id:"xfertxt",style:"min-height:70px",placeholder:"Paste a progress code here","aria-label":"Paste a progress code"});
+  body.append(el("h3",{text:"2. Load it on the other device"}),
+    el("p",{text:"Choose the progress file, or paste the code."}),
+    el("p",{},el("input",{type:"file",id:"xferfile",accept:".txt,.json,text/plain","aria-label":"Choose a progress file",onchange:function(e){var f=e.target.files&&e.target.files[0];if(!f)return;var fr=new FileReader();fr.onload=function(){offerTransfer(fr.result,box);};fr.onerror=function(){box.replaceChildren(el("div",{class:"lockmsg bad",text:"That file could not be read."}));};fr.readAsText(f);}})),
+    ta,el("p",{},el("button",{type:"button",class:"btn sm",id:"xferload",onclick:function(){offerTransfer(ta.value,box);}},"Load pasted code")),
+    box,el("p",{class:"vnote",text:"A progress file contains your name and your answers. Only send it to yourself."}));
+}
+
 /* ============ DRAWER (guide, notebook, clip times) ============ */
 var DR={kind:null,tab:null};
 function openDrawer(kind,tab){DR.kind=kind;DR.tab=tab||null;renderDrawer();$("dr").hidden=false;}
@@ -778,7 +2125,7 @@ function renderDrawer(){
     var tabs=[["who","Who’s who"],["steps","Trial steps"],["terms","Key terms"],["charges","Charges"]];DR.tab=DR.tab||"who";
     tabs.forEach(function(t){bar.append(el("button",{type:"button",role:"tab","aria-selected":DR.tab===t[0]?"true":"false",onclick:function(){DR.tab=t[0];renderDrawer();}},t[1]));});
     if(DR.tab==="who"){var tb=el("table",{class:"mini"});WHO.forEach(function(w){tb.append(el("tr",{},el("td",{text:w[0]}),el("td",{text:w[1]})));});body.append(tb);}
-    if(DR.tab==="steps"){body.append(el("p",{text:"The order of a jury trial. Open a step to jump to its station."}));STEPS.forEach(function(s,i){body.append(el("div",{class:"srow"},el("span",{},el("b",{text:(i+1)+". "+s[0]}),el("br"),s[1]),el("button",{type:"button",class:"btn ghost sm",onclick:function(){closeDrawer();var st=STATIONS[s[2]-1];if(!$("ov").hidden)closePanel();openStation(st.id);}},"Station "+s[2])));});}
+    if(DR.tab==="steps"){body.append(el("p",{text:"The order of a jury trial. Open a step to jump to its station."}));STEPS.forEach(function(s,i){body.append(el("div",{class:"srow"},el("span",{},el("b",{text:(i+1)+". "+s[0]}),el("br"),s[1]),el("button",{type:"button",class:"btn ghost sm",onclick:function(){closeDrawer();var st=byId(s[2]);if(!$("ov").hidden)closePanel();openStation(st.id);}},"Station "+numOf(byId(s[2])))));});}
     if(DR.tab==="terms"){var tt=el("table",{class:"mini"});TERMS.forEach(function(w){tt.append(el("tr",{},el("td",{text:w[0]}),el("td",{text:w[1]})));});body.append(tt);}
     if(DR.tab==="charges"){var tc=el("table",{class:"mini"});ELEMS.forEach(function(w){tc.append(el("tr",{},el("td",{text:w[0]}),el("td",{},w[1],el("br"),el("em",{text:w[2]}))));});body.append(tc);}
   }
@@ -793,8 +2140,10 @@ function renderDrawer(){
     var all=counts(STATIONS),ids=DAYS.map(function(d){return d.id;});
     body.append(el("div",{class:"dayrow"},el("div",{},el("b",{text:"Complete notebook (all four days)"}),el("small",{text:all.d+" of "+all.t+" done"})),el("button",{type:"button",class:"btn sm",id:"dlall",onclick:function(){downloadNotebook(ids);}},"Download")));
     body.append(el("p",{},el("button",{type:"button",class:"link",onclick:function(){copyNotebook(ids);}},"Copy everything as text instead")));
-    body.append(el("p",{class:"vnote",text:"Your work is saved in this browser. Use the same device and web address to come back to it."}));
+    body.append(el("p",{class:"vnote",text:"Your work is saved in this browser. Use the same device and web address to come back to it, or move it to another device."}));
+    body.append(el("p",{},el("button",{type:"button",class:"btn ghost sm",id:"xferopen",onclick:function(){openDrawer("transfer");}},"Move my progress to another device")));
   }
+  if(DR.kind==="transfer")renderTransfer(body);
   if(DR.kind==="clips"){
     $("drt").textContent="Clip times (teacher)";
     body.append(el("p",{text:"Set where each clip starts and ends. Times are m:ss. Use Preview to check, Save here to keep the change in this browser, and Copy list to paste into data.js."}));
@@ -835,6 +2184,7 @@ function route(){
   $("cont").addEventListener("click",function(){S.name=$("nm").value.trim()||S.name;save();showApp();route();});
   $("mclass").addEventListener("click",function(){setMode("class");});
   $("msolo").addEventListener("click",function(){setMode("solo");});
+  $("xfercv").addEventListener("click",function(){openDrawer("transfer");});
   $("gdbtn").addEventListener("click",function(){openDrawer("guide");});
   $("nbbtn").addEventListener("click",function(){openDrawer("notebook");});
   $("tcbtn").addEventListener("click",function(){openDrawer("clips");});
