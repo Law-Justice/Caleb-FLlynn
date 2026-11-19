@@ -59,7 +59,6 @@ If you run short: have students answer only the questions in Station 10 that you
 
 ### Day 3: Alleigha Botner: The Witness Behind the Texts
 
-<<<<<<< HEAD
 Station time is about **72 minutes**, which includes the 11-minute “Also watch” window in Station 12. In a 70-minute period that leaves about 3 minutes to launch (recap, open the site, set the mode) and 4 to wrap up (download the day’s notebook).
 
 | Station | Minutes | Teacher moves |
@@ -69,17 +68,6 @@ Station time is about **72 minutes**, which includes the 11-minute “Also watch
 | 14. Cross-examining Alleigha Botner | 20 | Teach credibility and bias before the clips. After watching, ask what the defense could and could not get Botner to say. |
 
 **This is now the longest day.** With Part 3 watched in class it runs about two minutes past what a 70-minute period leaves after launch and wrap. Options: assign Part 3 (11 minutes) as homework or watch it in the first minutes of Day 4, do Station 12 as a teacher-led discussion with only the Rule 403 question typed, or skip the optional comparison question in Station 14.
-=======
-Station time is about **64 minutes**. In a 70-minute period that leaves about 3 minutes to launch (recap, open the site, set the mode) and 4 to wrap up (download the day’s notebook).
-
-| Station | Minutes | Teacher moves |
-|---|---|---|
-| 12. Alleigha Botner takes the stand: how they met | 22 | Show how a direct examination opens. Ask students why the prosecutor starts with identification and background, then watch both windows. Before they type the Rule 403 question, ask what fact each detail (parking lot, tattoos, trips) helps prove. |
-| 13. Alleigha Botner: direct examination and the texts | 22 | Teach why a participant in the texts can authenticate them. Watch the reading clip first, then the two Court TV windows. Ask which three messages the state most needs. |
-| 14. Cross-examining Alleigha Botner | 20 | Teach credibility and bias before the clips. After watching, ask what the defense could and could not get Botner to say. |
-
-If you run short: do Station 12 (the start of her direct) as a teacher-led discussion with only the Rule 403 question typed, and skip the optional comparison question in Station 14.
->>>>>>> 51caed70c1aecb920a2bd13849edfbc688f6b93e
 
 ### Day 4: Experts, Closing Arguments, and Your Verdict
 
@@ -106,11 +94,7 @@ Day 3 follows the state’s key text-message witness through three stations that
 - **Station 13: direct examination and the texts.** Why a participant in the messages can authenticate them, why the state had her read them aloud, what the state wants jurors to infer, and how “Actions will come tomorrow” can be read two ways.
 - **Station 14: cross-examination by Emily Smith.** Bias and motive, her admission that she lied in her first FBI interview, her online searches, and how the defense reframed Flynn’s messages. A discussion question asks students to compare this cross with the officer’s and the sister’s.
 
-<<<<<<< HEAD
 The site keeps the sexual content to a minimum (“intimate,” “relationship became sexual”) and paraphrases the harshest messages. Her testimony ran almost seven hours over September 23 and 24, so the clips are short Court TV segments plus one clip of her reading the texts.
-=======
-Some details in her testimony are personal and some messages use harsh language about a real person. The site keeps the sexual content to a minimum (“intimate,” “relationship became sexual”), paraphrases the harshest messages, and shows a note on the Watch step. Her testimony ran almost seven hours over September 23 and 24, so the clips are short Court TV segments plus one clip of her reading the texts.
->>>>>>> 51caed70c1aecb920a2bd13849edfbc688f6b93e
 
 ## What changed from the previous version
 
@@ -120,11 +104,7 @@ I added Station 12 (the start of her direct) and, to keep every day within 70 mi
 
 Every clip shows a time window (for example “Watch 17:43 to 27:43”), and the player starts there and stops at the end time. A plain YouTube link sits under each player in case the player is blocked. Videos load only when a student clicks play (YouTube’s privacy-enhanced address), and the site makes no other outside requests.
 
-<<<<<<< HEAD
 I could not watch the videos or read their timestamps. **Only the start times of 17:43 (body camera) and 20:00 (sister-in-law) come from your assignment.** Every other window was chosen from the clip’s title and description or from the order of testimony in news coverage, and is an estimate. Use the teacher tool to check and fix them. The Botner Court TV clips are short themed segments (10 to 45 minutes in Court TV’s library), so the beginning of each should hold the topic its title names. **Station 12 is the least certain:** it uses three windows of one 45-minute Court TV clip, and where the tattoo and parking lot testimony falls inside that clip is a guess, so please check Part 2 first. Part 3 (14:00 to 25:00) is the window you asked for.
-=======
-I could not watch the videos or read their timestamps. **Only the start times of 17:43 (body camera) and 20:00 (sister-in-law) come from your assignment.** Every other window was chosen from the clip’s title and description or from the order of testimony in news coverage, and is an estimate. Use the teacher tool to check and fix them. The Botner Court TV clips are short themed segments (10 to 45 minutes in Court TV’s library), so the beginning of each should hold the topic its title names. **Station 12 is the least certain:** it uses two windows of one 45-minute Court TV clip, and where the tattoo and parking lot testimony falls inside that clip is a guess, so please check Part 2 first.
->>>>>>> 51caed70c1aecb920a2bd13849edfbc688f6b93e
 
 | Station | Clip | Source | Window | Basis |
 |---|---|---|---|---|
@@ -137,10 +117,7 @@ I could not watch the videos or read their timestamps. **Only the start times of
 | 11 | Caleb Flynn sister-in-law testimony | Trial video (YouTube) | 20:00 – 28:00 | start 20:00 is from your assignment; the end is estimated |
 | 12 | Part 1, how they met: from Court TV’s “Caleb Flynn Hated Wife, Said She Cheated On Him: Mistress” | Court TV | 0:00 – 7:00 | estimated: the clip is 45 minutes and opens her direct; adjust in teacher mode |
 | 12 | Part 2, keeping it secret: from the same Court TV clip | Court TV | 7:00 – 14:00 | estimated: adjust in teacher mode to where the tattoo and parking lot testimony falls |
-<<<<<<< HEAD
 | 12 | Part 3, how the relationship evolved: from the same Court TV clip | Court TV | 14:00 – 25:00 | requested “also watch” window; continues from Part 2 |
-=======
->>>>>>> 51caed70c1aecb920a2bd13849edfbc688f6b93e
 | 13 | “Actions Will Come Tomorrow”: Alleigha Botner reads Caleb Flynn’s texts | Trial clip (YouTube) | whole clip | whole short clip; publisher not confirmed |
 | 13 | Caleb Flynn wished he could kill his wife, not go to jail: Mistress | Court TV | 0:00 – 5:00 | estimated from the clip description or the order of testimony |
 | 13 | Pastor’s mistress reveals his first words after wife’s murder | Court TV | 0:00 – 4:00 | estimated from the clip description or the order of testimony |
