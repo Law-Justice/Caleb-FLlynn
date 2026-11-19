@@ -49,9 +49,9 @@ Station time is about **63 minutes**. In a 70-minute period that leaves about 3 
 
 | Station | Minutes | Teacher moves |
 |---|---|---|
-| 7. How evidence gets in, and who tells the story | 9 | Explain foundation with a non-case example (a photo of a school fight). Run the open-ended versus leading sorter. |
-| 8. The 911 witness: laying the foundation | 14 | Watch once, pausing at each step of the foundation. Then type. |
-| 9. Hearing the 911 call | 12 | Let students listen with the screen off if they prefer. Discuss sincerity as a class before they type, and separate what they noticed from what can be proven. |
+| 7. How evidence gets in, and who tells the story | 8 | Explain foundation with a non-case example (a photo of a school fight). Run the open-ended versus leading sorter. This station has no typed response; it is a teaching station. |
+| 8. The 911 witness: laying the foundation | 12 | Watch once, pausing at each step of the foundation. Then type. |
+| 9. Hearing the 911 call | 15 | Discuss sincerity as a class before students type, and separate what they noticed from what can be proven. The two newest questions ask them to apply credibility factors (consistency, detail, demeanor, motive) and to write what went through their mind as they listened. |
 | 10. Cross-examination and the body camera | 18 | Teach cross-examination, then watch. Ask students to track what the defense says was not preserved or recorded. |
 | 11. Cross-examining a family witness | 10 | Watch the window. Compare the tone with the officer’s cross. |
 
@@ -98,7 +98,7 @@ The site keeps the sexual content to a minimum (“intimate,” “relationship 
 
 ## What changed from the previous version
 
-I added Station 12 (the start of her direct) and, to keep every day within 70 minutes, moved the family-witness cross (Station 11) to Day 2 and the expert-witness station (Station 15) to Day 4. Day 1 is unchanged. All 23 questions from your three assignments are still in, word for word.
+I added Station 12 (the start of her direct) and, to keep every day within 70 minutes, moved the family-witness cross (Station 11) to Day 2 and the expert-witness station (Station 15) to Day 4. Day 1 is unchanged. 21 of the 23 questions from your three assignments are still in, word for word. Two were removed at your request: the question about when the recording is officially admitted into evidence, and the question about why the defense asked no questions of the 911 witness. Station 7 no longer has a Respond step (its quick-check activity remains), and Station 9 gained a credibility question and an open-ended “what went through your mind” question.
 
 ## Video clips and time windows
 
@@ -149,7 +149,6 @@ Facts come from reporting by CNN, ABC News, CBS News, NBC News, the Dayton Daily
 - **Deliberation length.** Reports range from about two hours to two and a half hours. The site says so.
 - **Reasonable doubt.** Ohio’s statute (R.C. 2901.05) says jurors must be firmly convinced of “the truth of the charge.” Your assignment quotes it as “the defendant’s guilt.” The site uses the statute’s wording.
 - **Expert witnesses.** The BCI crime-scene agent, the BCI firearms examiner, and the digital forensic examiners gave opinions based on specialized training. The site calls them expert-type witnesses and does not claim anything about how each was formally qualified.
-- **The 911 center director.** Your assignment says the defense asked no questions of this witness, and the site follows your assignment.
 - **Ohio rules cited:** R.C. 2901.05; 2903.01; 2903.02; 2903.11; 2921.12; Ohio Evid.R. 401, 403, 602, 607, 611, 701, 702, 801(D)(2), 901; State v. Jenks, 61 Ohio St.3d 259 (1991); Griffin v. California (1965).
 
 ## Moving progress to another device
@@ -178,6 +177,7 @@ To keep this working:
 - Students must use the same browser and device. Clearing browser data erases progress.
 - Day 1 is unchanged by this update, so a student who has started or finished Day 1 sees all of it exactly as they left it.
 - Two stations changed days in this update (the family-witness cross moved to Day 2 and the expert-witness station to Day 4). Students keep their answers to them, but a student who had finished Day 2 will now see one more station to do there.
+- Questions that were removed (two in Station 8 and the Respond question in Station 7) keep any answer a student already wrote in their browser, but it no longer appears in notebooks. A student who had finished Day 2 will now see two new questions in Station 9.
 - “Downloaded” markers from earlier versions are reset (the notebook can simply be downloaded again).
 
 ## Publishing on GitHub Pages
