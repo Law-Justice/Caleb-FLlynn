@@ -27,11 +27,11 @@ button{font:inherit;cursor:pointer}
 #top{position:sticky;top:0;z-index:30;display:none;align-items:center;gap:14px;background:#fff;padding:10px 18px;box-shadow:0 2px 14px rgba(27,36,64,.12)}
 #top.on{display:flex}
 .brand{font-weight:800;letter-spacing:-.01em;display:flex;align-items:center;gap:9px}
-.brand i{display:inline-block;width:26px;height:26px;border-radius:8px;background:conic-gradient(#0f9d8f 0 25%,#6c5ce7 0 50%,#ef5b5b 0 75%,#e08a00 0)}
+.brand i{display:inline-block;width:26px;height:26px;border-radius:8px;background:conic-gradient(#0f9d8f 0 20%,#6c5ce7 0 40%,#ef5b5b 0 60%,#e08a00 0 80%,#8e44ad 0)}
 .pg{flex:1;display:flex;align-items:center;gap:10px;justify-content:center;min-width:0}
 .prog{font-weight:700;font-size:.9rem;white-space:nowrap}
 .bar{width:min(220px,30vw);height:10px;border-radius:999px;background:#e8e4d8;overflow:hidden}
-#progbar{height:100%;width:0;background:linear-gradient(90deg,#0f9d8f,#6c5ce7,#ef5b5b,#e08a00);transition:width .3s}
+#progbar{height:100%;width:0;background:linear-gradient(90deg,#0f9d8f,#6c5ce7,#ef5b5b,#e08a00,#8e44ad);transition:width .3s}
 /* cover */
 #cover{min-height:100vh;display:grid;grid-template-columns:1.05fr 1fr;gap:40px;align-items:center;padding:48px max(24px,6vw);background:radial-gradient(1200px 600px at 85% 10%,#fff3d1,transparent),radial-gradient(900px 500px at 0% 100%,#d9f4f0,transparent),var(--paper)}
 .eyebrow{display:inline-block;background:var(--ink);color:#fff;font:700 .78rem system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;padding:6px 14px;border-radius:999px}
@@ -182,6 +182,31 @@ button{font:inherit;cursor:pointer}
 .win.also{background:var(--ink)}
 .cnote{margin:6px 14px 0;font:700 .92rem/1.4 system-ui,sans-serif;color:var(--ink)}
 
+.win.tag{background:var(--ink)}
+.tph{margin:0 0 14px}.tph h4{margin:10px 0 6px;font:800 .9rem system-ui,sans-serif;color:var(--pc);letter-spacing:.03em}
+.msg{max-width:88%;margin:0 0 6px;padding:7px 12px;border-radius:14px;font-size:.93rem;line-height:1.4}
+.msg small{display:block;font:700 .7rem system-ui,sans-serif;color:var(--muted);margin-bottom:1px}
+.msg.mcb{background:#eef0f6;border-bottom-left-radius:4px;margin-right:auto}
+.msg.ma{background:var(--ps);border-bottom-right-radius:4px;margin-left:auto}
+
+.tlk{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 10px}
+.kk{display:inline-block;border-radius:999px;padding:1px 9px;font:800 .68rem system-ui,sans-serif;color:#fff;background:#6b7280}
+.kk.k-msg{background:#ef5b5b}.kk.k-data{background:#2b6cb0}.kk.k-acct{background:#8e44ad}.kk.k-call{background:#c98a00}.kk.k-police{background:#2f855a}.kk.k-gap{background:#4b5563}
+.ptl{position:relative;margin:0 0 8px 6px;padding-left:16px;border-left:4px solid var(--ps)}
+.pev{position:relative;padding:5px 0 11px}
+.pev::before{content:"";position:absolute;left:-25px;top:9px;width:14px;height:14px;border-radius:50%;background:#6b7280;border:3px solid #fff;box-shadow:0 0 0 2px var(--ps)}
+.pev.k-msg::before{background:#ef5b5b}.pev.k-data::before{background:#2b6cb0}.pev.k-acct::before{background:#8e44ad}.pev.k-call::before{background:#c98a00}.pev.k-police::before{background:#2f855a}.pev.k-gap::before{background:#4b5563}
+.pt{display:block;font:800 .95rem system-ui,sans-serif}
+.pe{font-size:.94rem;line-height:1.45}
+.gaps{margin:12px 0}.gaps h4{margin:0 0 6px;font:800 .95rem system-ui,sans-serif}
+.gr{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px}
+.gc{background:#101830;color:#fff;border-radius:12px;padding:10px 13px}
+.gc small{display:block;font:700 .72rem system-ui,sans-serif;opacity:.85}.gc b{display:block;font:800 1.15rem system-ui,sans-serif;margin:2px 0}.gc span{font:600 .76rem system-ui,sans-serif;opacity:.85}
+.spot{background:#fff8e1;border:2px solid #f2c94c;border-radius:14px;padding:10px 16px;margin:12px 0}
+.spot h4{margin:0 0 6px;font:800 1rem system-ui,sans-serif}.spot p{margin:0 0 .6em;font-size:.95rem}
+
+.vspeed{margin:6px 14px 8px;font:700 .8rem system-ui,sans-serif;color:var(--muted)}
+
 </style>
 </head>
 <body>
@@ -205,7 +230,7 @@ button{font:inherit;cursor:pointer}
   </div>
   <div class="start"><button type="button" class="btn big" id="begin">Start the trial</button><button type="button" class="btn ghost" id="cont" hidden>Continue where I left off</button></div>
   <p class="xfer"><button type="button" class="link" id="xfercv">Using a new device? Load my saved progress</button></p>
-  <div class="how"><div><b>4</b>class periods of about 70 minutes</div><div><b>20</b>stations: learn, watch a short clip, respond</div><div><b>1</b>Word notebook for each day and for the whole unit</div></div>
+  <div class="how"><div><b>5</b>class periods of about 90 minutes</div><div><b>20</b>stations: learn, watch a short clip, respond</div><div><b>1</b>Word notebook for each day and for the whole unit</div></div>
  </div>
  <div id="cvart" aria-hidden="true"></div>
 </section>
@@ -220,8 +245,8 @@ button{font:inherit;cursor:pointer}
 <aside id="dr" hidden aria-label="Drawer"><div class="drh"><b id="drt">Courtroom guide</b><button type="button" class="x" id="drx" aria-label="Close">✕</button></div><div id="drbar" role="tablist"></div><div id="drbody"></div></aside>
 <div id="toast" role="status" aria-live="polite"></div>
 <script>
-/* ============ CONTENT: STATE OF OHIO v. CALEB FLYNN (4 periods of 70 minutes) ============
-   Clip windows are in seconds (start, end). est:1 marks a window chosen from the clip’s description or the order of testimony; tn explains the basis. */
+/* ============ CONTENT: STATE OF OHIO v. CALEB FLYNN (5 periods of 90 minutes) ============
+   Clip windows are in seconds (start, end). end:0 means play to the end of the video. est:1 marks a window chosen from the clip’s description or the order of testimony; tn explains the basis. A clip with u instead of yt opens a news site’s own video page. rate is the playback speed (default 1.25; rate:1 plays at normal speed). Station minutes already count 1.25x. */
 /* Saved progress lives under CFG.key. Never change it. Older keys are listed in legacy so earlier saves are merged in automatically. */
 var CFG={key:"flynn_trial_v3",legacy:["flynn_trial_v1","flynn_trial_v2"],videos:true};
 var DAYS=[
@@ -247,15 +272,23 @@ var DAYS=[
   short: "Day 3",
   color: "#ef5b5b",
   soft: "#fde3e3",
-  goal: "Follow the state’s key text-message witness from the start of her direct examination through the texts and the defense cross-examination."
+  goal: "Follow the state’s key text-message witness from the start of her direct examination through the texts, from the beginning of the relationship to the end."
  },
  {
   id: 4,
-  name: "Experts, Closing Arguments, and Your Verdict",
+  name: "The Last Days and Botner on Cross",
   short: "Day 4",
   color: "#e08a00",
   soft: "#fdf0d2",
-  goal: "Compare lay and expert witnesses, weigh the evidence and both closings, and reach your own verdict before you learn the jury’s."
+  goal: "Follow the night before and the morning after, including why Botner was suspicious, and watch the defense cross-examine her."
+ },
+ {
+  id: 5,
+  name: "Experts, the Police Theory, Closing Arguments, and Your Verdict",
+  short: "Day 5",
+  color: "#8e44ad",
+  soft: "#efe1f7",
+  goal: "Compare lay and expert witnesses, see the state’s timeline from the last text to the 911 call, weigh both closings, and reach your own verdict before you learn the jury’s."
  }
 ];
 var STATIONS=[
@@ -302,7 +335,7 @@ var STATIONS=[
   day: 1,
   title: "The rules for jurors",
   art: "rules",
-  mins: 12,
+  mins: 11,
   ideas: [
    {
     t: "Presumption of innocence",
@@ -445,7 +478,7 @@ var STATIONS=[
   day: 1,
   title: "The state’s opening statement",
   art: "opening",
-  mins: 14,
+  mins: 12,
   ideas: [
    {
     t: "A roadmap",
@@ -501,7 +534,7 @@ var STATIONS=[
   day: 1,
   title: "The defense’s opening statement",
   art: "opening",
-  mins: 11,
+  mins: 10,
   ideas: [
    {
     t: "The defense may wait or go now",
@@ -654,7 +687,7 @@ var STATIONS=[
   day: 2,
   title: "The 911 witness: laying the foundation",
   art: "phone",
-  mins: 12,
+  mins: 10,
   ideas: [
    {
     t: "The first witness",
@@ -738,7 +771,8 @@ var STATIONS=[
      "What facts does he give the dispatcher?",
      "What does the dispatcher ask or tell him?",
      "How does he react in the courtroom as the call plays?"
-    ]
+    ],
+    rate: 1
    }
   ],
   qs: [
@@ -816,7 +850,8 @@ var STATIONS=[
     watch: [
      "What does Flynn say and do on the footage?",
      "What does the defense ask the officer about evidence and the scene?"
-    ]
+    ],
+    rate: 1
    }
   ],
   qs: [
@@ -883,10 +918,9 @@ var STATIONS=[
     yt: "BKrwojn2aXg",
     t: "Caleb Flynn sister-in-law testimony",
     s: "Trial video (YouTube)",
-    start: 1200,
-    end: 1680,
-    est: 1,
-    tn: "start 20:00 is from your assignment; the end is estimated",
+    start: 1680,
+    end: 0,
+    tn: "28:00 to the end of the video, as you requested",
     watch: [
      "What does she say Caleb told the family?",
      "How does the defense attorney speak to her?",
@@ -916,7 +950,7 @@ var STATIONS=[
   day: 3,
   title: "Alleigha Botner takes the stand: how they met",
   art: "witness",
-  mins: 30,
+  mins: 25,
   ideas: [
    {
     t: "Starting a direct examination",
@@ -1029,26 +1063,32 @@ var STATIONS=[
  {
   id: "sb1",
   day: 3,
-  title: "Alleigha Botner: direct examination and the texts",
+  title: "Alleigha Botner: the texts, nature of their relationship",
   art: "chat",
-  mins: 22,
+  mins: 52,
   ideas: [
    {
     t: "A lay witness who was there",
-    x: "Alleigha Botner, who had a relationship with Caleb Flynn, testified because she took part in the messages. She can say who wrote them and what was going on, which is what personal knowledge means."
+    x: "Alleigha Botner took part in the conversations, so she can say who wrote each message and what was going on. That is what personal knowledge means."
    },
    {
     t: "Putting texts in front of a jury",
-    x: "The state wanted jurors to hear the messages in her voice. The prosecutor asked her to read them aloud from binders of exhibits, which also let her explain what she understood them to mean."
+    x: "The prosecutor handed her binder after binder of printed messages, and she read many aloud. Jurors heard messages from the early months, the middle of the relationship, and the final days."
    },
    {
     t: "A party’s own words",
-    x: "What Flynn wrote can be used against him. The rules treat a party’s own statements differently from other hearsay."
+    x: "What Flynn wrote or said can be used against him. The rules treat a party’s own statements differently from other hearsay."
+   },
+   {
+    t: "More than words",
+    x: "Jurors also see and hear how a witness behaves: a voicemail in the defendant’s own voice, and a witness who cries as she reads. They may consider these, but emotion is not proof."
    }
   ],
   more: [
-   "Botner’s testimony lasted almost seven hours over September 23 and 24. The state said she and Flynn exchanged about 107,000 messages. Printouts were bound into dozens of books that were wheeled into the courtroom. She read many aloud, including messages in which Flynn said he hated his wife and wanted her gone, and a final exchange shortly after midnight on February 16 that included “Actions will come tomorrow.”",
-   "She told jurors she understood those words to mean he planned to talk to his wife about divorce that day. She also said that on February 15 she sent him screenshots about divorce proceedings and about deleting messages, because she was afraid their messages would come out. After she learned Ashley Flynn was dead, she began to believe Flynn had killed her.",
+   "Botner’s testimony lasted almost seven hours over September 23 and 24. The state said she and Flynn exchanged about 107,000 messages, printed into 34 binders. She read many aloud, and jurors also heard recordings Flynn sent her. Reports say the earliest messages read in court date from early 2025, so she described the start of the relationship in her own words (see the previous station).",
+   "On September 24, as she read a message from July 10, 2025, she stopped, began to cry, and said, “Sorry, I just wish I didn’t say this. I didn’t mean it.” Then she read her own message and Flynn’s reply. Later she said that when she wrote about wanting Ashley gone, she “always meant divorce.” Later that day, before reading a September 29, 2025 message in which she used a vulgar nickname for Ashley, she sighed and whispered, “I’m so so sorry.”",
+   "Jurors also heard a voicemail Flynn sent her after the 15th-anniversary cruise in August 2025, during which Ashley had seen their messages. In it he apologized to Botner for going on the trip: “I do love you, and I’m sorry.”",
+   "She told jurors she understood “Actions will come tomorrow” to mean he planned to talk to his wife about divorce that day. She also said that on February 15 she sent him screenshots about divorce proceedings and about deleting messages, because she was afraid their messages would come out. After she learned Ashley Flynn was dead, she began to believe Flynn had killed her.",
    "Botner has not been charged with a crime, and she testified that prosecutors promised her nothing."
   ],
   rule: {
@@ -1057,21 +1097,9 @@ var STATIONS=[
   },
   clips: [
    {
-    id: "cb1",
-    yt: "wyjbPkV-GjQ",
-    t: "“Actions Will Come Tomorrow”: Alleigha Botner reads Caleb Flynn’s texts",
-    s: "Trial clip (YouTube)",
-    start: 0,
-    end: 0,
-    tn: "whole short clip; publisher not confirmed",
-    watch: [
-     "Which messages does she read?",
-     "What does she say Flynn still had to do?"
-    ]
-   },
-   {
     id: "cb2",
     yt: "UBK06UwaJtI",
+    tag: "Beginning",
     t: "Caleb Flynn wished he could kill his wife, not go to jail: Mistress",
     s: "Court TV",
     start: 0,
@@ -1083,16 +1111,60 @@ var STATIONS=[
     ]
    },
    {
-    id: "cb3",
-    yt: "DUjeV1e4k9M",
-    t: "Pastor’s mistress reveals his first words after wife’s murder",
-    s: "Court TV",
+    id: "cb7",
+    yt: "H8FW_p9rSmA",
+    tag: "In court",
+    t: "‘I want to kill her:’ Caleb Flynn mistress reads their texts on the stand",
+    s: "News video (publisher not confirmed)",
     start: 0,
-    end: 240,
-    est: 1,
+    end: 0,
+    tn: "whole short clip; publisher not confirmed",
     watch: [
-     "What did she do the morning of February 16?",
-     "What does she say Flynn told her in person?"
+     "What does she say just before she reads the message?",
+     "How does she react when she reads her own words and his reply?"
+    ]
+   },
+   {
+    id: "cb8",
+    yt: "hlNVsZdEXJI",
+    tag: "The relationship, part 1",
+    t: "Part 1, 35:00 to 50:00 of “Caleb Flynn’s Mistress Reads SHOCKING Texts During Affair”",
+    s: "Trial video (publisher not confirmed)",
+    start: 2100,
+    end: 3000,
+    tn: "35:00 to 50:00, as you requested (covers both 35:00 to 45:00 and 40:00 to 50:00)",
+    watch: [
+     "What do you notice about these texts?",
+     "How do you feel about each of these two people?",
+     "How does Caleb portray his relationship with his wife to his mistress? How does that make you feel about him, and about her?"
+    ]
+   },
+   {
+    id: "cb9",
+    yt: "hlNVsZdEXJI",
+    tag: "The relationship, part 2",
+    t: "Part 2, 1:10:00 to 1:20:00 of the same video",
+    s: "Trial video (publisher not confirmed)",
+    start: 4200,
+    end: 4800,
+    tn: "1:10:00 to 1:20:00 (read as 1 hour 10 minutes to 1 hour 20 minutes), as you requested",
+    watch: [
+     "What triggers Alleigha this time, and how does Caleb respond?",
+     "How is hating his wife used as a promise, a comfort, or a way to prove loyalty?"
+    ]
+   },
+   {
+    id: "cb16",
+    yt: "TmYOwV5tFQg",
+    tag: "How they talked about her",
+    t: "3:03:00 to 3:16:00 of “Pastor’s Mistress: Full Direct Testimony | OH v. Caleb Flynn”",
+    s: "Court TV",
+    start: 10980,
+    end: 11760,
+    tn: "3:03:00 to 3:16:00 (read as 3 hours 3 minutes to 3 hours 16 minutes), as you requested",
+    watch: [
+     "How do Caleb and Alleigha talk about Ashley? Notice the names and words they use for her.",
+     "What do they say they want to happen to Ashley, and how do they treat it as something they share?"
     ]
    }
   ],
@@ -1114,9 +1186,16 @@ var STATIONS=[
    {
     id: "qb1c",
     type: "q",
-    min: 30,
-    q: "List three messages or statements from the clips that the state most wants the jury to remember. For each, explain what the state wants the jury to infer.",
+    min: 35,
+    q: "Choose one message from the beginning, one from the middle, and one from the end of the relationship. For each, explain what the state wants the jury to infer.",
     hint: "These are circumstantial evidence. Name the message, then what it is supposed to suggest."
+   },
+   {
+    id: "qb1f",
+    type: "q",
+    min: 35,
+    q: "Trace how the messages change from the beginning to the middle to the end of the relationship. What changes in tone, in what Flynn promises, and in what Botner demands?",
+    hint: "Use dates and at least one message from each phase."
    },
    {
     id: "qb1d",
@@ -1126,20 +1205,422 @@ var STATIONS=[
     hint: "Write one sentence from each attorney’s point of view."
    },
    {
+    id: "qb1g",
+    type: "q",
+    min: 30,
+    q: "The jury heard a voicemail Flynn sent after the cruise, saw Botner cry as she read her own message, and learned she apologized before reading a vulgar nickname she had used for Ashley. How might a juror use each when deciding what to believe, and what should a juror be careful about?",
+    hint: "Think about evidence in the defendant’s own voice, and the difference between emotion and proof."
+   },
+   {
+    id: "qb1h",
+    type: "d",
+    min: 25,
+    q: "Botner said she “always meant divorce” when she wrote about wanting Ashley gone. Does seeing her cry make you more or less likely to believe that? Explain.",
+    hint: "Separate how the moment felt from what it shows."
+   },
+   {
     id: "qb1e",
     type: "q",
     min: 35,
     q: "Does Botner’s testimony make you lean more toward guilt or innocence? Explain your reasoning, and say what you would still want to know.",
     hint: "Be specific about which testimony moved you and which did not."
    }
-  ]
+  ],
+  texts: {
+   note: "These messages were read aloud by Botner in court. Wording comes from news reports and an unofficial transcript of the live stream, so a few messages are shortened.",
+   phases: [
+    {
+     t: "Beginning (2024 to early 2025)",
+     items: [
+      {
+       d: "Spring 2024",
+       w: "Botner, in testimony",
+       k: "c",
+       x: "“He would ask to come over just to hug me.”"
+      },
+      {
+       d: "Feb. 11, 2025",
+       w: "Caleb",
+       k: "c",
+       x: "“Why couldn’t I have met you and married you and had kids with you”"
+      },
+      {
+       d: "Early 2025",
+       w: "Caleb",
+       k: "c",
+       x: "“I just want her dead and gone.”"
+      },
+      {
+       d: "Mar. 24, 2025",
+       w: "Alleigha",
+       k: "a",
+       x: "“What can I do?”"
+      },
+      {
+       d: "Mar. 24, 2025",
+       w: "Caleb",
+       k: "c",
+       x: "“Kill her.”"
+      }
+     ]
+    },
+    {
+     t: "Middle (June to September 2025)",
+     items: [
+      {
+       d: "June 12, 2025",
+       w: "Caleb",
+       k: "c",
+       x: "“Please hire someone to take [her] out.”"
+      },
+      {
+       d: "July 10, 2025",
+       w: "Alleigha",
+       k: "a",
+       x: "“I want to kill her, Caleb.”"
+      },
+      {
+       d: "July 10, 2025",
+       w: "Caleb",
+       k: "c",
+       x: "“That makes two of us.”"
+      },
+      {
+       d: "Aug. 19, 2025",
+       w: "Caleb",
+       k: "c",
+       x: "“Obviously, we’ll need to delete them.” (about their messages)"
+      },
+      {
+       d: "Aug. 22, 2025, after the cruise",
+       w: "Caleb",
+       k: "c",
+       x: "“…literally thinking of ways to kill her and not go to jail.”"
+      },
+      {
+       d: "Aug. 22, 2025",
+       w: "Alleigha",
+       k: "a",
+       x: "She wrote that she was “not asking that you take her life” and wanted him to divorce Ashley."
+      },
+      {
+       d: "Sept. 29, 2025",
+       w: "Alleigha",
+       k: "a",
+       x: "In court she paused, sighed, and whispered “I’m so so sorry” before reading this one. She had written “have fun with” Ashley, using a vulgar nickname: “Ash-s***.”"
+      }
+     ]
+    },
+    {
+     t: "End (January to February 2026)",
+     items: [
+      {
+       d: "Jan. 11, 2026",
+       w: "Alleigha",
+       k: "a",
+       x: "She told him she was done waiting: “…officially move on from you and us.”"
+      },
+      {
+       d: "Feb. 14, 2026",
+       w: "Caleb",
+       k: "c",
+       x: "“I’m finally free of Ashley.”"
+      },
+      {
+       d: "Feb. 15, 2026",
+       w: "Caleb",
+       k: "c",
+       x: "“Actions will come tomorrow, February 16, a day I’ll never forget.”"
+      },
+      {
+       d: "12:45 a.m., Feb. 16",
+       w: "Alleigha",
+       k: "a",
+       x: "“You’re about to be free.”"
+      },
+      {
+       d: "Feb. 16, 2026",
+       w: "Caleb",
+       k: "c",
+       x: "“I choose you, Alleigha. You’re more than enough.”"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ {
+  id: "sb5",
+  day: 4,
+  title: "Alleigha Botner: the night before and the morning after",
+  art: "phone",
+  mins: 37,
+  ideas: [
+   {
+    t: "Evidence of the plan",
+    x: "The state argued Flynn’s messages on February 14 and 15 showed he was about to end his marriage the next day. Jurors decide what the messages actually show."
+   },
+   {
+    t: "What a witness did afterward",
+    x: "Jurors may consider what a witness did after the death: deleting messages, lying to the FBI, searching online. These can affect credibility and show how she understood what had happened."
+   },
+   {
+    t: "Two accounts of the same night",
+    x: "Flynn told investigators he was lying down in his daughters’ bedroom when the shot was fired. Botner said he told her he was on the couch. An inconsistency is circumstantial evidence, and jurors decide how much it matters."
+   }
+  ],
+  more: [
+   "On Saturday, February 14, Flynn messaged Botner and her boss that he needed to talk. She asked whether what he planned to say would affect her job or reputation. He wrote that he was “free,” that he would explain in person, and that they “shouldn’t text or leave any trails.” She asked whether he had come free “in a way that protects us.” He answered, “A million%.”",
+   "On Sunday, February 15, after church, they talked. That evening Botner told him she had a date planned for March. He begged her to tell him who, and wrote, “I’m going to fight.” She asked, “So, knowing all this, you’re still leaving her this week?” He answered, “Yes.” He told her he had gone to the Smiths’ house to talk to them but no one was home, and wrote, “I won’t leave tomorrow until I talk to them.” She advised him about jobs, housing, and custody.",
+   "Shortly after midnight she told him, “You’re about to be free,” and he wrote, “I choose you, Alleigha. You’re more than enough.” Prosecutors also quoted a message that said, “Actions will come tomorrow, February 16, a day I’ll never forget.” Botner testified she understood it to mean divorce. That night she was house-sitting for a church pastor in Vandalia.",
+   "On the morning of February 16, a church member messaged Botner asking whether she had heard about Mrs. Flynn. She texted Flynn, “What is going on right now? Were you behind this?” He did not answer. She testified that her “heart started pounding” and that it seemed like “too much of a coincidence.” When she saw him in person that day, she asked many questions. She testified that he said he had been on the couch, heard a gunshot, saw the garage side door open, and found Ashley dead, and that he “saw blood everywhere.” She also testified he told her it had not happened the way they thought it would (reports differ on the exact words).",
+   "Afterward Botner deleted her messages with Flynn. She lied to the FBI in her first interview on February 20 because she was “selfishly afraid” of losing her reputation and job, and she searched online for unsolved homicides. In a later interview she told the FBI she suspected him. She resigned from the church. Dayton police detective Zachary Farkas testified that investigators located her at her mother’s house in Tipp City."
+  ],
+  texts: {
+   title: "The texts: February 14 to 16",
+   note: "These messages were read aloud by Botner in court. Wording comes from news reports and an unofficial transcript of the live stream, so a few messages are shortened.",
+   phases: [
+    {
+     t: "Saturday, February 14",
+     items: [
+      {
+       d: "Feb. 14, 2026",
+       w: "Caleb",
+       k: "c",
+       x: "“I’m free.” He wrote that they “shouldn’t text or leave any trails.”"
+      },
+      {
+       d: "Feb. 14, 2026",
+       w: "Alleigha",
+       k: "a",
+       x: "“Did you come free in a way that protects us?”"
+      },
+      {
+       d: "Feb. 14, 2026",
+       w: "Caleb",
+       k: "c",
+       x: "“A million%.”"
+      },
+      {
+       d: "Feb. 14, 2026",
+       w: "Alleigha",
+       k: "a",
+       x: "“Just delete the thread.”"
+      }
+     ]
+    },
+    {
+     t: "Sunday, February 15",
+     items: [
+      {
+       d: "Feb. 15, 2026",
+       w: "Alleigha",
+       k: "a",
+       x: "“You could have had it all on January 11th.” She told him about a date in March."
+      },
+      {
+       d: "Feb. 15, 2026",
+       w: "Caleb",
+       k: "c",
+       x: "“I’m going to fight.”"
+      },
+      {
+       d: "Feb. 15, 2026",
+       w: "Alleigha",
+       k: "a",
+       x: "“So, knowing all this, you’re still leaving her this week?”"
+      },
+      {
+       d: "Feb. 15, 2026",
+       w: "Caleb",
+       k: "c",
+       x: "“Yes.”"
+      },
+      {
+       d: "Feb. 15, 2026",
+       w: "Caleb",
+       k: "c",
+       x: "“I won’t leave tomorrow until I talk to them.”"
+      },
+      {
+       d: "Feb. 15, 2026",
+       w: "Caleb",
+       k: "c",
+       x: "“I’m not scared tomorrow.”"
+      },
+      {
+       d: "Feb. 15, 2026",
+       w: "Caleb",
+       k: "c",
+       x: "“Actions will come tomorrow, February 16, a day I’ll never forget.”"
+      }
+     ]
+    },
+    {
+     t: "After midnight and the morning of February 16",
+     items: [
+      {
+       d: "12:45 a.m., Feb. 16",
+       w: "Alleigha",
+       k: "a",
+       x: "“You’re about to be free.”"
+      },
+      {
+       d: "Feb. 16, 2026",
+       w: "Caleb",
+       k: "c",
+       x: "“I choose you, Alleigha. You’re more than enough.”"
+      },
+      {
+       d: "Morning, Feb. 16",
+       w: "Alleigha",
+       k: "a",
+       x: "“What is going on right now? Were you behind this?” Flynn did not answer. She later deleted the messages."
+      }
+     ]
+    }
+   ]
+  },
+  clips: [
+   {
+    id: "cb11",
+    yt: "sUQckEcAh9Q",
+    tag: "The day before",
+    t: "Caleb Flynn planned to divorce wife on day she was killed: Mistress",
+    s: "Court TV",
+    start: 0,
+    end: 300,
+    est: 1,
+    watch: [
+     "What did Flynn tell her he planned to do on February 16?",
+     "What does she say she understood “actions” to mean?"
+    ]
+   },
+   {
+    id: "cb13",
+    yt: "MOT82SSD1-8",
+    tag: "Her suspicion",
+    t: "Caleb Flynn’s mistress believed he killed his wife",
+    s: "Court TV",
+    start: 0,
+    end: 300,
+    est: 1,
+    tn: "title matches this topic; window estimated; the same video also appears on her cross-examination card",
+    watch: [
+     "When did she first suspect him, and what made her suspicious?",
+     "What did she do and say about that suspicion afterward?"
+    ]
+   },
+   {
+    id: "cb1",
+    yt: "wyjbPkV-GjQ",
+    tag: "Past midnight",
+    t: "“Actions Will Come Tomorrow”: Alleigha Botner reads Caleb Flynn’s texts",
+    s: "Trial clip (YouTube)",
+    start: 0,
+    end: 0,
+    tn: "whole short clip; publisher not confirmed",
+    watch: [
+     "Which messages does she read?",
+     "What does she say Flynn still had to do?"
+    ]
+   },
+   {
+    id: "cb3",
+    yt: "DUjeV1e4k9M",
+    tag: "The morning after",
+    t: "Pastor’s mistress reveals his first words after wife’s murder",
+    s: "Court TV",
+    start: 0,
+    end: 180,
+    est: 1,
+    watch: [
+     "What did she do the morning of February 16?",
+     "What does she say Flynn told her in person?"
+    ]
+   },
+   {
+    id: "cb12",
+    yt: "WxeA7ADmsbc",
+    tag: "Investigators",
+    t: "Detective reveals where Caleb Flynn’s mistress was during murder",
+    s: "Court TV",
+    start: 0,
+    end: 240,
+    est: 1,
+    watch: [
+     "How did investigators find her, and where was she?",
+     "What does a detective’s testimony add that her own testimony could not?"
+    ]
+   }
+  ],
+  qs: [
+   {
+    id: "qb5a",
+    type: "q",
+    min: 35,
+    q: "What did Flynn’s messages on February 14 and 15 tell Botner about his plan for the next day? Use at least two messages, and say what the state wants jurors to infer from them.",
+    hint: "Quote a few words from each message."
+   },
+   {
+    id: "qb5b",
+    type: "q",
+    min: 35,
+    q: "Flynn wrote that they “shouldn’t text or leave any trails.” How might the state use that line, and how might the defense explain it?",
+    hint: "Think about what he said he was about to do, and who might see the messages."
+   },
+   {
+    id: "qb5c",
+    type: "q",
+    min: 40,
+    q: "Compare what Flynn reportedly told Botner about the shooting (on the couch, heard a shot, saw the garage door open) with what he told investigators (in his daughters’ room). Why does an inconsistency matter in a circumstantial case, and how might the defense respond?",
+    hint: "Name the two accounts, then explain what a juror could and could not conclude from the difference."
+   },
+   {
+    id: "qb5d",
+    type: "q",
+    min: 35,
+    q: "After Ashley’s death Botner deleted messages, lied to the FBI, and searched for unsolved homicides. What does each action show, and how should it affect how much a juror believes her?",
+    hint: "Separate what each action shows about her from what it shows about Flynn."
+   },
+   {
+    id: "qb5e",
+    type: "q",
+    min: 30,
+    q: "Botner testified that it seemed like “too much of a coincidence.” Is a coincidence evidence? What would you need to turn a suspicion into proof?",
+    hint: "Use the difference between circumstantial evidence and speculation."
+   },
+   {
+    id: "qb5f",
+    type: "d",
+    min: 25,
+    q: "Detective Farkas testified about where Botner was that night. Why do prosecutors present evidence about where a witness was, even when no one claims she was involved?",
+    hint: "Think about what the jury would wonder if they were not told."
+   },
+   {
+    id: "qb5g",
+    type: "q",
+    min: 35,
+    q: "Botner said the next day it seemed like “too much of a coincidence” that Ashley was dead on the day Flynn planned to start the divorce. How did her view of Flynn change from her first FBI interview to her testimony, and how might that affect how much a juror trusts her suspicion?",
+    hint: "Use the timeline of what she said, when she said it, and what she knew each time."
+   }
+  ],
+  spot: {
+   t: "Her suspicion the next day: “too much of a coincidence”",
+   items: [
+    "On the morning of February 16 she texted Flynn, “What is going on right now? Were you behind this?” He did not answer.",
+    "She testified that her “heart started pounding.” To her it seemed like “too much of a coincidence” that Ashley was dead on the very day Flynn was supposed to start the divorce.",
+    "When she saw him in person that day, she asked him many questions and said she was “very suspicious.”",
+    "Her story over time: in her first FBI interview on February 20 she lied about the affair and said she did not believe he had killed Ashley. In a later interview she told the FBI she suspected him. On the stand she said she believes he murdered his wife, but she also said she did not think he was capable of it when she was dating him."
+   ]
+  }
  },
  {
   id: "sb2",
-  day: 3,
+  day: 4,
   title: "Cross-examining Alleigha Botner",
   art: "cross",
-  mins: 20,
+  mins: 18,
   ideas: [
    {
     t: "Testing credibility",
@@ -1230,10 +1711,10 @@ var STATIONS=[
  },
  {
   id: "s15",
-  day: 4,
+  day: 5,
   title: "Expert witnesses",
   art: "expert",
-  mins: 12,
+  mins: 9,
   ideas: [
    {
     t: "Expert witness",
@@ -1286,78 +1767,191 @@ var STATIONS=[
     min: 30,
     q: "How did the defense try to limit or challenge the agent’s conclusions on cross-examination?",
     hint: "Name one question or point from the clip and explain what the defense wanted the jury to take from it."
-   },
-   {
-    id: "d15c",
-    type: "d",
-    min: 20,
-    q: "Do jurors have to accept an expert’s opinion? Why or why not?",
-    hint: "Think about experts who disagree, and about opinions that depend on facts the jury has not accepted."
    }
   ]
  },
  {
-  id: "s16",
-  day: 4,
-  title: "Your evidence ledger",
+  id: "sb6",
+  day: 5,
+  title: "The police theory: from the last text to the 911 call",
   art: "ledger",
-  mins: 6,
+  mins: 19,
   ideas: [
    {
-    t: "Weighing the evidence",
-    x: "Jurors do not need to decide each piece by itself. They weigh the whole picture."
+    t: "A summary witness",
+    x: "Near the end of its case the state called Samantha Reeb, a criminal intelligence analyst with the Ohio Bureau of Criminal Investigation. She had not seen the shooting. She organized messages and phone, watch, and AirPods data into timelines so jurors could see events in order."
+   },
+   {
+    t: "A timeline is also an argument",
+    x: "Which facts go on a timeline, and how they are connected, is a choice. The defense pointed out what Reeb’s timeline left out: Ashley’s own phone held a note about a struggling marriage and a photo with an “X” over Caleb’s face."
+   },
+   {
+    t: "The window",
+    x: "Prosecutors focused on the gap between Flynn’s last message at 12:45 a.m. and the 911 call at about 2:31 a.m. They say this is when the shooting, the staged door, and the disposal of evidence happened. The defense said nothing proved he left the house."
    }
   ],
-  qs: [
+  timeline: {
+   title: "The police theory, minute by minute",
+   note: "Times are approximate and come from testimony as reported by WLWT, the Dayton Daily News, WDTN, WHIO, Fox News, and the Springfield News-Sun. Reports do not give the exact minute of the shooting.",
+   events: [
+    {
+     t: "Feb. 15, about 3:07 p.m.",
+     k: "data",
+     e: "A search on Flynn’s phone for the best cough medicine for adults, which fits his account that he was sick and was sent to the couch for coughing."
+    },
+    {
+     t: "Feb. 15",
+     k: "data",
+     e: "ChatGPT is uninstalled from his phone."
+    },
+    {
+     t: "Feb. 15, night",
+     k: "msg",
+     e: "He messages Botner: “Actions will come tomorrow, February 16, a day I’ll never forget.”"
+    },
+    {
+     t: "11:00 p.m.",
+     k: "acct",
+     e: "His account to police: he and Ashley go to bed. She reads on her phone and he scrolls Twitter. They fall asleep around 11:45."
+    },
+    {
+     t: "12:45 a.m., Feb. 16",
+     k: "msg",
+     e: "His final outgoing message to Botner. He stops answering her. In his account to police, this is when he moves to the couch."
+    },
+    {
+     t: "1:01 to 1:02 a.m.",
+     k: "data",
+     e: "GroupMe and Instagram are uninstalled from his iPhone."
+    },
+    {
+     t: "1:06 to 1:07 a.m.",
+     k: "data",
+     e: "The phone is plugged in at 1:06 and locked a minute later."
+    },
+    {
+     t: "1:19 to 1:23 a.m.",
+     k: "data",
+     e: "His Apple Watch logs steps: 18 at 1:19, 18 at 1:22, and 34 at 1:23."
+    },
+    {
+     t: "1:52 to 1:56 a.m.",
+     k: "data",
+     e: "The watch logs 21 more steps. In his account, he is asleep on a bottom bunk in his daughters’ room."
+    },
+    {
+     t: "2:18 to 2:28 a.m.",
+     k: "data",
+     e: "The watch logs 105 steps. Prosecutors say it then came off and was placed on the counter shortly before the 911 call."
+    },
+    {
+     t: "About 2:31 a.m.",
+     k: "call",
+     e: "The 911 call. He says he woke to gunfire, froze for four to six seconds, ran to the bedroom, and found Ashley shot. He says he called within two to five minutes."
+    },
+    {
+     t: "About 2:36 a.m.",
+     k: "police",
+     e: "The first officer arrives and finds Ashley in bed with two gunshot wounds to the head. The garage side door is damaged on the inside, and officers find it unlocked."
+    },
+    {
+     t: "About 3:50 a.m.",
+     k: "police",
+     e: "A drone search of the area begins, about an hour and 20 minutes after the call. The defense says it covered a limited area."
+    },
+    {
+     t: "About 4:30 a.m.",
+     k: "police",
+     e: "The first police interview with Flynn, who had been awake all night."
+    },
+    {
+     t: "Never found",
+     k: "gap",
+     e: "The gun he said he kept in his truck’s center console. Police did not find Ashley’s blood on him or his clothes, and no gunshot residue test was done."
+    }
+   ]
+  },
+  gaps: [
    {
-    id: "q16a",
-    type: "q",
-    min: 50,
-    q: "Evidence ledger: List the three pieces of evidence that most point toward guilt and the three that most raise doubt. Label each one direct or circumstantial.",
-    hint: "Use a short line for each: the evidence, direct or circumstantial, and why it matters."
-   }
-  ]
- },
- {
-  id: "s17",
-  day: 4,
-  title: "The defense rests",
-  art: "rests",
-  mins: 5,
-  ideas: [
-   {
-    t: "The right to remain silent",
-    x: "The Fifth Amendment protects a defendant from being forced to testify. The judge tells jurors not to hold it against him."
+    l: "Last message to the 911 call",
+    v: "1 hour 46 minutes",
+    x: "12:45 a.m. to about 2:31 a.m."
    },
    {
-    t: "The burden never shifts",
-    x: "If the defense calls no witnesses, the state must still prove every element beyond a reasonable doubt."
+    l: "Last message to the first officer",
+    v: "1 hour 51 minutes",
+    x: "12:45 a.m. to about 2:36 a.m."
+   },
+   {
+    l: "911 call to the drone search",
+    v: "about 1 hour 20 minutes",
+    x: "about 2:31 a.m. to about 3:50 a.m."
+   },
+   {
+    l: "Most active watch burst to the call",
+    v: "3 minutes",
+    x: "the 105 steps ended at 2:28 a.m."
    }
   ],
   more: [
-   "After the state called more than three dozen witnesses over seven days of testimony, it rested its case. The defense also rested without calling witnesses, and Flynn did not testify. Jurors had already heard his own words in the 911 call, the body camera video, his messages, and recorded police interviews."
+   "The state’s theory is that Flynn used the time after his last message to shoot Ashley, stage the garage door to look like a break-in, get rid of the gun, and uninstall apps that held evidence. That window is about an hour and 46 minutes before the 911 call and about an hour and 51 minutes before the first officer arrived. The state did not have to show where the gun went.",
+   "The defense argued that nothing showed Flynn left the house, that no blood was found on him or his clothes, that no gunshot residue test was done, that the drone search began long after the call and did not cover the field behind the house, and that Reeb’s timeline left out evidence from Ashley’s own phone."
   ],
   rule: {
-   t: "Constitution and Ohio law",
-   x: "Fifth Amendment: no one may be compelled to be a witness against himself. Griffin v. California (1965): the prosecution may not comment on a defendant’s silence."
+   t: "Ohio Rules of Evidence",
+   x: "Rule 1006: a summary, chart, or calculation of voluminous records may be presented if the underlying records are available to the other side. Jurors decide how much weight a summary deserves."
   },
+  clips: [
+   {
+    id: "cb14",
+    yt: "W1gxN-ma4ww",
+    tag: "The final 12 minutes",
+    t: "Timelines chronicle evidence against Caleb Flynn in wife’s murder case",
+    s: "Trial clip (publisher not confirmed)",
+    start: 0,
+    end: 0,
+    tn: "whole clip; described as the final 12 minutes of testimony, with Reeb; publisher not confirmed",
+    watch: [
+     "What does each timeline show, and what does it leave out?",
+     "How does she describe the gap between the last message and the 911 call?"
+    ]
+   }
+  ],
   qs: [
    {
-    id: "q17a",
+    id: "qb6a",
     type: "q",
-    min: 25,
-    q: "Why can’t a jury hold it against a defendant that he did not testify?",
-    hint: "Connect your answer to the presumption of innocence and the Fifth Amendment."
+    min: 40,
+    q: "Using the timeline, how long was it between Flynn’s last message to Botner (12:45 a.m.) and the 911 call (about 2:31 a.m.)? What does the state say happened in that window, and what evidence does it point to?",
+    hint: "Show your arithmetic, then list at least three timed events from the data."
+   },
+   {
+    id: "qb6b",
+    type: "q",
+    min: 40,
+    q: "The state’s theory is that this window was long enough to shoot Ashley, stage the door, and get rid of the gun. What would the state need to show to make that more than a guess, and what did the defense say was never found, checked, or tested?",
+    hint: "Think about the gun, blood, gunshot residue, the drone search, and the cameras."
+   },
+   {
+    id: "qb6d",
+    type: "q",
+    min: 40,
+    q: "Compare Flynn’s account of the night (couch, then a bottom bunk, then a noise) with the device data the state presented. Where do they match, where do they conflict, and what innocent explanations could the defense offer for the data?",
+    hint: "Use specific times from the timeline."
    }
   ]
  },
  {
   id: "s18",
-  day: 4,
-  title: "Closing arguments",
+  day: 5,
+  title: "The defense rests and closing arguments",
   art: "closing",
-  mins: 15,
+  mins: 13,
   ideas: [
+   {
+    t: "The defense rests",
+    x: "The defense may call witnesses or rest. This defense rested without calling any, and Flynn did not testify. The Fifth Amendment protects a defendant from being forced to testify, the judge tells jurors not to hold his silence against him, and the burden of proof never shifts."
+   },
    {
     t: "Argument, not evidence",
     x: "In closings each side argues what the evidence proves. Lawyers may argue reasonable inferences but may not add new facts."
@@ -1378,7 +1972,7 @@ var STATIONS=[
     t: "State’s closing: Prosecuting attorney Matt Joseph",
     s: "Courtroom Insider (YouTube)",
     start: 0,
-    end: 360,
+    end: 240,
     est: 1,
     watch: [
      "How does he connect the separate pieces of evidence?",
@@ -1391,7 +1985,7 @@ var STATIONS=[
     t: "State’s rebuttal: Prosecuting attorney Paul Watkins",
     s: "Courtroom Insider (YouTube)",
     start: 0,
-    end: 300,
+    end: 180,
     est: 1,
     watch: [
      "Which defense points does he answer?",
@@ -1400,6 +1994,13 @@ var STATIONS=[
    }
   ],
   qs: [
+   {
+    id: "q17a",
+    type: "q",
+    min: 25,
+    q: "Why can’t a jury hold it against a defendant that he did not testify?",
+    hint: "Connect your answer to the presumption of innocence and the Fifth Amendment."
+   },
    {
     id: "q18a",
     type: "q",
@@ -1431,16 +2032,24 @@ var STATIONS=[
     t: "Read: closing arguments as they happened (Courtroom Insider)",
     u: "https://www.courtroominsider.com/2026/09/live-updates-closing-arguments-planned-for-day-8-of-caleb-flynn-murder-trial/"
    }
-  ]
+  ],
+  rule: {
+   t: "Constitution and Ohio law",
+   x: "Fifth Amendment: no one may be compelled to be a witness against himself. Griffin v. California (1965): the prosecution may not comment on a defendant’s silence."
+  }
  },
  {
   id: "s21",
-  day: 4,
-  title: "Your verdict",
+  day: 5,
+  title: "Your evidence ledger and verdict",
   art: "ballot",
-  mins: 14,
+  mins: 15,
   verdict: true,
   ideas: [
+   {
+    t: "Weighing the evidence",
+    x: "Jurors do not need to decide each piece by itself. They weigh the whole picture."
+   },
    {
     t: "Elements",
     x: "Each charge has parts, called elements. The state must prove every element beyond a reasonable doubt. In a felony trial all twelve jurors must agree."
@@ -1451,6 +2060,13 @@ var STATIONS=[
    }
   ],
   qs: [
+   {
+    id: "q16a",
+    type: "q",
+    min: 50,
+    q: "Evidence ledger: List the three pieces of evidence that most point toward guilt and the three that most raise doubt. Label each one direct or circumstantial.",
+    hint: "Use a short line for each: the evidence, direct or circumstantial, and why it matters."
+   },
    {
     id: "q21a",
     type: "q",
@@ -1463,10 +2079,10 @@ var STATIONS=[
  },
  {
   id: "s22",
-  day: 4,
+  day: 5,
   title: "What the jury decided",
   art: "reveal",
-  mins: 7,
+  mins: 6,
   reveal: true,
   qs: [
    {
@@ -1848,9 +2464,10 @@ function updateProg(){var c=counts(STATIONS);$("prog").textContent=c.d+" of "+c.
 /* ---- clip windows ---- */
 var CLIPOV=(function(){try{return JSON.parse(localStorage.getItem("flynn_clip_overrides")||"{}");}catch(e){return{};}})();
 function clipTimes(c){var o=CLIPOV[c.id];return o?{s:o[0],e:o[1]}:{s:c.start||0,e:c.end||0};}
-function fmt(sec){sec=Math.max(0,Math.round(sec));return Math.floor(sec/60)+":"+("0"+(sec%60)).slice(-2);}
-function parseTime(s){s=String(s||"").trim();if(!s)return 0;if(s.indexOf(":")<0)return Math.max(0,parseInt(s,10)||0);var p=s.split(":");return Math.max(0,(parseInt(p[0],10)||0)*60+(parseInt(p[1],10)||0));}
-function windowLabel(c){var t=clipTimes(c);if(!t.e)return t.s?"Watch from "+fmt(t.s)+" to the end":"Watch the whole clip";var m=Math.round((t.e-t.s)/60);return"Watch "+fmt(t.s)+" to "+fmt(t.e)+" · about "+(m<1?"under 1":m)+" min";}
+function fmt(sec){sec=Math.max(0,Math.round(sec));var h=Math.floor(sec/3600),m=Math.floor((sec%3600)/60),s=sec%60;return h?h+":"+("0"+m).slice(-2)+":"+("0"+s).slice(-2):m+":"+("0"+s).slice(-2);}
+function parseTime(s){s=String(s||"").trim();if(!s)return 0;if(s.indexOf(":")<0)return Math.max(0,parseInt(s,10)||0);var p=s.split(":");if(p.length>=3)return Math.max(0,(parseInt(p[0],10)||0)*3600+(parseInt(p[1],10)||0)*60+(parseInt(p[2],10)||0));return Math.max(0,(parseInt(p[0],10)||0)*60+(parseInt(p[1],10)||0));}
+function rateOf(c){return c.rate||1.25;}
+function windowLabel(c){var t=clipTimes(c);if(!t.e)return t.s?"Watch from "+fmt(t.s)+" to the end":"Watch the whole clip";var r=rateOf(c);var m=Math.round((t.e-t.s)/60/r);return"Watch "+fmt(t.s)+" to "+fmt(t.e)+" · about "+(m<1?"under 1":m)+" min"+(r!==1?" at "+r+"×":"");}
 function watchUrl(c){var t=clipTimes(c);return"https://www.youtube.com/watch?v="+c.yt+(t.s?"&t="+t.s+"s":"");}
 function embedRaw(yt,s,e){return"https://www.youtube-nocookie.com/embed/"+yt+"?"+(s?"start="+s+"&":"")+(e?"end="+e+"&":"")+"rel=0&modestbranding=1&autoplay=1";}
 function embedUrl(c){var t=clipTimes(c);return embedRaw(c.yt,t.s,t.e);}
@@ -1926,12 +2543,52 @@ function learnBody(st){
   if(st.reveal)b.append(revealBlock());
   (st.ideas||[]).forEach(function(i){b.append(el("div",{class:"idea"},el("b",{text:i.t}),el("span",{text:i.x})));});
   if(st.more){var solo=S.mode==="solo";b.append(el("details",{class:"dd",open:solo},el("summary",{},solo?"The full explanation":"More explanation (your teacher may cover this)"),el("div",{class:"ddb"},st.more.map(function(p){return el("p",{text:p});}))));}
+  if(st.spot)b.append(spotBlock(st));
   if(st.rule)b.append(el("div",{class:"rulebox"},el("b",{text:st.rule.t}),el("span",{text:st.rule.x})));
+  if(st.timeline)b.append(timelineBlock(st));
+  if(st.gaps)b.append(gapsBlock(st));
   if(st.who){var tb=el("table",{class:"mini"});WHO.forEach(function(w){tb.append(el("tr",{},el("td",{text:w[0]}),el("td",{text:w[1]})));});b.append(el("details",{class:"dd",open:true},el("summary",{},"Who is who in the courtroom"),el("div",{class:"ddb"},tb)));}
   if(st.elems){var te=el("table",{class:"mini"});ELEMS.forEach(function(w){te.append(el("tr",{},el("td",{text:w[0]}),el("td",{},w[1],el("br"),el("em",{text:w[2]}))));});b.append(el("details",{class:"dd",open:true},el("summary",{},"The charges and what the state must prove"),el("div",{class:"ddb"},te)));}
+  if(st.texts)b.append(textsBlock(st));
   if(st.sort)b.append(sorter(st));
   if(st.read)b.append(el("div",{class:"reads"},st.read.map(function(r){return el("a",{href:r.u,target:"_blank",rel:"noopener noreferrer"},"Read: "+r.t.replace(/^Read: /,"")+" ↗");})));
   return b;
+}
+var TLK={msg:"Messages",data:"Device data",acct:"Flynn’s account",call:"911 call",police:"Police",gap:"Never found"};
+function timelineBlock(st){
+  var box=el("details",{class:"dd",open:true},el("summary",{},st.timeline.title));
+  var body=el("div",{class:"ddb"});
+  if(st.timeline.note)body.append(el("p",{class:"vnote",text:st.timeline.note}));
+  var legend=el("div",{class:"tlk"});Object.keys(TLK).forEach(function(k){legend.append(el("span",{class:"kk k-"+k},TLK[k]));});body.append(legend);
+  var list=el("div",{class:"ptl"});
+  st.timeline.events.forEach(function(ev){
+    list.append(el("div",{class:"pev k-"+ev.k},el("b",{class:"pt",text:ev.t}),el("div",{class:"pe"},el("span",{class:"kk k-"+ev.k,text:TLK[ev.k]}),el("span",{text:" "+ev.e}))));
+  });
+  body.append(list);box.append(body);return box;
+}
+function gapsBlock(st){
+  var box=el("div",{class:"gaps"},el("h4",{text:"How long?"}));
+  var row=el("div",{class:"gr"});
+  st.gaps.forEach(function(g){row.append(el("div",{class:"gc"},el("small",{text:g.l}),el("b",{text:g.v}),el("span",{text:g.x})));});
+  box.append(row);return box;
+}
+function spotBlock(st){
+  var box=el("div",{class:"spot"},el("h4",{text:st.spot.t}));
+  st.spot.items.forEach(function(x){box.append(el("p",{text:x}));});
+  return box;
+}
+function textsBlock(st){
+  var box=el("details",{class:"dd",open:true},el("summary",{},st.texts.title||"The texts, from beginning to end"));
+  var body=el("div",{class:"ddb"});
+  if(st.texts.note)body.append(el("p",{class:"vnote",text:st.texts.note}));
+  st.texts.phases.forEach(function(ph){
+    var p=el("div",{class:"tph"},el("h4",{text:ph.t}));
+    ph.items.forEach(function(m){
+      p.append(el("div",{class:"msg "+(m.k==="a"?"ma":"mcb")},el("small",{text:m.w+" · "+m.d}),el("span",{text:m.x})));
+    });
+    body.append(p);
+  });
+  box.append(body);return box;
 }
 function sorter(st){
   var sd=S.sort[st.id]=S.sort[st.id]||{};
@@ -1953,28 +2610,69 @@ function revealBlock(){
 }
 function watchBody(st){
   var b=el("div",{});
-  b.append(el("p",{class:"hint2",text:"Watch only the window shown for each clip. The video will start there."}));
+  b.append(el("p",{class:"hint2",text:"Watch only the window shown for each clip. The video will start there. Most clips play at 1.25× speed to save time; the 911 call and the body camera play at normal speed because their tone and cadence matter. You can change the speed with the gear icon in the player."}));
   st.clips.forEach(function(c){b.append(clipCard(c));});
   return b;
 }
+var YT_WAIT=2500,ytq=[],ytLoading=false,ytn=0;
+function loadYT(cb){
+  if(window.YT&&window.YT.Player){cb(true);return;}
+  ytq.push(cb);if(ytLoading)return;ytLoading=true;
+  var prev=window.onYouTubeIframeAPIReady;
+  window.onYouTubeIframeAPIReady=function(){if(prev){try{prev();}catch(e){}}var q=ytq;ytq=[];q.forEach(function(f){f(true);});};
+  var s=document.createElement("script");s.src="https://www.youtube.com/iframe_api";s.async=true;
+  s.onerror=function(){var q=ytq;ytq=[];ytLoading=false;q.forEach(function(f){f(false);});};
+  document.head.appendChild(s);
+}
+function startClip(c,holder){
+  var rate=rateOf(c),t=clipTimes(c),done=false;
+  var box=el("div",{class:"vframe"});
+  var note=el("p",{class:"vspeed",text:rate!==1?"Playing at "+rate+"× speed. You can change it with the gear icon.":"Plays at normal speed because the tone and cadence matter."});
+  holder.replaceChildren(box,note);
+  function fallback(){
+    if(done)return;done=true;
+    box.replaceChildren(el("iframe",{src:embedUrl(c),title:c.t,allow:"autoplay; fullscreen; encrypted-media; picture-in-picture",allowfullscreen:true,referrerpolicy:"strict-origin-when-cross-origin"}));
+    note.textContent=rate!==1?"Set the speed to "+rate+"× with the gear icon (Settings, then Playback speed).":"Plays at normal speed because the tone and cadence matter.";
+  }
+  loadYT(function(ok){
+    if(done)return;
+    if(!ok){fallback();return;}
+    done=true;
+    var slot=el("div",{id:"ytp_"+c.id+"_"+(++ytn)});box.replaceChildren(slot);
+    var vars={rel:0,modestbranding:1,autoplay:1,playsinline:1};if(t.s)vars.start=t.s;if(t.e)vars.end=t.e;
+    try{
+      new window.YT.Player(slot.id,{host:"https://www.youtube-nocookie.com",videoId:c.yt,playerVars:vars,events:{
+        onReady:function(e){if(rate!==1){try{e.target.setPlaybackRate(rate);}catch(_){}}},
+        onError:function(){done=false;fallback();}}});
+    }catch(err){done=false;fallback();}
+  });
+  setTimeout(fallback,YT_WAIT);
+}
 function clipCard(c){
+  var watch=c.watch?el("div",{class:"wf"},el("b",{text:"Watch for"}),el("ul",{},c.watch.map(function(w){return el("li",{text:w});}))):null;
+  var chips=el("div",{class:"cw"},c.also?el("span",{class:"win also",text:"Also watch"}):null,c.tag?el("span",{class:"win tag",text:c.tag}):null,c.yt?el("span",{class:"win",text:windowLabel(c)}):null);
+  if(!c.yt){
+    return el("div",{class:"clip"},chips,c.note?el("p",{class:"cnote",text:c.note}):null,el("div",{class:"ct2"},el("b",{text:c.t}),el("span",{text:c.s})),watch,
+      el("a",{class:"vlink big",href:c.u,target:"_blank",rel:"noopener noreferrer"},"Watch on "+c.s+" ↗"));
+  }
   var holder=el("div",{class:"vplayer"});
-  holder.append(el("button",{type:"button",class:"vbtn","aria-label":"Play clip: "+c.t,onclick:function(){
-    holder.replaceChildren(el("div",{class:"vframe"},el("iframe",{src:embedUrl(c),title:c.t,allow:"autoplay; fullscreen; encrypted-media; picture-in-picture",allowfullscreen:true,referrerpolicy:"strict-origin-when-cross-origin"})));
-  }},el("span",{class:"vplay"},"▶"),el("span",{},"Play this clip")));
-  return el("div",{class:"clip"},
-    el("div",{class:"cw"},c.also?el("span",{class:"win also",text:"Also watch"}):null,el("span",{class:"win",text:windowLabel(c)})),
+  holder.append(el("button",{type:"button",class:"vbtn","aria-label":"Play clip: "+c.t,onclick:function(){startClip(c,holder);}},el("span",{class:"vplay"},"▶"),el("span",{},"Play this clip")));
+  return el("div",{class:"clip"},chips,
     c.note?el("p",{class:"cnote",text:c.note}):null,
     el("div",{class:"ct2"},el("b",{text:c.t}),el("span",{text:c.s})),
-    c.watch?el("div",{class:"wf"},el("b",{text:"Watch for"}),el("ul",{},c.watch.map(function(w){return el("li",{text:w});}))):null,
-    holder,el("a",{class:"vlink",href:watchUrl(c),target:"_blank",rel:"noopener noreferrer"},"Open on YouTube ↗"));
+    watch,holder,el("a",{class:"vlink",href:watchUrl(c),target:"_blank",rel:"noopener noreferrer"},"Open on YouTube ↗"));
 }
 function respondBody(st){
   var b=el("div",{});
   if(S.mode==="class"&&prompts(st).some(function(q){return q.type==="d";}))b.append(el("p",{class:"hint2",text:"Questions marked “class discussion” are talked through together. Add a note if it helps you."}));
-  if(st.verdict)b.append(verdictBlock());
+  if(st.verdict){
+    prompts(st).filter(function(q){return q.id!=="q21a";}).forEach(function(q){b.append(qBlock(q));});
+    b.append(verdictBlock());
+    b.append(qBlock(expl()));
+    b.append(lockBlock(st));
+    return b;
+  }
   prompts(st).forEach(function(q){b.append(qBlock(q));});
-  if(st.verdict)b.append(lockBlock(st));
   return b;
 }
 function qBlock(q){
@@ -1999,13 +2697,14 @@ function verdictBlock(){
   });
   return b;
 }
-function lockReady(){var st=byId("s21");return VERDICT_COUNTS.every(function(c){return S.verdict[c.id];})&&qOk(prompts(st)[0]);}
+function expl(){return prompts(byId("s21")).filter(function(q){return q.id==="q21a";})[0];}
+function lockReady(){return VERDICT_COUNTS.every(function(c){return S.verdict[c.id];})&&qOk(expl());}
 function lockBlock(st){
   var wrap=el("div",{id:"lockwrap"});
   if(S.locked){wrap.append(el("div",{class:"lockmsg",text:"Your verdict is locked in. You can still improve your explanation. Station "+numOf(byId("s22"))+" is now open."}));return wrap;}
   wrap.append(el("button",{type:"button",class:"btn",id:"lockbtn",disabled:!lockReady(),onclick:function(){
     if(!lockReady())return;S.locked=true;S.lockedOn=new Date().toISOString();save();toast("Verdict locked in. Station "+numOf(byId("s22"))+" is open.");buildTimeline();renderPanel();}},"Lock in my verdict and open Station "+numOf(byId("s22"))));
-  wrap.append(el("div",{class:"lockmsg",text:"Choose a vote for every charge and write at least "+prompts(st)[0].min+" words explaining your reasoning. Once you lock it in, you will see what the jury decided."}));
+  wrap.append(el("div",{class:"lockmsg",text:"Choose a vote for every charge and write at least "+expl().min+" words explaining your reasoning. Once you lock it in, you will see what the jury decided."}));
   return wrap;
 }
 function syncLock(){var b=$("lockbtn");if(b)b.disabled=!lockReady();}
@@ -2134,7 +2833,7 @@ function renderDrawer(){
         el("button",{type:"button",class:"btn sm",disabled:!any,onclick:function(){downloadNotebook([d.id]);}},"Download")));
     });
     var all=counts(STATIONS),ids=DAYS.map(function(d){return d.id;});
-    body.append(el("div",{class:"dayrow"},el("div",{},el("b",{text:"Complete notebook (all four days)"}),el("small",{text:all.d+" of "+all.t+" done"})),el("button",{type:"button",class:"btn sm",id:"dlall",onclick:function(){downloadNotebook(ids);}},"Download")));
+    body.append(el("div",{class:"dayrow"},el("div",{},el("b",{text:"Complete notebook (all five days)"}),el("small",{text:all.d+" of "+all.t+" done"})),el("button",{type:"button",class:"btn sm",id:"dlall",onclick:function(){downloadNotebook(ids);}},"Download")));
     body.append(el("p",{},el("button",{type:"button",class:"link",onclick:function(){copyNotebook(ids);}},"Copy everything as text instead")));
     body.append(el("p",{class:"vnote",text:"Your work is saved in this browser. Use the same device and web address to come back to it, or move it to another device."}));
     body.append(el("p",{},el("button",{type:"button",class:"btn ghost sm",id:"xferopen",onclick:function(){openDrawer("transfer");}},"Move my progress to another device")));
@@ -2145,6 +2844,7 @@ function renderDrawer(){
     body.append(el("p",{text:"Set where each clip starts and ends. Times are m:ss. Use Preview to check, Save here to keep the change in this browser, and Copy list to paste into data.js."}));
     var ed={};
     STATIONS.forEach(function(st){(st.clips||[]).forEach(function(c){
+      if(!c.yt)return;
       var t=clipTimes(c),a=el("input",{value:fmt(t.s),"aria-label":"Start for "+c.t}),z=el("input",{value:t.e?fmt(t.e):"","aria-label":"End for "+c.t,placeholder:"end"});ed[c.id]={a:a,z:z,c:c};
       var pv=el("div",{});
       body.append(el("div",{class:"srow"},el("span",{},el("b",{text:"Station "+numOf(st)+": "+c.t}),el("br"),c.s+" · "+(c.tn||(c.est?"estimated window":"window set by you"))),
@@ -2165,7 +2865,7 @@ function route(){
   $("tcbtn").hidden=h.indexOf("teacher")<0&&!window.__teacher;
   if(h.indexOf("teacher")>=0)window.__teacher=true;
   if(!S.started)return;
-  var m=h.match(/^day([1-4])/);if(m){var d=$("day"+m[1]);if(d)d.scrollIntoView();}
+  var m=h.match(/^day([1-5])/);if(m){var d=$("day"+m[1]);if(d)d.scrollIntoView();}
   var s=h.match(/^(s\d+)$/);if(s&&byId(s[1])&&!isLocked(byId(s[1])))openStation(s[1]);
 }
 (function boot(){
